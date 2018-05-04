@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	   http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+<!-- 	<mvc:annotation-driven /> -->
+
+	<context:component-scan base-package="com.checc.*">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />
+	</context:component-scan>
+	
+	<bean id="stringHttpMessageConverter"
+		class="org.springframework.http.converter.StringHttpMessageConverter" />
+	<bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
+
+	<bean id="jsonHttpMessageConverter"
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="supportedMediaTypes">
+			<list>
+				<value>application/json;charset=UTF-8</value>
+				<value>text/html;charset=UTF-8</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 线程安全的访问session -->
+	<bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="synchronizeOnSession" value="true" />
+		<property name="messageConverters">
+			<list>
+				<ref bean="jsonHttpMessageConverter" />
+				<ref bean="stringHttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- jsp视图解析(*.jsp) -->
+	<bean id="internalResourceViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/view/" />
+		<property name="suffix" value=".jsp" />
+		<property name="contentType" value="text/html;charset=UTF-8" />
+		<property name="order" value="1" />
+	</bean>
+
+	<!-- FreeMarkerViewResolver: freemarker视图解析 -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="cache" value="true" />
+		<property name="suffix" value=".ftl" />
+		<property name="order" value="0" />
+		<property name="contentType" value="text/html;charset=UTF-8" />
+		<property name="requestContextAttribute" value="requestContextPath" />
+		<property name="exposeRequestAttributes" value="true" />
+		<property name="exposeSessionAttributes" value="true" />
+		<!-- 支持@SessionAttributes -->
+    	<property name="allowRequestOverride" value="true" />
+		<property name="allowSessionOverride" value="true" />
+		<property name="exposeSpringMacroHelpers" value="true" />
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
+		<property name="attributesMap">
+			<map>
+				<entry key="staticDomain" value="${static.domain}" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- FreeMarkerConfigurer: freemarker配置 -->
+	<bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape" />
+
+	<bean id="freeMarkerConfigurer" class="ng.bayue.shiro.freemarker.ShiroTagFreeMarkerConfigurer">
+		<property name="templateLoaderPath" value="/WEB-INF/view/" />
+		<property name="freemarkerVariables">
+			<map>
+				<entry key="xml_escape" value-ref="fmXmlEscape" />
+				<!-- <entry key="imageDownload" value-ref="imageDownload" /> -->
+			</map>
+		</property>
+
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="template_update_delay">0</prop>
+				<prop key="default_encoding">UTF-8</prop>
+				<prop key="number_format">0.##########</prop>
+				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+				<prop key="date_format">yyyy-MM-dd</prop>
+				<prop key="time_format">HH:mm:ss</prop>
+				<prop key="classic_compatible">true</prop>
+				<prop key="template_exception_handler">ignore</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource"
+		p:basename="i18n/messages" />
+	<!-- 静态资源路径 -->
+	<mvc:resources mapping="/statics/**" location="/statics/" />
+	<!-- 错误页面 -->
+<!-- 	<mvc:resources mapping="/error/**" location="/WEB-INF/view/error/" /> -->
+	
+<!-- 	<bean id="exceptionHandler" class="com.checc.interceptor.ExceptionHandler" /> -->
+	
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+<!-- 		<property name="defaultErrorView" value="/WEB-INF/view/error/error" /> -->
+		<property name="order" value="0" />
+		<property name="defaultErrorView" value="/error/error" />
+		<property name="defaultStatusCode" value="500" />
+		<property name="exceptionMappings">
+			<props>
+				<prop key="java.lang.Exception">/error/caonima</prop>
+				<prop key="java.lang.NullPointerException">/error/error</prop>
+			</props>
+		</property>
+	</bean>
+	
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean id="tokenInterceptor" class="com.checc.interceptor.TokenInterceptor">
+				<property name="enable" value="true" />
+			</bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/user/bis/**" />
+			<mvc:mapping path="/user/deposit/**" />
+			<mvc:mapping path="/topicItem/auctionAction/**" />
+			<mvc:mapping path="/auction/**" />
+			<mvc:mapping path="/pay/wechat/payQRCode" />
+			<bean id="loginStatusInterceptor" class="com.checc.interceptor.LoginStatusInterceptor">
+				<property name="enable" value="true" />
+			</bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+</beans>
