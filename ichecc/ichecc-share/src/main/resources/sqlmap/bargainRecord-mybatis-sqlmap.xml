@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ichecc.domain.BargainRecordMapper">
+
+	<resultMap type="com.ichecc.domain.BargainRecordDO" id="BargainRecordDOResultMap">
+		<id column="id" property="id" />
+        <result column="topic_item_id" property="topicItemId"/>
+        <result column="user_id" property="userId"/>
+        <result column="bargain_amount" property="bargainAmount"/>
+        <result column="bargain_type" property="bargainType"/>
+        <result column="wechat_user_id" property="wechatUserId"/>
+        <result column="create_time" property="createTime"/>
+	</resultMap>
+
+	<sql id="MybatisBargainRecordDAO_all_column_fields">
+	      id,topic_item_id,user_id,bargain_amount,bargain_type,wechat_user_id,create_time
+ 	</sql>
+	<!-- 只有varchar char text类型 做 !='' 判断，生成代码时,其他类型时只做!=null 决断 0或fasle与空''是相同的，在mybatis中的动态语句中 -->
+	<sql id="MybatisBargainRecordDAO_dynamic_where_fields"><!-- xml转义字符需要 <![CDATA[   ]]> 标签-->
+		<where>
+			<if test="topicItemId != null "> AND topic_item_id=#{topicItemId} </if>
+			<if test="userId != null "> AND user_id=#{userId} </if>
+			<if test="bargainAmount != null "> AND bargain_amount=#{bargainAmount} </if>
+			<if test="bargainType != null  and bargainType != '' "> AND bargain_type=#{bargainType} </if>
+			<if test="wechatUserId != null "> AND wechat_user_id=#{wechatUserId} </if>
+		</where>
+ 	</sql>
+	
+	<select id="MybatisBargainRecordDAO_selectById" parameterType="long" resultMap="BargainRecordDOResultMap">
+		SELECT
+			<include refid="MybatisBargainRecordDAO_all_column_fields" />
+		FROM
+			bargain_record
+		WHERE
+			 id = #{id}
+	</select>
+	
+	
+	
+    <insert id="MybatisBargainRecordDAO_insert" parameterType="com.ichecc.domain.BargainRecordDO" useGeneratedKeys="true">
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        INSERT INTO bargain_record(
+				id,
+				topic_item_id,
+				user_id,
+				bargain_amount,
+				bargain_type,
+				wechat_user_id,
+				create_time
+		)values(
+				#{id},
+				#{topicItemId},
+				#{userId},
+				#{bargainAmount},
+				#{bargainType},
+				#{wechatUserId},
+				#{createTime}
+		)
+    </insert>
+	
+
+	<update id="MybatisBargainRecordDAO_updateById" parameterType="com.ichecc.domain.BargainRecordDO">
+		UPDATE bargain_record
+		SET
+					topic_item_id = #{topicItemId},
+					user_id = #{userId},
+					bargain_amount = #{bargainAmount},
+					bargain_type = #{bargainType},
+					wechat_user_id = #{wechatUserId},
+		WHERE
+			id = #{id}
+	</update>
+
+	<delete id="MybatisBargainRecordDAO_deleteById" parameterType="long">
+		DELETE FROM bargain_record WHERE id = #{id}
+	</delete>
+	
+	
+	<update id="MybatisBargainRecordDAO_update_dynamic" parameterType="com.ichecc.domain.BargainRecordDO">
+		UPDATE bargain_record
+		<set>
+					<if test="topicItemId != null ">topic_item_id=#{topicItemId},</if>
+					<if test="userId != null ">user_id=#{userId},</if>
+					<if test="bargainAmount != null ">bargain_amount=#{bargainAmount},</if>
+					<if test="bargainType != null  and bargainType != '' ">bargain_type=#{bargainType},</if>
+					<if test="wechatUserId != null ">wechat_user_id=#{wechatUserId},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
+ 	<select id="MybatisBargainRecordDAO_select_dynamic" resultMap="BargainRecordDOResultMap" parameterType="com.ichecc.domain.BargainRecordDO">
+	     SELECT
+	     	<include refid="MybatisBargainRecordDAO_all_column_fields" />
+		 FROM
+		 	bargain_record
+			<include refid="MybatisBargainRecordDAO_dynamic_where_fields" />
+ 	</select>
+
+ 	<select id="MybatisBargainRecordDAO_select_dynamic_count" resultType="long" parameterType="com.ichecc.domain.BargainRecordDO">
+	     SELECT
+	     	count(1)
+		 FROM
+		 	bargain_record
+	 	<include refid="MybatisBargainRecordDAO_dynamic_where_fields" />
+ 	</select>
+
+ 	<select id="MybatisBargainRecordDAO_select_dynamic_page_query" resultMap="BargainRecordDOResultMap" parameterType="com.ichecc.domain.BargainRecordDO">
+	     SELECT
+	     	<include refid="MybatisBargainRecordDAO_all_column_fields" />
+		 FROM
+		 	bargain_record
+	 	<include refid="MybatisBargainRecordDAO_dynamic_where_fields" />
+	 	ORDER BY bargain_record.id DESC
+	 	Limit #{start},#{pageSize}
+ 	</select>
+
+</mapper>

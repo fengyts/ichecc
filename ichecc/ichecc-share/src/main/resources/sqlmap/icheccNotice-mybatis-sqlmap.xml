@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ichecc.domain.IcheccNoticeMapper">
+
+	<resultMap type="com.ichecc.domain.IcheccNoticeDO" id="IcheccNoticeDOResultMap">
+		<id column="id" property="id" />
+        <result column="type" property="type"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="link_url" property="linkUrl"/>
+        <result column="create_user_id" property="createUserId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_user_id" property="modifyUserId"/>
+        <result column="modify_time" property="modifyTime"/>
+	</resultMap>
+
+	<sql id="MybatisIcheccNoticeDAO_all_column_fields">
+	      id,type,title,content,link_url,create_user_id,create_time,modify_user_id,modify_time
+ 	</sql>
+	<!-- 只有varchar char text类型 做 !='' 判断，生成代码时,其他类型时只做!=null 决断 0或fasle与空''是相同的，在mybatis中的动态语句中 -->
+	<sql id="MybatisIcheccNoticeDAO_dynamic_where_fields"><!-- xml转义字符需要 <![CDATA[   ]]> 标签-->
+		<where>
+			<if test="type != null  and type != '' "> AND type=#{type} </if>
+			<if test="title != null  and title != '' "> AND title=#{title} </if>
+			<if test="content != null  and content != '' "> AND content=#{content} </if>
+			<if test="linkUrl != null  and linkUrl != '' "> AND link_url=#{linkUrl} </if>
+			<if test="createUserId != null "> AND create_user_id=#{createUserId} </if>
+			<if test="modifyUserId != null "> AND modify_user_id=#{modifyUserId} </if>
+		</where>
+ 	</sql>
+	
+	<select id="MybatisIcheccNoticeDAO_selectById" parameterType="long" resultMap="IcheccNoticeDOResultMap">
+		SELECT
+			<include refid="MybatisIcheccNoticeDAO_all_column_fields" />
+		FROM
+			ichecc_notice
+		WHERE
+			 id = #{id}
+	</select>
+	
+	
+	
+    <insert id="MybatisIcheccNoticeDAO_insert" parameterType="com.ichecc.domain.IcheccNoticeDO" useGeneratedKeys="true">
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        INSERT INTO ichecc_notice(
+				id,
+				type,
+				title,
+				content,
+				link_url,
+				create_user_id,
+				create_time,
+				modify_user_id,
+				modify_time
+		)values(
+				#{id},
+				#{type},
+				#{title},
+				#{content},
+				#{linkUrl},
+				#{createUserId},
+				#{createTime},
+				#{modifyUserId},
+				#{modifyTime}
+		)
+    </insert>
+	
+
+	<update id="MybatisIcheccNoticeDAO_updateById" parameterType="com.ichecc.domain.IcheccNoticeDO">
+		UPDATE ichecc_notice
+		SET
+					type = #{type},
+					title = #{title},
+					content = #{content},
+					link_url = #{linkUrl},
+					create_user_id = #{createUserId},
+					modify_user_id = #{modifyUserId},
+					modify_time = #{modifyTime}
+		WHERE
+			id = #{id}
+	</update>
+
+	<delete id="MybatisIcheccNoticeDAO_deleteById" parameterType="long">
+		DELETE FROM ichecc_notice WHERE id = #{id}
+	</delete>
+	
+	
+	<update id="MybatisIcheccNoticeDAO_update_dynamic" parameterType="com.ichecc.domain.IcheccNoticeDO">
+		UPDATE ichecc_notice
+		<set>
+					<if test="type != null  and type != '' ">type=#{type},</if>
+					<if test="title != null  and title != '' ">title=#{title},</if>
+					<if test="content != null  and content != '' ">content=#{content},</if>
+					<if test="linkUrl != null  and linkUrl != '' ">link_url=#{linkUrl},</if>
+					<if test="createUserId != null ">create_user_id=#{createUserId},</if>
+					<if test="modifyUserId != null ">modify_user_id=#{modifyUserId},</if>
+					<if test="modifyTime != null ">modify_time=#{modifyTime},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
+ 	<select id="MybatisIcheccNoticeDAO_select_dynamic" resultMap="IcheccNoticeDOResultMap" parameterType="com.ichecc.domain.IcheccNoticeDO">
+	     SELECT
+	     	<include refid="MybatisIcheccNoticeDAO_all_column_fields" />
+		 FROM
+		 	ichecc_notice
+			<include refid="MybatisIcheccNoticeDAO_dynamic_where_fields" />
+ 	</select>
+
+ 	<select id="MybatisIcheccNoticeDAO_select_dynamic_count" resultType="long" parameterType="com.ichecc.domain.IcheccNoticeDO">
+	     SELECT
+	     	count(1)
+		 FROM
+		 	ichecc_notice
+	 	<include refid="MybatisIcheccNoticeDAO_dynamic_where_fields" />
+ 	</select>
+
+ 	<select id="MybatisIcheccNoticeDAO_select_dynamic_page_query" resultMap="IcheccNoticeDOResultMap" parameterType="com.ichecc.domain.IcheccNoticeDO">
+	     SELECT
+	     	<include refid="MybatisIcheccNoticeDAO_all_column_fields" />
+		 FROM
+		 	ichecc_notice
+	 	<include refid="MybatisIcheccNoticeDAO_dynamic_where_fields" />
+	 	ORDER BY ichecc_notice.id DESC
+	 	Limit #{start},#{pageSize}
+ 	</select>
+
+</mapper>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ichecc.domain.TopicItemMapper">
+
+	<resultMap type="com.ichecc.domain.TopicItemDO" id="TopicItemDOResultMap">
+		<id column="id" property="id" />
+        <result column="topic_id" property="topicId"/>
+        <result column="item_id" property="itemId"/>
+        <result column="item_title" property="itemTitle"/>
+        <result column="sub_title" property="subTitle"/>
+        <result column="market_price" property="marketPrice"/>
+        <result column="guide_price" property="guidePrice"/>
+        <result column="special_price" property="specialPrice"/>
+        <result column="bargain_max_times" property="bargainMaxTimes"/>
+        <result column="residue_times" property="residueTimes"/>
+        <result column="sort" property="sort"/>
+        <result column="status" property="status"/>
+        <result column="create_user_id" property="createUserId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_user_id" property="modifyUserId"/>
+        <result column="modify_time" property="modifyTime"/>
+	</resultMap>
+
+	<sql id="MybatisTopicItemDAO_all_column_fields">
+	      id,topic_id,item_id,item_title,sub_title,market_price,guide_price,special_price,bargain_max_times,residue_times,sort,status,create_user_id,create_time,modify_user_id,modify_time
+ 	</sql>
+	<!-- 只有varchar char text类型 做 !='' 判断，生成代码时,其他类型时只做!=null 决断 0或fasle与空''是相同的，在mybatis中的动态语句中 -->
+	<sql id="MybatisTopicItemDAO_dynamic_where_fields"><!-- xml转义字符需要 <![CDATA[   ]]> 标签-->
+		<where>
+			<if test="topicId != null "> AND topic_id=#{topicId} </if>
+			<if test="itemId != null "> AND item_id=#{itemId} </if>
+			<if test="itemTitle != null  and itemTitle != '' "> AND item_title=#{itemTitle} </if>
+			<if test="subTitle != null  and subTitle != '' "> AND sub_title=#{subTitle} </if>
+			<if test="marketPrice != null "> AND market_price=#{marketPrice} </if>
+			<if test="guidePrice != null "> AND guide_price=#{guidePrice} </if>
+			<if test="specialPrice != null "> AND special_price=#{specialPrice} </if>
+			<if test="bargainMaxTimes != null "> AND bargain_max_times=#{bargainMaxTimes} </if>
+			<if test="residueTimes != null "> AND residue_times=#{residueTimes} </if>
+			<if test="sort != null "> AND sort=#{sort} </if>
+			<if test="status != null "> AND status=#{status} </if>
+			<if test="createUserId != null "> AND create_user_id=#{createUserId} </if>
+			<if test="modifyUserId != null "> AND modify_user_id=#{modifyUserId} </if>
+		</where>
+ 	</sql>
+	
+	<select id="MybatisTopicItemDAO_selectById" parameterType="long" resultMap="TopicItemDOResultMap">
+		SELECT
+			<include refid="MybatisTopicItemDAO_all_column_fields" />
+		FROM
+			topic_item
+		WHERE
+			 id = #{id}
+	</select>
+	
+	
+	
+    <insert id="MybatisTopicItemDAO_insert" parameterType="com.ichecc.domain.TopicItemDO" useGeneratedKeys="true">
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        INSERT INTO topic_item(
+				id,
+				topic_id,
+				item_id,
+				item_title,
+				sub_title,
+				market_price,
+				guide_price,
+				special_price,
+				bargain_max_times,
+				residue_times,
+				sort,
+				status,
+				create_user_id,
+				create_time,
+				modify_user_id,
+				modify_time
+		)values(
+				#{id},
+				#{topicId},
+				#{itemId},
+				#{itemTitle},
+				#{subTitle},
+				#{marketPrice},
+				#{guidePrice},
+				#{specialPrice},
+				#{bargainMaxTimes},
+				#{residueTimes},
+				#{sort},
+				#{status},
+				#{createUserId},
+				#{createTime},
+				#{modifyUserId},
+				#{modifyTime}
+		)
+    </insert>
+	
+
+	<update id="MybatisTopicItemDAO_updateById" parameterType="com.ichecc.domain.TopicItemDO">
+		UPDATE topic_item
+		SET
+					topic_id = #{topicId},
+					item_id = #{itemId},
+					item_title = #{itemTitle},
+					sub_title = #{subTitle},
+					market_price = #{marketPrice},
+					guide_price = #{guidePrice},
+					special_price = #{specialPrice},
+					bargain_max_times = #{bargainMaxTimes},
+					residue_times = #{residueTimes},
+					sort = #{sort},
+					status = #{status},
+					create_user_id = #{createUserId},
+					modify_user_id = #{modifyUserId},
+					modify_time = #{modifyTime}
+		WHERE
+			id = #{id}
+	</update>
+
+	<delete id="MybatisTopicItemDAO_deleteById" parameterType="long">
+		DELETE FROM topic_item WHERE id = #{id}
+	</delete>
+	
+	
+	<update id="MybatisTopicItemDAO_update_dynamic" parameterType="com.ichecc.domain.TopicItemDO">
+		UPDATE topic_item
+		<set>
+					<if test="topicId != null ">topic_id=#{topicId},</if>
+					<if test="itemId != null ">item_id=#{itemId},</if>
+					<if test="itemTitle != null  and itemTitle != '' ">item_title=#{itemTitle},</if>
+					<if test="subTitle != null  and subTitle != '' ">sub_title=#{subTitle},</if>
+					<if test="marketPrice != null ">market_price=#{marketPrice},</if>
+					<if test="guidePrice != null ">guide_price=#{guidePrice},</if>
+					<if test="specialPrice != null ">special_price=#{specialPrice},</if>
+					<if test="bargainMaxTimes != null ">bargain_max_times=#{bargainMaxTimes},</if>
+					<if test="residueTimes != null ">residue_times=#{residueTimes},</if>
+					<if test="sort != null ">sort=#{sort},</if>
+					<if test="status != null ">status=#{status},</if>
+					<if test="createUserId != null ">create_user_id=#{createUserId},</if>
+					<if test="modifyUserId != null ">modify_user_id=#{modifyUserId},</if>
+					<if test="modifyTime != null ">modify_time=#{modifyTime},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
+ 	<select id="MybatisTopicItemDAO_select_dynamic" resultMap="TopicItemDOResultMap" parameterType="com.ichecc.domain.TopicItemDO">
+	     SELECT
+	     	<include refid="MybatisTopicItemDAO_all_column_fields" />
+		 FROM
+		 	topic_item
+			<include refid="MybatisTopicItemDAO_dynamic_where_fields" />
+ 	</select>
+
+ 	<select id="MybatisTopicItemDAO_select_dynamic_count" resultType="long" parameterType="com.ichecc.domain.TopicItemDO">
+	     SELECT
+	     	count(1)
+		 FROM
+		 	topic_item
+	 	<include refid="MybatisTopicItemDAO_dynamic_where_fields" />
+ 	</select>
+
+ 	<select id="MybatisTopicItemDAO_select_dynamic_page_query" resultMap="TopicItemDOResultMap" parameterType="com.ichecc.domain.TopicItemDO">
+	     SELECT
+	     	<include refid="MybatisTopicItemDAO_all_column_fields" />
+		 FROM
+		 	topic_item
+	 	<include refid="MybatisTopicItemDAO_dynamic_where_fields" />
+	 	ORDER BY topic_item.id DESC
+	 	Limit #{start},#{pageSize}
+ 	</select>
+ 	
+ 	<update id="MybatisTopicItemDAO_update_item_redundance" parameterType="com.ichecc.domain.TopicItemDO">
+		UPDATE topic_item
+		<set>
+			<if test="itemTitle != null  and itemTitle != '' ">item_title=#{itemTitle},</if>
+			<if test="marketPrice != null ">market_price=#{marketPrice},</if>
+			<if test="modifyUserId != null ">modify_user_id=#{modifyUserId},</if>
+			<if test="modifyTime != null ">modify_time=#{modifyTime},</if>
+		</set>
+		WHERE item_id = #{itemId}
+	</update>
+
+</mapper>

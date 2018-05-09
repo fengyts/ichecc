@@ -1,4 +1,4 @@
-<#macro backend title="一元购后台管理系统" 
+<#macro backend title="台管理系统" 
 	js=[] 
 	css=[] 
 	>

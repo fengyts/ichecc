@@ -12,5 +12,21 @@
 		<mapper resource="sqlmap/sysMenu-mybatis-sqlmap.xml" />
 		<mapper resource="sqlmap/sysUser-mybatis-sqlmap.xml" />
 		
+		<mapper resource="sqlmap/topic-mybatis-sqlmap.xml" />
+		<mapper resource="sqlmap/icheccNotice-mybatis-sqlmap.xml" />
+		<mapper resource="sqlmap/itemDesc-mybatis-sqlmap.xml" />
+		<mapper resource="sqlmap/vipDepositConfig-mybatis-sqlmap.xml" />
+		<mapper resource="sqlmap/choiceOrder-mybatis-sqlmap.xml" />
+		<mapper resource="sqlmap/member-mybatis-sqlmap.xml" />
+		<mapper resource="sqlmap/depositRecord-mybatis-sqlmap.xml" />
+		<mapper resource="sqlmap/itemPicture-mybatis-sqlmap.xml" />
+		<mapper resource="sqlmap/icheccConstants-mybatis-sqlmap.xml" />
+		<mapper resource="sqlmap/icheccUserInfo-mybatis-sqlmap.xml" />
+		<mapper resource="sqlmap/icheccUser-mybatis-sqlmap.xml" />
+		<mapper resource="sqlmap/wechatUser-mybatis-sqlmap.xml" />
+		<mapper resource="sqlmap/topicItem-mybatis-sqlmap.xml" />
+		<mapper resource="sqlmap/bargainRecord-mybatis-sqlmap.xml" />
+		<mapper resource="sqlmap/item-mybatis-sqlmap.xml" />
+		
 	</mappers>
 </configuration>

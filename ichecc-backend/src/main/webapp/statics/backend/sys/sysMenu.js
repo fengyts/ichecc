@@ -13,7 +13,7 @@ $(function(){
 		pageii=layer.open({
 			type : 2,
 			title : '菜单管理-->新增',
-			shadeClose : true,
+			shadeClose : false,
 			maxmin : true,
 			fix : false,
 			area : [ '600px', '450px' ],
@@ -49,7 +49,7 @@ $(function(){
 		pageii=layer.open({
 			type : 2,
 			title : '菜单管理-->编辑',
-			shadeClose : true,
+			shadeClose : false,
 			maxmin : true,
 			fix : false,
 			area : [ '600px', '450px' ],

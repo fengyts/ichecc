@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ichecc.domain.WechatUserMapper">
+
+	<resultMap type="com.ichecc.domain.WechatUserDO" id="WechatUserDOResultMap">
+		<id column="id" property="id" />
+        <result column="open_id" property="openId"/>
+        <result column="nick_name" property="nickName"/>
+        <result column="avatar_url" property="avatarUrl"/>
+        <result column="gender" property="gender"/>
+        <result column="province" property="province"/>
+        <result column="city" property="city"/>
+        <result column="country" property="country"/>
+        <result column="union_id" property="unionId"/>
+	</resultMap>
+
+	<sql id="MybatisWechatUserDAO_all_column_fields">
+	      id,open_id,nick_name,avatar_url,gender,province,city,country,union_id
+ 	</sql>
+	<!-- 只有varchar char text类型 做 !='' 判断，生成代码时,其他类型时只做!=null 决断 0或fasle与空''是相同的，在mybatis中的动态语句中 -->
+	<sql id="MybatisWechatUserDAO_dynamic_where_fields"><!-- xml转义字符需要 <![CDATA[   ]]> 标签-->
+		<where>
+			<if test="openId != null  and openId != '' "> AND open_id=#{openId} </if>
+			<if test="nickName != null  and nickName != '' "> AND nick_name=#{nickName} </if>
+			<if test="avatarUrl != null  and avatarUrl != '' "> AND avatar_url=#{avatarUrl} </if>
+			<if test="gender != null  and gender != '' "> AND gender=#{gender} </if>
+			<if test="province != null  and province != '' "> AND province=#{province} </if>
+			<if test="city != null  and city != '' "> AND city=#{city} </if>
+			<if test="country != null  and country != '' "> AND country=#{country} </if>
+			<if test="unionId != null  and unionId != '' "> AND union_id=#{unionId} </if>
+		</where>
+ 	</sql>
+	
+	<select id="MybatisWechatUserDAO_selectById" parameterType="long" resultMap="WechatUserDOResultMap">
+		SELECT
+			<include refid="MybatisWechatUserDAO_all_column_fields" />
+		FROM
+			wechat_user
+		WHERE
+			 id = #{id}
+	</select>
+	
+	
+	
+    <insert id="MybatisWechatUserDAO_insert" parameterType="com.ichecc.domain.WechatUserDO" useGeneratedKeys="true">
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        INSERT INTO wechat_user(
+				id,
+				open_id,
+				nick_name,
+				avatar_url,
+				gender,
+				province,
+				city,
+				country,
+				union_id
+		)values(
+				#{id},
+				#{openId},
+				#{nickName},
+				#{avatarUrl},
+				#{gender},
+				#{province},
+				#{city},
+				#{country},
+				#{unionId}
+		)
+    </insert>
+	
+
+	<update id="MybatisWechatUserDAO_updateById" parameterType="com.ichecc.domain.WechatUserDO">
+		UPDATE wechat_user
+		SET
+					open_id = #{openId},
+					nick_name = #{nickName},
+					avatar_url = #{avatarUrl},
+					gender = #{gender},
+					province = #{province},
+					city = #{city},
+					country = #{country},
+					union_id = #{unionId}
+		WHERE
+			id = #{id}
+	</update>
+
+	<delete id="MybatisWechatUserDAO_deleteById" parameterType="long">
+		DELETE FROM wechat_user WHERE id = #{id}
+	</delete>
+	
+	
+	<update id="MybatisWechatUserDAO_update_dynamic" parameterType="com.ichecc.domain.WechatUserDO">
+		UPDATE wechat_user
+		<set>
+					<if test="openId != null  and openId != '' ">open_id=#{openId},</if>
+					<if test="nickName != null  and nickName != '' ">nick_name=#{nickName},</if>
+					<if test="avatarUrl != null  and avatarUrl != '' ">avatar_url=#{avatarUrl},</if>
+					<if test="gender != null  and gender != '' ">gender=#{gender},</if>
+					<if test="province != null  and province != '' ">province=#{province},</if>
+					<if test="city != null  and city != '' ">city=#{city},</if>
+					<if test="country != null  and country != '' ">country=#{country},</if>
+					<if test="unionId != null  and unionId != '' ">union_id=#{unionId},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
+ 	<select id="MybatisWechatUserDAO_select_dynamic" resultMap="WechatUserDOResultMap" parameterType="com.ichecc.domain.WechatUserDO">
+	     SELECT
+	     	<include refid="MybatisWechatUserDAO_all_column_fields" />
+		 FROM
+		 	wechat_user
+			<include refid="MybatisWechatUserDAO_dynamic_where_fields" />
+ 	</select>
+
+ 	<select id="MybatisWechatUserDAO_select_dynamic_count" resultType="long" parameterType="com.ichecc.domain.WechatUserDO">
+	     SELECT
+	     	count(1)
+		 FROM
+		 	wechat_user
+	 	<include refid="MybatisWechatUserDAO_dynamic_where_fields" />
+ 	</select>
+
+ 	<select id="MybatisWechatUserDAO_select_dynamic_page_query" resultMap="WechatUserDOResultMap" parameterType="com.ichecc.domain.WechatUserDO">
+	     SELECT
+	     	<include refid="MybatisWechatUserDAO_all_column_fields" />
+		 FROM
+		 	wechat_user
+	 	<include refid="MybatisWechatUserDAO_dynamic_where_fields" />
+	 	ORDER BY wechat_user.id DESC
+	 	Limit #{start},#{pageSize}
+ 	</select>
+
+</mapper>

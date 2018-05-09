@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ichecc.domain.MemberMapper">
+
+	<resultMap type="com.ichecc.domain.MemberDO" id="MemberDOResultMap">
+		<id column="id" property="id" />
+        <result column="member_card_no" property="memberCardNo"/>
+        <result column="user_id" property="userId"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+	</resultMap>
+
+	<sql id="MybatisMemberDAO_all_column_fields">
+	      id,member_card_no,user_id,start_time,end_time,create_time,modify_time
+ 	</sql>
+	<!-- 只有varchar char text类型 做 !='' 判断，生成代码时,其他类型时只做!=null 决断 0或fasle与空''是相同的，在mybatis中的动态语句中 -->
+	<sql id="MybatisMemberDAO_dynamic_where_fields"><!-- xml转义字符需要 <![CDATA[   ]]> 标签-->
+		<where>
+			<if test="memberCardNo != null  and memberCardNo != '' "> AND member_card_no=#{memberCardNo} </if>
+			<if test="userId != null "> AND user_id=#{userId} </if>
+		</where>
+ 	</sql>
+	
+	<select id="MybatisMemberDAO_selectById" parameterType="long" resultMap="MemberDOResultMap">
+		SELECT
+			<include refid="MybatisMemberDAO_all_column_fields" />
+		FROM
+			member
+		WHERE
+			 id = #{id}
+	</select>
+	
+	
+	
+    <insert id="MybatisMemberDAO_insert" parameterType="com.ichecc.domain.MemberDO" useGeneratedKeys="true">
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        INSERT INTO member(
+				id,
+				member_card_no,
+				user_id,
+				start_time,
+				end_time,
+				create_time,
+				modify_time
+		)values(
+				#{id},
+				#{memberCardNo},
+				#{userId},
+				#{startTime},
+				#{endTime},
+				#{createTime},
+				#{modifyTime}
+		)
+    </insert>
+	
+
+	<update id="MybatisMemberDAO_updateById" parameterType="com.ichecc.domain.MemberDO">
+		UPDATE member
+		SET
+					member_card_no = #{memberCardNo},
+					user_id = #{userId},
+					start_time = #{startTime},
+					end_time = #{endTime},
+					modify_time = #{modifyTime}
+		WHERE
+			id = #{id}
+	</update>
+
+	<delete id="MybatisMemberDAO_deleteById" parameterType="long">
+		DELETE FROM member WHERE id = #{id}
+	</delete>
+	
+	
+	<update id="MybatisMemberDAO_update_dynamic" parameterType="com.ichecc.domain.MemberDO">
+		UPDATE member
+		<set>
+					<if test="memberCardNo != null  and memberCardNo != '' ">member_card_no=#{memberCardNo},</if>
+					<if test="userId != null ">user_id=#{userId},</if>
+					<if test="startTime != null ">start_time=#{startTime},</if>
+					<if test="endTime != null ">end_time=#{endTime},</if>
+					<if test="modifyTime != null ">modify_time=#{modifyTime},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
+ 	<select id="MybatisMemberDAO_select_dynamic" resultMap="MemberDOResultMap" parameterType="com.ichecc.domain.MemberDO">
+	     SELECT
+	     	<include refid="MybatisMemberDAO_all_column_fields" />
+		 FROM
+		 	member
+			<include refid="MybatisMemberDAO_dynamic_where_fields" />
+ 	</select>
+
+ 	<select id="MybatisMemberDAO_select_dynamic_count" resultType="long" parameterType="com.ichecc.domain.MemberDO">
+	     SELECT
+	     	count(1)
+		 FROM
+		 	member
+	 	<include refid="MybatisMemberDAO_dynamic_where_fields" />
+ 	</select>
+
+ 	<select id="MybatisMemberDAO_select_dynamic_page_query" resultMap="MemberDOResultMap" parameterType="com.ichecc.domain.MemberDO">
+	     SELECT
+	     	<include refid="MybatisMemberDAO_all_column_fields" />
+		 FROM
+		 	member
+	 	<include refid="MybatisMemberDAO_dynamic_where_fields" />
+	 	ORDER BY member.id DESC
+	 	Limit #{start},#{pageSize}
+ 	</select>
+
+</mapper>

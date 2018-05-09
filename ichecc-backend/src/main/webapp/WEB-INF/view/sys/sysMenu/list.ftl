@@ -54,6 +54,7 @@ js=[
 	            		   <th width="50">菜单编号</th>
 		                   <th width="50">菜单名称</th>
 		                   <th width="50">菜单类型</th>
+		                   <th width="50">排序</th>
 		                   <th width="150">菜单url</th>
 		                   <th width="100">备注</th>
 		                   <th width="80">状态</th>
@@ -62,18 +63,21 @@ js=[
 	            	<#if page.list?default([])?size !=0>
 	            		<#list page.list as sysMenuDO>
 	            		<tr class="tr">
-		            		<td width="50">${sysMenuDO.id}</td>
-		            		<td width="50">${sysMenuDO.name}</td>
-		            		<#list sysMenuTypes as sysMenuType>
-		            			<#if sysMenuType.code==sysMenuDO.menuType>
-				            		<td width="50">${sysMenuType.value}</td>
-				            		<#--也可以这样获取枚举值 <td width="50">${sysMenuType.getValue()}</td> -->
-		            			</#if>
-		            		</#list>
-		            		<td width="150">${sysMenuDO.url}</td>
-		            		<td width="100">${sysMenuDO.remark}</td>
-		            		<td width="80">${(sysMenuDO.status!true)?string("有效","无效")}</td>
-		            		<td width="100">
+		            		<td>${sysMenuDO.id}</td>
+		            		<td>${sysMenuDO.name}</td>
+		            		<td>
+			            		<#list sysMenuTypes as sysMenuType>
+			            			<#if sysMenuType.code==sysMenuDO.menuType>
+										${sysMenuType.value}
+					            		<#--也可以这样获取枚举值 <td width="50">${sysMenuType.getValue()}</td> -->
+			            			</#if>
+			            		</#list>
+							</td>
+							<td>${sysMenuDO.sort}</td>
+		            		<td>${sysMenuDO.url}</td>
+		            		<td>${sysMenuDO.remark}</td>
+		            		<td>${(sysMenuDO.status!true)?string("有效","无效")}</td>
+		            		<td>
 		            			<#if sysMenuDO.menuType != '0'>
 				            		<a href="javascript:void(0)" class="editcatabtn editSysMenu" param="${sysMenuDO.id}">[编辑]</a>&nbsp;
 				            		<a href="javascript:void(0)" class="editcatabtn journalReview" param="${sysMenuDO.id}">[日志]</a>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ichecc.domain.DepositRecordMapper">
+
+	<resultMap type="com.ichecc.domain.DepositRecordDO" id="DepositRecordDOResultMap">
+		<id column="id" property="id" />
+        <result column="user_id" property="userId"/>
+        <result column="deposit_amount" property="depositAmount"/>
+        <result column="discount" property="discount"/>
+        <result column="create_time" property="createTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="expiry_date" property="expiryDate"/>
+	</resultMap>
+
+	<sql id="MybatisDepositRecordDAO_all_column_fields">
+	      id,user_id,deposit_amount,discount,create_time,end_time,expiry_date
+ 	</sql>
+	<!-- 只有varchar char text类型 做 !='' 判断，生成代码时,其他类型时只做!=null 决断 0或fasle与空''是相同的，在mybatis中的动态语句中 -->
+	<sql id="MybatisDepositRecordDAO_dynamic_where_fields"><!-- xml转义字符需要 <![CDATA[   ]]> 标签-->
+		<where>
+			<if test="userId != null "> AND user_id=#{userId} </if>
+			<if test="depositAmount != null "> AND deposit_amount=#{depositAmount} </if>
+			<if test="discount != null "> AND discount=#{discount} </if>
+			<if test="expiryDate != null "> AND expiry_date=#{expiryDate} </if>
+		</where>
+ 	</sql>
+	
+	<select id="MybatisDepositRecordDAO_selectById" parameterType="long" resultMap="DepositRecordDOResultMap">
+		SELECT
+			<include refid="MybatisDepositRecordDAO_all_column_fields" />
+		FROM
+			deposit_record
+		WHERE
+			 id = #{id}
+	</select>
+	
+	
+	
+    <insert id="MybatisDepositRecordDAO_insert" parameterType="com.ichecc.domain.DepositRecordDO" useGeneratedKeys="true">
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        INSERT INTO deposit_record(
+				id,
+				user_id,
+				deposit_amount,
+				discount,
+				create_time,
+				end_time,
+				expiry_date
+		)values(
+				#{id},
+				#{userId},
+				#{depositAmount},
+				#{discount},
+				#{createTime},
+				#{endTime},
+				#{expiryDate}
+		)
+    </insert>
+	
+
+	<update id="MybatisDepositRecordDAO_updateById" parameterType="com.ichecc.domain.DepositRecordDO">
+		UPDATE deposit_record
+		SET
+					user_id = #{userId},
+					deposit_amount = #{depositAmount},
+					discount = #{discount},
+					end_time = #{endTime},
+					expiry_date = #{expiryDate}
+		WHERE
+			id = #{id}
+	</update>
+
+	<delete id="MybatisDepositRecordDAO_deleteById" parameterType="long">
+		DELETE FROM deposit_record WHERE id = #{id}
+	</delete>
+	
+	
+	<update id="MybatisDepositRecordDAO_update_dynamic" parameterType="com.ichecc.domain.DepositRecordDO">
+		UPDATE deposit_record
+		<set>
+					<if test="userId != null ">user_id=#{userId},</if>
+					<if test="depositAmount != null ">deposit_amount=#{depositAmount},</if>
+					<if test="discount != null ">discount=#{discount},</if>
+					<if test="endTime != null ">end_time=#{endTime},</if>
+					<if test="expiryDate != null ">expiry_date=#{expiryDate},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
+ 	<select id="MybatisDepositRecordDAO_select_dynamic" resultMap="DepositRecordDOResultMap" parameterType="com.ichecc.domain.DepositRecordDO">
+	     SELECT
+	     	<include refid="MybatisDepositRecordDAO_all_column_fields" />
+		 FROM
+		 	deposit_record
+			<include refid="MybatisDepositRecordDAO_dynamic_where_fields" />
+ 	</select>
+
+ 	<select id="MybatisDepositRecordDAO_select_dynamic_count" resultType="long" parameterType="com.ichecc.domain.DepositRecordDO">
+	     SELECT
+	     	count(1)
+		 FROM
+		 	deposit_record
+	 	<include refid="MybatisDepositRecordDAO_dynamic_where_fields" />
+ 	</select>
+
+ 	<select id="MybatisDepositRecordDAO_select_dynamic_page_query" resultMap="DepositRecordDOResultMap" parameterType="com.ichecc.domain.DepositRecordDO">
+	     SELECT
+	     	<include refid="MybatisDepositRecordDAO_all_column_fields" />
+		 FROM
+		 	deposit_record
+	 	<include refid="MybatisDepositRecordDAO_dynamic_where_fields" />
+	 	ORDER BY deposit_record.id DESC
+	 	Limit #{start},#{pageSize}
+ 	</select>
+
+</mapper>

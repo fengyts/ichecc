@@ -25,7 +25,8 @@
   <script src="${domain}/statics/plugins/jquery/jqueryui/js/jquery-ui-1.9.2.custom.min.js"></script>
   <script src="${domain}/statics/plugins/jquery/jqueryui/i18n/jquery.ui.datepicker-zh-CN.js"></script>
   -->	
-
+	
+  <#-- 菜单加载js -->
   <script src="${domain}/statics/themes/layout.js"></script>
   <script>
   	var domain = "${domain}";

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ichecc.domain.ChoiceOrderMapper">
+
+	<resultMap type="com.ichecc.domain.ChoiceOrderDO" id="ChoiceOrderDOResultMap">
+		<id column="id" property="id" />
+        <result column="order_no" property="orderNo"/>
+        <result column="user_id" property="userId"/>
+        <result column="budget" property="budget"/>
+        <result column="energy" property="energy"/>
+        <result column="type" property="type"/>
+        <result column="seat" property="seat"/>
+        <result column="gearbox" property="gearbox"/>
+        <result column="customer_brand" property="customerBrand"/>
+        <result column="other_requirement" property="otherRequirement"/>
+        <result column="create_time" property="createTime"/>
+        <result column="status" property="status"/>
+        <result column="result" property="result"/>
+        <result column="modify_time" property="modifyTime"/>
+	</resultMap>
+
+	<sql id="MybatisChoiceOrderDAO_all_column_fields">
+	      id,order_no,user_id,budget,energy,type,seat,gearbox,customer_brand,other_requirement,create_time,status,result,modify_time
+ 	</sql>
+	<!-- 只有varchar char text类型 做 !='' 判断，生成代码时,其他类型时只做!=null 决断 0或fasle与空''是相同的，在mybatis中的动态语句中 -->
+	<sql id="MybatisChoiceOrderDAO_dynamic_where_fields"><!-- xml转义字符需要 <![CDATA[   ]]> 标签-->
+		<where>
+			<if test="orderNo != null  and orderNo != '' "> AND order_no=#{orderNo} </if>
+			<if test="userId != null "> AND user_id=#{userId} </if>
+			<if test="budget != null "> AND budget=#{budget} </if>
+			<if test="energy != null  and energy != '' "> AND energy=#{energy} </if>
+			<if test="type != null  and type != '' "> AND type=#{type} </if>
+			<if test="seat != null  and seat != '' "> AND seat=#{seat} </if>
+			<if test="gearbox != null  and gearbox != '' "> AND gearbox=#{gearbox} </if>
+			<if test="customerBrand != null  and customerBrand != '' "> AND customer_brand=#{customerBrand} </if>
+			<if test="otherRequirement != null  and otherRequirement != '' "> AND other_requirement=#{otherRequirement} </if>
+			<if test="status != null  and status != '' "> AND status=#{status} </if>
+			<if test="result != null  and result != '' "> AND result=#{result} </if>
+		</where>
+ 	</sql>
+	
+	<select id="MybatisChoiceOrderDAO_selectById" parameterType="long" resultMap="ChoiceOrderDOResultMap">
+		SELECT
+			<include refid="MybatisChoiceOrderDAO_all_column_fields" />
+		FROM
+			choice_order
+		WHERE
+			 id = #{id}
+	</select>
+	
+	
+	
+    <insert id="MybatisChoiceOrderDAO_insert" parameterType="com.ichecc.domain.ChoiceOrderDO" useGeneratedKeys="true">
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        INSERT INTO choice_order(
+				id,
+				order_no,
+				user_id,
+				budget,
+				energy,
+				type,
+				seat,
+				gearbox,
+				customer_brand,
+				other_requirement,
+				create_time,
+				status,
+				result,
+				modify_time
+		)values(
+				#{id},
+				#{orderNo},
+				#{userId},
+				#{budget},
+				#{energy},
+				#{type},
+				#{seat},
+				#{gearbox},
+				#{customerBrand},
+				#{otherRequirement},
+				#{createTime},
+				#{status},
+				#{result},
+				#{modifyTime}
+		)
+    </insert>
+	
+
+	<update id="MybatisChoiceOrderDAO_updateById" parameterType="com.ichecc.domain.ChoiceOrderDO">
+		UPDATE choice_order
+		SET
+					order_no = #{orderNo},
+					user_id = #{userId},
+					budget = #{budget},
+					energy = #{energy},
+					type = #{type},
+					seat = #{seat},
+					gearbox = #{gearbox},
+					customer_brand = #{customerBrand},
+					other_requirement = #{otherRequirement},
+					status = #{status},
+					result = #{result},
+					modify_time = #{modifyTime}
+		WHERE
+			id = #{id}
+	</update>
+
+	<delete id="MybatisChoiceOrderDAO_deleteById" parameterType="long">
+		DELETE FROM choice_order WHERE id = #{id}
+	</delete>
+	
+	
+	<update id="MybatisChoiceOrderDAO_update_dynamic" parameterType="com.ichecc.domain.ChoiceOrderDO">
+		UPDATE choice_order
+		<set>
+					<if test="orderNo != null  and orderNo != '' ">order_no=#{orderNo},</if>
+					<if test="userId != null ">user_id=#{userId},</if>
+					<if test="budget != null ">budget=#{budget},</if>
+					<if test="energy != null  and energy != '' ">energy=#{energy},</if>
+					<if test="type != null  and type != '' ">type=#{type},</if>
+					<if test="seat != null  and seat != '' ">seat=#{seat},</if>
+					<if test="gearbox != null  and gearbox != '' ">gearbox=#{gearbox},</if>
+					<if test="customerBrand != null  and customerBrand != '' ">customer_brand=#{customerBrand},</if>
+					<if test="otherRequirement != null  and otherRequirement != '' ">other_requirement=#{otherRequirement},</if>
+					<if test="status != null  and status != '' ">status=#{status},</if>
+					<if test="result != null  and result != '' ">result=#{result},</if>
+					<if test="modifyTime != null ">modify_time=#{modifyTime},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
+ 	<select id="MybatisChoiceOrderDAO_select_dynamic" resultMap="ChoiceOrderDOResultMap" parameterType="com.ichecc.domain.ChoiceOrderDO">
+	     SELECT
+	     	<include refid="MybatisChoiceOrderDAO_all_column_fields" />
+		 FROM
+		 	choice_order
+			<include refid="MybatisChoiceOrderDAO_dynamic_where_fields" />
+ 	</select>
+
+ 	<select id="MybatisChoiceOrderDAO_select_dynamic_count" resultType="long" parameterType="com.ichecc.domain.ChoiceOrderDO">
+	     SELECT
+	     	count(1)
+		 FROM
+		 	choice_order
+	 	<include refid="MybatisChoiceOrderDAO_dynamic_where_fields" />
+ 	</select>
+
+ 	<select id="MybatisChoiceOrderDAO_select_dynamic_page_query" resultMap="ChoiceOrderDOResultMap" parameterType="com.ichecc.domain.ChoiceOrderDO">
+	     SELECT
+	     	<include refid="MybatisChoiceOrderDAO_all_column_fields" />
+		 FROM
+		 	choice_order
+	 	<include refid="MybatisChoiceOrderDAO_dynamic_where_fields" />
+	 	ORDER BY choice_order.id DESC
+	 	Limit #{start},#{pageSize}
+ 	</select>
+
+</mapper>
