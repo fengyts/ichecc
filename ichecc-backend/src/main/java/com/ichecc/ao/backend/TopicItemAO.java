@@ -74,6 +74,10 @@ public class TopicItemAO {
 			ti.setItemId(item.getItemId());
 			ti.setItemStatus(item.getStatus());
 			ti.setItemTitle(item.getItemTitle());
+			ti.setBargainMaxTimes(item.getBargainMaxTimes());
+			ti.setGuidePrice(item.getGuidePrice());
+			ti.setSpecialPrice(item.getSpecialPrice());
+			ti.setMarketPrice(item.getMarketPrice());
 
 			listResult.add(ti);
 		}
@@ -110,6 +114,9 @@ public class TopicItemAO {
 		topicItemDO.setCreateUserId(userId);
 		topicItemDO.setModifyTime(date);
 		topicItemDO.setModifyUserId(userId);
+		
+		// 默认初始剩余次数为最大砍价次数
+		topicItemDO.setResidueTimes(topicItemDO.getBargainMaxTimes());
 
 		Long tid = topicItemService.insert(topicItemDO);
 

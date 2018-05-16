@@ -27,6 +27,9 @@ public class ItemDTO implements Serializable {
 	/** 市场价 */
 //	@NotNull(message = "市场价不能为空")
 	private Double marketPrice;
+	
+	/** 指导价 */
+	private Double guidePrice;
 
 	/** 备注 */
 	private String remark;
@@ -97,6 +100,14 @@ public class ItemDTO implements Serializable {
 
 	public void setMarketPrice(Double marketPrice) {
 		this.marketPrice = marketPrice;
+	}
+
+	public Double getGuidePrice() {
+		return guidePrice;
+	}
+
+	public void setGuidePrice(Double guidePrice) {
+		this.guidePrice = guidePrice;
 	}
 
 	public String getRemark() {

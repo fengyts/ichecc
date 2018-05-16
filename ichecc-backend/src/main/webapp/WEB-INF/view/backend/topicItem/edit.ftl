@@ -31,19 +31,40 @@ css=[
 			<div class="input-group">
 				<input type="text" class="form-control" readonly="readonly" id="itemTitle" name="itemTitle" placeholder="请选择商品" value="${topicItemDO.itemTitle}">
 				<input type="hidden" id="itemId" name="itemId" value="${topicItemDO.itemId}"/>
-				<input type="hidden" id="marketPrice" name="marketPrice" value="${topicItemDO.marketPrice}"/>
 				<span class="btn btn-default btn-sm input-group-addon" id="selectItem">
 					<span class="glyphicon glyphicon-plus"></span>
 					选择商品
 				</span>
 			</div>
 		</div>
+		<label class="col-md-2 control-label">市场价</label>
+		<div class="col-md-4">
+			<input type="text" class="form-control" readonly id="marketPrice" name="marketPrice" value="${topicItemDO.marketPrice?string('#.00')}" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-md-2 control-label">指导价</label>
+		<div class="col-md-4">
+			<input type="text" class="form-control" id="guidePrice" name="guidePrice" value="${topicItemDO.guidePrice?string('#.00')}" />
+		</div>
+	</div>
+	
+	<hr/>
+	<div class="form-group">
+		<label class="col-md-2 control-label">特卖价<span class="dr-asterisk requiredField">*</span></label>
+		<div class="col-md-4">
+			<input type="text" class="form-control" id="specialPrice" name="specialPrice" value="${topicItemDO.specialPrice}" />
+		</div>
+		<label class="col-md-2 control-label">砍价最大次数<span class="dr-asterisk requiredField">*</span></label>
+		<div class="col-md-4">
+			<input type="text" class="form-control" id="bargainMaxTimes" name="bargainMaxTimes" value="${topicItemDO.bargainMaxTimes!100}" />
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="col-md-2 control-label">商品排序值(默认为0)</label>
 		<div class="col-md-4">
 			<input type="text" class="form-control" id="sort" name="sort" value="${topicItemDO.sort!0}" />
 		</div>
-	</div>
-	<div class="form-group">
 		<label class="col-md-2 control-label">商品状态</label>
 		<div class="radio">
 			<label>
@@ -54,53 +75,12 @@ css=[
 			</label>
 		</div>
 	</div>
-	
-	<hr/>
 	<div class="form-group">
-		<label class="col-md-2 control-label">竞拍单次出价西币</label>
-		<div class="col-md-4">
-			<input type="text" class="form-control" id="auctionCurrency" name="auctionCurrency" value="${topicItemDO.auctionCurrency}" />
-		</div>
-		<label class="col-md-2 control-label">竞拍单次最大次数</label>
-		<div class="col-md-4">
-			<input type="text" class="form-control" id="auctionMaxTimes" name="auctionMaxTimes" value="${topicItemDO.auctionMaxTimes}" />
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="col-md-2 control-label">竞拍底价</label>
-		<div class="col-md-4">
-			<input type="text" class="form-control" id="floorPrice" name="floorPrice" value="${topicItemDO.floorPrice!0}" />
-		</div>
+		
 	</div>
 	
+	
 	<hr/>
-	<div class="form-group">
-		<label class="col-md-2 control-label">兑换商品数量</label>
-		<div class="col-md-4">
-			<input type="text" class="form-control" id="inventory" name="inventory" value="${topicItemDO.inventory}" />
-		</div>
-		<label class="col-md-2 control-label">商品兑换价格</label>
-		<div class="col-md-4">
-			<input type="text" class="form-control" id="exchangeAmount" name="exchangeAmount" value="${topicItemDO.exchangeAmount}" />
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="col-md-2 control-label">兑换限兑次数</label>
-		<div class="col-md-4">
-			<input type="text" class="form-control" id="exchangeLimitNum" name="exchangeLimitNum" value="${topicItemDO.exchangeLimitNum!1}" />
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="col-md-2 control-label" style="display:none;">是否和专题状态一致</label>
-		<div class="radio" style="display:none;">
-			<label>
-				<input type="radio" name="isTopicStatus" id="isTopicStatus" value="1" checked>是
-			</label>
-			<label>
-				<input type="radio" name="isTopicStatus" id="stisTopicStatustus" value="0">否
-			</label>
-		</div>
-	</div>
 	
 	<#-- 商品上传图片 -->
 	<#--

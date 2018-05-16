@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * 专题商品
  * 
- * @author fengyts Wed May 09 09:29:17 CST 2018
+ * @author fengyts Tue May 15 11:14:56 CST 2018
  */
 
 public class TopicItemDO extends BaseDO {
@@ -33,7 +33,7 @@ public class TopicItemDO extends BaseDO {
 	/** 市场价（冗余字段） */
 	private Double marketPrice;
 
-	/** 指导价 */
+	/** 指导价,默认为tiem的指导价 */
 	private Double guidePrice;
 
 	/** 特卖价 */
@@ -118,7 +118,7 @@ public class TopicItemDO extends BaseDO {
 	}
 
 	/**
-	 * 设置 指导价
+	 * 设置 指导价,默认为tiem的指导价
 	 * 
 	 * @param guidePrice
 	 */
@@ -262,7 +262,7 @@ public class TopicItemDO extends BaseDO {
 	}
 
 	/**
-	 * 获取 指导价
+	 * 获取 指导价,默认为tiem的指导价
 	 * 
 	 * @return guidePrice
 	 */

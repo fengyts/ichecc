@@ -7,13 +7,13 @@ import java.util.Date;
 /**
  * 商品
  * 
- * @author fengyts Wed May 09 09:29:18 CST 2018
+ * @author fengyts Tue May 15 11:14:55 CST 2018
  */
 
 public class ItemDO extends BaseDO {
 
 	/**  */
-	private static final long serialVersionUID = 8172080176073130731L;
+	private static final long serialVersionUID = -5106964830489693316L;
 
 	/** 主键 */
 	private Long id;
@@ -26,6 +26,9 @@ public class ItemDO extends BaseDO {
 
 	/** 市场价 */
 	private Double marketPrice;
+
+	/** 指导价 */
+	private Double guidePrice;
 
 	/** 商品状态(是否上架)：0-未上架；1-已上架；2-已作废 */
 	private Integer status;
@@ -79,6 +82,15 @@ public class ItemDO extends BaseDO {
 	 */
 	public void setMarketPrice(Double marketPrice) {
 		this.marketPrice = marketPrice;
+	}
+
+	/**
+	 * 设置 指导价
+	 * 
+	 * @param guidePrice
+	 */
+	public void setGuidePrice(Double guidePrice) {
+		this.guidePrice = guidePrice;
 	}
 
 	/**
@@ -169,6 +181,15 @@ public class ItemDO extends BaseDO {
 	 */
 	public Double getMarketPrice() {
 		return marketPrice;
+	}
+
+	/**
+	 * 获取 指导价
+	 * 
+	 * @return guidePrice
+	 */
+	public Double getGuidePrice() {
+		return guidePrice;
 	}
 
 	/**

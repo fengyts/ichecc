@@ -124,19 +124,22 @@ $(function() {
 //		}
 //	});
 	
+	/**
+	 * 关联商品确认
+	 */
 	$("#checkItemConfirmBtn").on('click', function(){
 		var _checkBox = $("#itemListData :radio:checked");
 		if( _checkBox.length < 1 ){
 			layer.alert("必须选择一个商品",{icon : 0});
 			return;
 		}
-		var _trs = _checkBox.parent().nextAll();
+		var _tds = _checkBox.parent().nextAll();
 		var _itemId = _checkBox.val();
-		var _itemTitle = $(_trs[0]).text();
-		var _marketPrice = $(_trs[1]).text();
+		var _itemTitle = $(_tds[0]).text(), _marketPrice = $(_tds[1]).text(), _guidePrice = $(_tds[2]).text();
 		window.parent.$("#itemId").val(_itemId);
 		window.parent.$("#itemTitle").val(_itemTitle);
 		window.parent.$("#marketPrice").val(_marketPrice);
+		window.parent.$("#guidePrice").val(_guidePrice);
 		
 		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 		parent.layer.close(index); //再执行关闭   

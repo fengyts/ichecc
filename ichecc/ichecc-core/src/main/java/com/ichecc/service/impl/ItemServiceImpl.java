@@ -220,6 +220,7 @@ public class ItemServiceImpl  implements ItemService{
 			itemDO.setItemTitle(itemDTO.getItemTitle());
 			itemDO.setId(itemId);
 			itemDO.setMarketPrice(itemDTO.getMarketPrice());
+			itemDO.setGuidePrice(itemDTO.getGuidePrice());
 			itemDO.setStatus(itemDTO.getStatus());
 			itemDO.setRemark(itemDTO.getRemark());
 			itemDO.setModifyTime(date);
@@ -232,6 +233,7 @@ public class ItemServiceImpl  implements ItemService{
 			titemDO.setItemId(itemId);
 			titemDO.setItemTitle(itemDTO.getItemTitle());
 			titemDO.setMarketPrice(itemDTO.getMarketPrice());
+			titemDO.setGuidePrice(itemDTO.getGuidePrice());
 			titemDO.setModifyTime(date);
 			titemDO.setModifyUserId(userId);
 			topicItemDAO.updateItemRedundance(titemDO);

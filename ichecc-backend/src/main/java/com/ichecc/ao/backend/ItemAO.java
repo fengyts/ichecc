@@ -68,6 +68,7 @@ public class ItemAO {
 		itemDTO.setDescription(descDO.getDescription());
 		itemDTO.setListPictures(listPics);
 		itemDTO.setMarketPrice(itemDO.getMarketPrice());
+		itemDTO.setGuidePrice(itemDO.getGuidePrice());
 		
 		return itemDTO;
 	}

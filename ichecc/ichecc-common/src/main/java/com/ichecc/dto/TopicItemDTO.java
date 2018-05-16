@@ -21,23 +21,12 @@ public class TopicItemDTO implements Serializable {
 
 	private Long itemId;
 	private String itemTitle;
-	/** 商品兑换总数量 */
-	private Integer inventory;
-	/** 商品兑换价格 */
-	private Double exchangeAmount;
-	/** 商品兑换剩余数量 */
-	private Integer residue;
-	/** 兑换商品限兑次数 */
-	private Integer exchangeLimitNum;
-	/** 商品状态 */
+	private Double marketPrice;
+	private Double guidePrice;
+	private Double specialPrice;
+	private Integer bargainMaxTimes;
+	private Integer residueTimes;
 	private Boolean itemStatus;
-
-	/** 竞拍商品单次出价 */
-	private Integer auctionCurrency;
-	/** 竞拍商品单次最大限次 */
-	private Integer auctionMaxTimes;
-	/** 竞拍底价 */
-	private Double floorPrice;
 
 	public Long getId() {
 		return id;
@@ -103,28 +92,44 @@ public class TopicItemDTO implements Serializable {
 		this.itemTitle = itemTitle;
 	}
 
-	public Integer getInventory() {
-		return inventory;
+	public Double getMarketPrice() {
+		return marketPrice;
 	}
 
-	public void setInventory(Integer inventory) {
-		this.inventory = inventory;
+	public void setMarketPrice(Double marketPrice) {
+		this.marketPrice = marketPrice;
 	}
 
-	public Double getExchangeAmount() {
-		return exchangeAmount;
+	public Double getGuidePrice() {
+		return guidePrice;
 	}
 
-	public void setExchangeAmount(Double exchangeAmount) {
-		this.exchangeAmount = exchangeAmount;
+	public void setGuidePrice(Double guidePrice) {
+		this.guidePrice = guidePrice;
 	}
 
-	public Integer getResidue() {
-		return residue;
+	public Double getSpecialPrice() {
+		return specialPrice;
 	}
 
-	public void setResidue(Integer residue) {
-		this.residue = residue;
+	public void setSpecialPrice(Double specialPrice) {
+		this.specialPrice = specialPrice;
+	}
+
+	public Integer getBargainMaxTimes() {
+		return bargainMaxTimes;
+	}
+
+	public void setBargainMaxTimes(Integer bargainMaxTimes) {
+		this.bargainMaxTimes = bargainMaxTimes;
+	}
+
+	public Integer getResidueTimes() {
+		return residueTimes;
+	}
+
+	public void setResidueTimes(Integer residueTimes) {
+		this.residueTimes = residueTimes;
 	}
 
 	public Boolean getItemStatus() {
@@ -135,36 +140,4 @@ public class TopicItemDTO implements Serializable {
 		this.itemStatus = itemStatus;
 	}
 
-	public Integer getExchangeLimitNum() {
-		return exchangeLimitNum;
-	}
-
-	public void setExchangeLimitNum(Integer exchangeLimitNum) {
-		this.exchangeLimitNum = exchangeLimitNum;
-	}
-
-	public Integer getAuctionCurrency() {
-		return auctionCurrency;
-	}
-
-	public void setAuctionCurrency(Integer auctionCurrency) {
-		this.auctionCurrency = auctionCurrency;
-	}
-
-	public Integer getAuctionMaxTimes() {
-		return auctionMaxTimes;
-	}
-
-	public void setAuctionMaxTimes(Integer auctionMaxTimes) {
-		this.auctionMaxTimes = auctionMaxTimes;
-	}
-
-	public Double getFloorPrice() {
-		return floorPrice;
-	}
-
-	public void setFloorPrice(Double floorPrice) {
-		this.floorPrice = floorPrice;
-	}
-	
 }

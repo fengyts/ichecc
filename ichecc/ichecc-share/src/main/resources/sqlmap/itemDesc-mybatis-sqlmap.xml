@@ -120,7 +120,6 @@
  		UPDATE item_desc
 		<set>
 			<if test="description != null  and description != '' ">description=#{description},</if>
-			<if test="rules != null  and rules != '' ">rules=#{rules},</if>
 			<if test="createUserId != null ">create_user_id=#{createUserId},</if>
 			<if test="modifyUserId != null ">modify_user_id=#{modifyUserId},</if>
 			<if test="modifyTime != null ">modify_time=#{modifyTime},</if>

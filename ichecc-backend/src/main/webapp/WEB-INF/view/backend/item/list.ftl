@@ -53,6 +53,7 @@ css=[
 			    		<th>副标题</th>
 			    		<th>商品状态</th>
 			    		<th>市场价</th>
+			    		<th>指导价</th>
 			    		<th style="width:100px;">操作</th>
 			    	</tr>
 			    	<#if page.list?default([])?size!=0>
@@ -69,6 +70,7 @@ css=[
 								</#list>	
 							</td>
 			    			<td class="td_center">${(obj.marketPrice!0)?string('#0.00')}</td>
+			    			<td class="td_center">${(obj.guidePrice!0)?string('#0.00')}</td>
 			    			<td class="td_center">
 			    				<a href="javascript:void(0);" style="color:blue;" class="editcatabtn editBtn" param="${obj.id}">[编辑]</a>
 			    			</td>

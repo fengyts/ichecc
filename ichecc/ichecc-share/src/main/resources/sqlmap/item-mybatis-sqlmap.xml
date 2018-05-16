@@ -8,6 +8,7 @@
         <result column="item_title" property="itemTitle"/>
         <result column="sub_title" property="subTitle"/>
         <result column="market_price" property="marketPrice"/>
+        <result column="guide_price" property="guidePrice"/>
         <result column="status" property="status"/>
         <result column="remark" property="remark"/>
         <result column="create_user_id" property="createUserId"/>
@@ -17,7 +18,7 @@
 	</resultMap>
 
 	<sql id="MybatisItemDAO_all_column_fields">
-	      id,item_title,sub_title,market_price,status,remark,create_user_id,create_time,modify_user_id,modify_time
+	      id,item_title,sub_title,market_price,guide_price,status,remark,create_user_id,create_time,modify_user_id,modify_time
  	</sql>
 	<!-- 只有varchar char text类型 做 !='' 判断，生成代码时,其他类型时只做!=null 决断 0或fasle与空''是相同的，在mybatis中的动态语句中 -->
 	<sql id="MybatisItemDAO_dynamic_where_fields"><!-- xml转义字符需要 <![CDATA[   ]]> 标签-->
@@ -25,6 +26,7 @@
 			<if test="itemTitle != null  and itemTitle != '' "> AND item_title=#{itemTitle} </if>
 			<if test="subTitle != null  and subTitle != '' "> AND sub_title=#{subTitle} </if>
 			<if test="marketPrice != null "> AND market_price=#{marketPrice} </if>
+			<if test="guidePrice != null "> AND guide_price=#{guidePrice} </if>
 			<if test="status != null "> AND status=#{status} </if>
 			<if test="remark != null  and remark != '' "> AND remark=#{remark} </if>
 			<if test="createUserId != null "> AND create_user_id=#{createUserId} </if>
@@ -52,6 +54,7 @@
 				item_title,
 				sub_title,
 				market_price,
+				guide_price,
 				status,
 				remark,
 				create_user_id,
@@ -63,6 +66,7 @@
 				#{itemTitle},
 				#{subTitle},
 				#{marketPrice},
+				#{guidePrice},
 				#{status},
 				#{remark},
 				#{createUserId},
@@ -79,6 +83,7 @@
 					item_title = #{itemTitle},
 					sub_title = #{subTitle},
 					market_price = #{marketPrice},
+					guide_price = #{guidePrice},
 					status = #{status},
 					remark = #{remark},
 					create_user_id = #{createUserId},
@@ -99,6 +104,7 @@
 					<if test="itemTitle != null  and itemTitle != '' ">item_title=#{itemTitle},</if>
 					<if test="subTitle != null  and subTitle != '' ">sub_title=#{subTitle},</if>
 					<if test="marketPrice != null ">market_price=#{marketPrice},</if>
+					<if test="guidePrice != null ">guide_price=#{guidePrice},</if>
 					<if test="status != null ">status=#{status},</if>
 					<if test="remark != null  and remark != '' ">remark=#{remark},</if>
 					<if test="createUserId != null ">create_user_id=#{createUserId},</if>

@@ -49,6 +49,7 @@ css=[
 				    		</th>
 				    		<th>商品名称</th>
 				    		<th style="width:20%">市场价</th>
+				    		<th style="width:20%">指导价</th>
 				    	</tr>
 			    	</thead>
 			    	<tbody id="itemListData">
@@ -57,7 +58,8 @@ css=[
 				    		<tr class="tr">
 				    			<td class="td_center"><input type="radio" name="checkItem" value="${obj.id}"></td>
 				    			<td class="td_center">${obj.itemTitle}</td>
-				    			<td class="td_center">${obj.marketPrice}</td>
+				    			<td class="td_center">${obj.marketPrice?string('##.00')}</td>
+				    			<td class="td_center">${obj.guidePrice?string('##.00')}</td>
 				    		</tr>
 				    	</#list>
 				    	</#if>

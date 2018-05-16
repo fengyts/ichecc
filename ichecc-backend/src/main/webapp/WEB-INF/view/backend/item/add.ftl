@@ -47,6 +47,12 @@ css=[
 		<div class="col-md-4">
 			<input type="text" class="form-control" id="marketPrice" name="marketPrice" value="${itemDO.marketPrice!0.00}"/>
 		</div>
+		<label class="col-md-2 control-label">指导价<span class="dr-asterisk requiredField">*</span></label>
+		<div class="col-md-4">
+			<input type="text" class="form-control" id="guidePrice" name="guidePrice" value="${itemDO.guidePrice!0.00}"/>
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="col-md-2 control-label">商品状态<span class="dr-asterisk requiredField">*</span></label>
 		<div class="col-md-4">
 			<select class="form-control" id="status" name="status">

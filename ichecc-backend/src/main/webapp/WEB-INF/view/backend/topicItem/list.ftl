@@ -53,6 +53,9 @@ css=[]
 			    		<th width="200px">开始时间</th>
 			    		<th width="200px">结束时间</th>
 			    		<th>商品名称</th>
+			    		<th>指导价</th>
+			    		<th>特卖价</th>
+			    		<th>砍价次数</th>
 			    		<th>操作</th>
 			    	</tr>
 			    	<#if page.list?default([])?size!=0>
@@ -69,6 +72,9 @@ css=[]
 							<td class="td_center">${obj.startTime?datetime}</td>
 							<td class="td_center">${obj.endTime?datetime}</td>
 							<td class="td_center">${obj.itemTitle}</td>
+							<td class="td_center">${obj.guidePrice?string('#.00')}</td>
+							<td class="td_center">${obj.specialPrice?string('#.00')}</td>
+							<td class="td_center">${obj.bargainMaxTimes}</td>
 			    			<td class="td_center">
 		    					<a href="javascript:void(0);" class="editcatabtn editTopicItemBtn" param="${obj.id}">[编辑]</a>
 		    					<#--

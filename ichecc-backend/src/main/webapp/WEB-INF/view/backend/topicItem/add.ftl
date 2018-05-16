@@ -30,7 +30,6 @@ css=[
 			<div class="input-group">
 				<input type="text" class="form-control" readonly="readonly" id="itemTitle" name="itemTitle" placeholder="请选择商品" value="${topicItemDO.itemTitle}">
 				<input type="hidden" id="itemId" name="itemId" value="${topicItemDO.itemId}"/>
-				<input type="hidden" id="marketPrice" name="marketPrice" value="${topicItemDO.marketPrice}"/>
 				<span class="btn btn-default btn-sm input-group-addon" id="selectItem">
 					<span class="glyphicon glyphicon-plus"></span>
 					选择商品
@@ -40,6 +39,24 @@ css=[
 		<label class="col-md-2 control-label">市场价</label>
 		<div class="col-md-4">
 			<input type="text" class="form-control" readonly id="marketPrice" name="marketPrice" value="${topicItemDO.marketPrice}" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-md-2 control-label">指导价<span class="dr-asterisk requiredField">*</span></label>
+		<div class="col-md-4">
+			<input type="text" class="form-control" id="guidePrice" name="guidePrice" value="${topicItemDO.guidePrice}" />
+		</div>
+	</div>
+	
+	<hr/>
+	<div class="form-group">
+		<label class="col-md-2 control-label">特卖价<span class="dr-asterisk requiredField">*</span></label>
+		<div class="col-md-4">
+			<input type="text" class="form-control" id="specialPrice" name="specialPrice" value="${topicItemDO.specialPrice}" />
+		</div>
+		<label class="col-md-2 control-label">砍价最大次数(次)<span class="dr-asterisk requiredField">*</span></label>
+		<div class="col-md-4">
+			<input type="text" class="form-control" id="bargainMaxTimes" name="bargainMaxTimes" value="${topicItemDO.bargainMaxTimes!100}" />
 		</div>
 	</div>
 	<div class="form-group">
@@ -58,17 +75,6 @@ css=[
 		</div>
 	</div>
 	
-	<hr/>
-	<div class="form-group">
-		<label class="col-md-2 control-label">指导价<span class="dr-asterisk requiredField">*</span></label>
-		<div class="col-md-4">
-			<input type="text" class="form-control" id="guidePrice" name="guidePrice" value="${topicItemDO.guidePrice}" />
-		</div>
-		<label class="col-md-2 control-label">特卖价<span class="dr-asterisk requiredField">*</span></label>
-		<div class="col-md-4">
-			<input type="text" class="form-control" id="specialPrice" name="specialPrice" value="${topicItemDO.specialPrice}" />
-		</div>
-	</div>
 	
 	<hr/>
 	<div>
