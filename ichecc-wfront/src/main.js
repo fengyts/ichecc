@@ -6,7 +6,6 @@ import router from './router'
 import $ from 'jquery'
 import weui from 'jquery-weui/dist/js/jquery-weui.min'
 import picker from 'jquery-weui/dist/js/city-picker.min'
-import Index from './components/Index'
 
 Vue.config.productionTip = false
 
@@ -14,6 +13,8 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
-  components: { Index },
-  template: '<Index/>'
+  components: { App },
+  template: '<App/>'
 })
+
+// router.push('/home');
