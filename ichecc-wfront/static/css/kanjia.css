@@ -1,0 +1,185 @@
+
+* { 
+    margin: 0;
+    padding: 0;
+}
+
+.body{
+    width:100%;
+    height: 100%;
+}
+
+.name{
+    color:gray;
+}
+
+.userinfo{
+  text-align: center;
+  margin-top:15px;
+  width:100%;
+}
+.kanjia_info{
+    border-radius: 6px;
+    padding-top:35px;
+    width:94%;
+    margin-left:3%;
+    margin-top:-60px;
+    height:120px;
+    background: #f3f1f1;
+}
+.kanjia_info2{
+    margin-left: 14px;
+    width:94%;
+}
+.kanjia_info_carimg{
+    display:inline-block;
+    float:left;
+    vertical-align: middle;
+    padding-top:50px;
+    width:17%;
+}
+
+.kanjia_info_carmess{
+    display:inline-block;
+    float:left;
+    vertical-align: middle;
+    padding-top:46px;
+    font-size:12px;
+    width:83%;
+}
+
+.carimg{
+    width:50px;
+    height:50px;
+}
+.carmess_title{
+    color:black;
+}
+.carmess_more{
+    color:gray;
+}
+.carmess_dijia{
+    color:red;
+    font-weight: bold;
+}
+.carmess_shichangjia{
+    color:gray;
+    text-decoration:line-through;
+}
+.carmess_kanjianum{
+    float: right;
+}
+
+.kanjia_middle{
+    text-align: center;
+    padding-top:25px;
+}
+.kanjia_time{
+    text-align: center;
+}
+.kanjia_time_icon{
+    width:14px;
+    height:14px;
+    vertical-align: middle;
+}
+.kanjia_time_num{
+    font-size:13px;
+    color:gray;
+    vertical-align: middle;
+}
+
+.kanjia_price{
+    line-height: 34px;
+}
+.kanjia_price_des{
+    color:gray;
+    font-size:16px;
+}
+.kanjia_price_num1{
+    color:#2aa515;
+    font-size:25px;
+    font-weight: bold;
+}
+
+.kanjia_price_num2{
+    color:#2aa515;
+    font-size:16px;
+    font-weight: bold;
+}
+.kanjia_guize{
+    color:gray;
+    font-size:13px;
+}
+.kanjia_button{
+    margin-top:18px;
+    line-height: 80px;
+}
+.kanjia_button1{
+    width:90%;
+    height:60px;
+    background: #2aa515;
+    border: none;
+    border-radius:8px;
+    font-size:22px;
+    color:white;
+}
+
+.hr{
+    width:90%;
+    margin-left:5%;
+    height:1px;
+    border:none;
+    border-top:1px 
+    dashed #bdbaba;
+    margin-top:12px;
+
+}
+
+.kanjia_bottom_title{
+    line-height: 24px;
+    padding-top:12px;
+    margin-top:25px;
+    width:94%;
+    margin-left:3%;
+    text-align: center;
+}
+.kanjia_record_title1{
+    font-size: 18px;
+}
+.kanjia_record_title2{
+    font-size: 12px;
+    color:gray;
+}
+
+.kanjia_bottom_list{
+    width:84%;
+    margin-left: 8%;
+    margin-top:15px;
+}
+.kanjia_bottom_list_userlogo,.kanjia_bottom_list_usermess{
+    float:left;    
+}
+.kanjia_bottom_list_usernum{
+    float: right;
+}
+.logo{
+    width:35px;
+    height: 35px;
+}
+.kanjia_bottom_list_usermess{
+    text-align: left;
+    padding-left:6px;
+    font-size:10px;
+}
+.time{
+    color:#bdbaba;
+}
+
+.num{
+    font-size:14px;
+    color:#2aa515;
+}
+
+.tips{
+   height:80px;
+}

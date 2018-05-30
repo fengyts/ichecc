@@ -1,20 +1,67 @@
 <!--  -->
 <template>
-    <div class="home">
-        这里是首页
+  <!--新车特卖-->
+  <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active">
+
+    <!--头部区域-->
+    <div class="xctm_top">
+      <p class="xctm_top_title">本期特卖</p>
+      <p class="xctm_top_time">期号 : H180404&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时间 : 4.23 ~ 4.29</p>
     </div>
+
+    <!--列表区域-->
+    <div class="xctm_list">
+      <a href="./temaidetail.html" class="xctm_list_href">
+        <!--车辆图片-->
+        <div class="xctm_list_img">
+          <img src="../../assets/images/img/car_01.jpg" width="100%" alt="">
+        </div>
+        <!--车辆标题-->
+        <div class="xctm_list_title">
+          <p>上汽斯柯达明锐 2018款 1.6L 自动舒适版</p>
+        </div>
+        <!--车辆价格-->
+        <div class="xctm_list_price">
+          <p class="price">
+            <span>指导价 : </span>
+            <span class="price_num_zhidao">13.69万</span>
+          </p>
+          <p class="price">
+            <span>市场价 : </span>
+            <span class="price_num_shichang">10.69万</span>
+          </p>
+          <p class="price">
+            <span>特卖价 : </span>
+            <span class="price_num_temai">5.88万</span>
+          </p>
+        </div>
+        <!--参与人数等-->
+        <div class="xctm_list_canyu">
+          <hr class="hr" />
+          <p class="xctm_list_canyu_content">
+            <span class="xctm_list_canyu_num">578人已参与</span>
+            <span class="xctm_list_canyu_time">剩 3天19时50分28秒 结束</span>
+          </p>
+        </div>
+      </a>
+    </div>
+
+    <!--尾部区域-->
+    <div class="xctm_bottom">
+      <p>~ 没有更多了 ~</p>
+    </div>
+  </div>
 </template>
 
 <script type="text/javascript">
+import Vue from "vue";
 export default {
-    data() {
-        return {
-
-        }
-    },
-    components: {
-    }
-}
+  props: {
+  },
+  data() {
+    return {};
+  },
+};
 </script>
 
 <style scoped lang="stylus">

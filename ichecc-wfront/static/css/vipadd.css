@@ -1,0 +1,51 @@
+* { 
+    margin: 0;
+    padding: 0;
+}
+
+.body{
+    width:100%;
+    height: 100%;
+}
+
+.content{
+    width:90%;
+    margin-left: 5%;
+    margin-top:20px;
+    line-height: 35px;
+}
+
+.title{
+    margin-top:15px;
+    margin-bottom: 15px;
+    font-size:20px;
+}
+
+.hr{
+    height:1px;
+    border:none;
+    border-top:1px 
+    dashed #bdbaba;
+    margin-top:20px;
+}
+.quanyi,.notice{
+    color:gray;
+    font-size:20px;
+}
+.quanyides,.noticedes{
+    font-size:15px;
+}
+.addvip{
+    margin-top:40px;
+}
+.button_add,.button_pay{
+    width:90%;
+    margin-left:5%;
+    margin-bottom: 30px;
+    background: #2aa515;
+    font-size:20px;
+    color:white;
+    border:none;
+    border-radius: 5px;
+    height:50px;
+}

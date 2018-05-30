@@ -1,0 +1,29 @@
+* { 
+    margin: 0;
+    padding: 0;
+}
+
+.body{
+    width:100%;
+    height: 100%;
+}
+.help{
+    width:92%;
+    margin-left: 4%;
+    margin-top:18px;
+}
+.Q{
+    font-weight: bold;
+    margin-top:18px;
+}
+.A{
+    color:gray;
+    margin-top:6px;
+}
+
+.tips{
+    color:#bdbaba;
+    font-size:12px;
+    text-align: center;
+    padding-top:40px;
+}

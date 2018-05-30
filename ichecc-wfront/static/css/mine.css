@@ -1,0 +1,109 @@
+* { 
+    margin: 0;
+    padding: 0;
+}
+
+.weui-tabbar{
+    
+}
+
+.weui-tab__bd{
+    background: #f3f1f1;
+}
+.weui-tabbar__label{
+    font-size:18px;
+    display: inline-block;
+    position: relative;
+    line-height: 18px;
+    top: 48%;
+    vertical-align: top;
+    margin-top:-9px;
+}
+
+.userinfo{
+    background: white;
+    height:100px;
+    margin-top:20px;
+    width:100%;
+}
+.usericon{
+    padding-top:12px;
+    margin-left: 5%;
+    display: inline-block;
+    float: left;
+}
+.icon1{
+    width:78px;
+    height:78px;
+}
+.username{
+    font-size:16px;
+    display: inline-block;
+    float: left;
+    margin-left:10px;
+    padding-top:20px;
+}
+.viplogo{
+    margin-left:3px;
+    vertical-align: text-bottom;
+}
+.vipbg{
+    background: red;
+    color:white;
+    font-size:8px;
+    font-weight: bold;
+    width:30px;
+    height:16px;
+    vertical-align: middle;
+    text-align: center;
+    border:none;
+    border-radius: 3px;
+}
+.phone{
+    color:#bdbaba;
+    font-size:8px;
+    padding-top:5px;
+}
+
+.vip,.kanjiarecord,.help{
+    background: white;
+    height:60px;
+    margin-top:20px;
+    width:100%;
+}
+.idconfirm,.xuancherecord{
+    background: white;
+    height:60px;
+    margin-top:0px;
+    width:100%;
+}
+
+.listicon{
+    padding-top:15px;
+    margin-left: 5%;
+    display: inline-block;
+    float: left;
+}
+.icon2{
+    width:30px;
+    height:30px;
+}
+.title{
+    font-size:16px;
+    display: inline-block;
+    float: left;
+    margin-left:10px;  
+    padding-top: 16px;
+}
+.href{
+    text-decoration: none; 
+    color:black;
+}
+.hr{
+    width:90%;
+    margin-left:5%;
+    height:0.6px;
+    border:none;
+    border-top:0.6px 
+    solid #ebe8e8 ;
+}

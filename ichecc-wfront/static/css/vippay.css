@@ -1,0 +1,104 @@
+* { 
+    margin: 0;
+    padding: 0;
+}
+
+.body{
+    width:100%;
+    height: 100%;
+    overflow: hidden;
+}
+.title{
+    width:86%;
+    margin-top:20px;
+    margin-left: 7%;
+    margin-right: 7%;
+}
+
+.hr{
+    height:1px;
+    border:none;
+    border-top:1px 
+    dashed #bdbaba;
+    margin-top:20px;
+}
+.vipinfo{
+    margin-top:20px;
+    width:100%;
+    margin-left: 7%;
+    line-height: 60px;
+}
+.viptype_checked,.price_num_checked{
+    color:#2aa515;
+    font-size:12px;
+}
+.viptype,.price_num{
+    font-size:12px;
+}
+
+.one,.three{
+    display: inline-block;
+    text-align: center;
+    line-height: 20px;
+    height:45px;
+    padding-top:8px;
+}
+.six,.twelve{
+    display: inline-block;
+    text-align: center;
+    line-height: 20px;
+    height:45px;
+    padding-top:8px;
+}
+.one{
+    border:1px solid #2aa515;
+    width:40%;
+
+}
+.three{
+    border:1px solid #bdbaba;
+    margin-left: 4%;
+    width:40%;
+    position: relative;
+}
+.six{
+    border:1px solid #bdbaba;
+    width:40%;
+}
+.twelve{
+    border:1px solid #bdbaba;
+    margin-left: 4%;
+    width:40%;
+    position: relative;
+}
+
+.vippay{
+    margin-top:35px;
+}
+.button_pay{
+    width:86%;
+    margin-left: 7%;
+    background: #2aa515;
+    color:white;
+    font-size:22px;
+    height:50px;
+    border:none;
+    border-radius: 5px;
+}
+.tips{
+    margin-top:15px;
+    text-align: center;
+    color:#bdbaba;
+    font-size:12px;
+}
+.tuijian{
+    background: #2aa515;
+    color:white;
+    float:right;
+    font-size:12px;
+    display: inline-block;
+    position: absolute;
+    top:0px;
+    right:0px;
+}
+

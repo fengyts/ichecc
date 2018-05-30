@@ -1,0 +1,151 @@
+* { 
+    margin: 0;
+    padding: 0;
+}
+
+.body{
+    width:100%;
+    height: 100%;
+}
+
+.name{
+    color:gray;
+}
+
+.userinfo{
+  text-align: center;
+  margin-top:15px;
+  width:100%;
+}
+.kanjia_info{
+    border-radius: 6px;
+    padding-top:35px;
+    width:94%;
+    margin-left:3%;
+    margin-top:-60px;
+    height:120px;
+    background: #f3f1f1;
+}
+.kanjia_info2{
+    margin-left: 14px;
+    width:94%;
+}
+.kanjia_info_carimg{
+    display:inline-block;
+    float:left;
+    vertical-align: middle;
+    padding-top:50px;
+    width:17%;
+}
+
+.kanjia_info_carmess{
+    display:inline-block;
+    float:left;
+    vertical-align: middle;
+    padding-top:46px;
+    font-size:12px;
+    width:83%;
+}
+
+.carimg{
+    width:50px;
+    height:50px;
+}
+.carmess_title{
+    color:black;
+}
+.carmess_more{
+    color:gray;
+}
+.carmess_dijia{
+    color:red;
+    font-weight: bold;
+}
+.carmess_shichangjia{
+    color:gray;
+    text-decoration:line-through;
+}
+.carmess_kanjianum{
+    float: right;
+}
+
+.kanjia_middle{
+    text-align: center;
+    margin-top:25px;
+}
+.status{
+    font-size:24px;
+    font-weight: bold;
+    color:#2aa515;
+}
+.quanyi,.notice{
+    font-size:12px;
+    color:gray;
+}
+.quanyi{
+    margin-top:15px;
+}
+.notice{
+    margin-top:8px;
+}
+.quanyi_num{
+    color:#2aa515;
+}
+
+
+.hr{
+    width:90%;
+    margin-left:5%;
+    height:1px;
+    border:none;
+    border-top:1px 
+    dashed #bdbaba;
+    margin-top:12px;
+
+}
+
+.kanjia_bottom_title{
+    line-height: 24px;
+    padding-top:12px;
+    margin-top:25px;
+    width:94%;
+    margin-left:3%;
+    text-align: center;
+}
+.kanjia_record_title1{
+    font-size: 18px;
+}
+.kanjia_record_title2{
+    font-size: 12px;
+    color:gray;
+}
+
+.kanjia_bottom_list{
+    width:84%;
+    margin-left: 8%;
+    margin-top:15px;
+}
+.kanjia_bottom_list_userlogo,.kanjia_bottom_list_usermess{
+    float:left;    
+}
+.kanjia_bottom_list_usernum{
+    float: right;
+}
+.logo{
+    width:35px;
+    height: 35px;
+}
+.kanjia_bottom_list_usermess{
+    text-align: left;
+    padding-left:6px;
+    font-size:10px;
+}
+.time{
+    color:#bdbaba;
+}
+
+.num{
+    font-size:14px;
+    color:#2aa515;
+}
+

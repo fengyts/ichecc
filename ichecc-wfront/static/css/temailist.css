@@ -1,0 +1,120 @@
+* { 
+    margin: 0;
+    padding: 0;
+}
+.weui-tabbar{
+    
+}
+
+.weui-tab__bd{
+    background: #f3f1f1;
+}
+.weui-tabbar__label{
+    font-size:18px;
+    display: inline-block;
+    position: relative;
+    line-height: 18px;
+    top: 48%;
+    vertical-align: top;
+    margin-top:-9px;
+}
+
+.xctm_top{
+    text-align: center;
+    padding-top:22px;
+}
+
+.xctm_top_title{
+    color:#2aa515;
+    font-size:24px;
+    font-weight: bold;
+}
+
+.xctm_top_time{
+    color:gray;
+    font-size:14px;
+    margin-top:4px;
+}
+
+.xctm_list{
+    background: #fff;
+    width:92%;
+    margin-top:22px;
+    margin-left:4%;
+    border-radius:5px;
+}
+.xctm_list_img{
+    width:100%;
+    margin:0 auto;
+    border-radius:5px;
+}
+.xctm_list_title{
+    font-size:21px;
+    color: #000000;
+    margin-left:4%;
+    font-weight: bold;
+    width:92%;
+}
+.xctm_list_price{
+    font-size: 17px;
+    color:gray; 
+    margin-top:6px;
+    margin-left:4%;
+}
+
+.price_num_zhidao{
+    color:black;
+}
+.price_num_shichang{
+    color:black;
+}
+
+.price{
+    line-height: 32px;
+}
+.price_num_temai{
+    color:red;
+    font-weight: bold;
+}
+
+.hr{
+    width:92%;
+    margin-left:4%;
+    height:1px;
+    border:none;
+    border-top:1px 
+    dashed gray;
+}
+.xctm_list_canyu{
+    color:gray;
+    font-size: 14px;
+    margin-top:9px;
+    height:48px;
+}
+.xctm_list_canyu_content{
+    padding-top:10px;
+    width:92%;
+    margin-left:4%;
+}
+
+.xctm_bottom{
+    margin-top:23px;
+    margin-bottom: 23px;
+    font-size:14px;
+    color:gray;
+    text-align: center;
+}
+
+.xctm_list_canyu_num{
+    float:left;
+}
+
+.xctm_list_canyu_time{
+    float:right;
+}
+
+.xctm_list_href{
+    text-decoration: none; 
+    color: #000000;
+
+}

@@ -4,9 +4,30 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+
+  <!--禁止将一定长度范围内的数字自动转换为电话号码-->
+  <meta name="format-detection" content="telephone=no" />
+  <!--iphone设备，safari私有meta标签，允许全屏浏览，隐藏浏览器导航栏-->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <!--iphone设备，指定safari顶端的状态条的样式（default:白色，black:黑色，black-translucent：半透明）-->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!--禁止浏览器转码-->
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
   <title>ichecc-wfront</title>
 
-  <link type="text/css" rel="stylesheet" href="static/css/reset.css">
+  <!-- <link type="text/css" rel="stylesheet" href="static/css/reset.css"> -->
+
+  <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+  <!-- <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css"> -->
+
+  <style>
+    html,
+    body {
+      height: 100%;
+    }
+
+  </style>
 
 </head>
 

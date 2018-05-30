@@ -1,19 +1,25 @@
 <!--  -->
 <template>
-    <div class="header">
-        这里是header组件
-    </div>
+  <div class="page">
+    
+  </div>
 </template>
 
 <script type="text/javascript">
 export default {
-    data() {
-        return {
+  data() {
+    return {
 
-        }
-    },
-    components: {
     }
+  },
+  components: {
+  },
+  computed: {
+  },
+  mounted: {
+  },
+  methods: {
+  }
 }
 </script>
 
