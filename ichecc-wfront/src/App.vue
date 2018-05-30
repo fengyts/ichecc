@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="weui-tab" style="height: 100%;">
+  <div id="app" class="weui-tab">
     <!--页面内容-->
     <div class="weui-tab__bd" style="height:91%">
       <!--新车特卖-->

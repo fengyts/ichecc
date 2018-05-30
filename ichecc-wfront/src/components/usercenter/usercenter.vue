@@ -1,4 +1,4 @@
-<!--  -->
+<!-- 用户中心 -->
 <template>
   <!--个人中心-->
   <div id="tab3" class="weui-tab__bd-item">
