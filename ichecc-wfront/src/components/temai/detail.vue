@@ -1,9 +1,8 @@
 <!-- 特卖详情页 -->
 <template>
   <div class="temai-detail-wrapper" ref="detailWrapper">
-  <div class="temai-detail">
-    <div class="tmxq_top">
-      <a href="./cardescribe.html">
+    <div class="temai-detail">
+      <div class="tmxq_top">
         <!--车辆图片-->
         <div class="tmxq_img">
           <img src="../../assets/images/img/car_01.jpg" width="100%" alt="">
@@ -24,36 +23,38 @@
             <span>10.69万</span>
           </p>
         </div>
-      </a>
-    </div>
-    <div class="tmxq_middle">
-      <!--特卖价，参与按钮-->
-      <div class="tmxq_price2">
-        <span>
-          <font class="price_temai">特卖价 : </font>
-          <font class="price_num_temai">5.58万</font>&nbsp;
-          <font class="xianzhi">仅限1辆</font>
-        </span>
-        <span class="canyu">
-          <button type="button" class="button_canyu" onclick="javascript:window.location.href='./kanjia.html'">立即参与</button>
-        </span>
       </div>
-      <!--特卖说明-->
-      <div>
-        <hr class="hr" />
-      </div>
-      <div class="tmxq_notice">
-        <p class="notice">免购置税：购置税全部由平台代为缴纳</p>
-        <p class="notice">送保险：免费赠送第一年保险</p>
-        <p class="notice">0首付：按揭购车可享0首付，最高可分60期</p>
-      </div>
-      <div>
-        <div class="tmxq_bottom">
-          <p>本期特卖剩 3天19时50分28秒 结束<br>(本期特卖已结束)</p>
+      <div class="tmxq_middle">
+        <!--特卖价，参与按钮-->
+        <div class="tmxq_price2">
+          <span>
+            <font class="price_temai">特卖价 : </font>
+            <font class="price_num_temai">5.58万</font>&nbsp;
+            <font class="xianzhi">仅限1辆</font>
+          </span>
+          <span class="canyu">
+            <!-- <button type="button" class="button_canyu" onclick="javascript:window.location.href='./kanjia.html'">立即参与</button> -->
+            <router-link :to="{path:'/detail/bargain'}">
+              <button class="button_canyu">立即参与</button>
+            </router-link>
+          </span>
+        </div>
+        <!--特卖说明-->
+        <div>
+          <hr class="hr" />
+        </div>
+        <div class="tmxq_notice">
+          <p class="notice">免购置税：购置税全部由平台代为缴纳</p>
+          <p class="notice">送保险：免费赠送第一年保险</p>
+          <p class="notice">0首付：按揭购车可享0首付，最高可分60期</p>
+        </div>
+        <div>
+          <div class="tmxq_bottom">
+            <p>本期特卖剩 3天19时50分28秒 结束<br>(本期特卖已结束)</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   </div>
 </template>
 
@@ -62,7 +63,6 @@ import BScroll from 'better-scroll'
 export default {
   data() {
     return {
-
     }
   },
   created() {
@@ -72,10 +72,14 @@ export default {
   },
   methods: {
     _initScroll() {
-      this.scroll = new BScroll(this.$refs.detailWrapper, {
-        // scrollY: true,
-        click: true
-      });
+      if (!this.scroll) {
+        this.scroll = new BScroll(this.$refs.detailWrapper, {
+          // scrollY: true,
+          click: true
+        });
+      } else {
+        this.scroll.refresh();
+      }
     }
   },
   components: {
@@ -85,13 +89,15 @@ export default {
 
 <style scoped lang="stylus">
 @import ('../../../static/css/temaidetail');
-.temai-detail
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 510;
-  width: 100%;
-  // height: 100%;
-  // overflow: auto;
-  background: #fff;
+.temai-detail-wrapper
+  height: 100%;
+  .temai-detail
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 510;
+    width: 100%;
+    // height: 100%;
+    // overflow: auto;
+    background: #ffffff;
 </style>

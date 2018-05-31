@@ -11,7 +11,7 @@
 
       <!--列表区域-->
       <div class="xctm_list">
-        <router-link :to="{path:'/detail'}" replace>
+        <router-link :to="{path:'/detail'}">
           <a class="xctm_list_href">
             <!--车辆图片-->
             <div class="xctm_list_img">
