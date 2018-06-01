@@ -112,7 +112,7 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-// @import ('../../../static/css/temaidetail');
+@import ('../../../static/css/temaidetail');
 .temai-detail-wrapper
   position: fixed;
   top: 0;
