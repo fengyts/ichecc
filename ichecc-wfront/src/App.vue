@@ -4,7 +4,7 @@
       <!--页面内容-->
       <div class="weui-tab__bd" style="height:91%">
         <!--新车特卖-->
-        <temailist></temailist>
+        <temailist v-on:closeTabbarC="closeTabbarP"></temailist>
         <!--帮你选车-->
         <choice></choice>
         <!--个人中心-->
@@ -36,7 +36,23 @@ export default {
   name: "App",
   data() {
     return {
+      closeTabbarFlag: true
     };
+  },
+  methods: {
+    closeTabbarP(data) {
+      // console.log(data);
+      this.closeTabbarFlag = data;
+    }
+  },
+  watch: {
+    closeTabbarFlag: {
+      handler: function (val, oldVal) {
+        this.closeTabbarFlag = val;
+      },
+      deep: true,
+      immediate: true
+    }
   },
   components: {
     temailist, choice, usercenter
@@ -45,7 +61,26 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-@import ('../static/css/temailist');
-@import ('../static/css/xuanche');
-@import ('../static/css/mine');
+// @import ('../static/css/temailist');
+// @import ('../static/css/xuanche');
+// @import ('../static/css/mine');
+.weui-tab
+  display: flex;
+  .weui-tab__bd
+    flex: 1;
+    background: #f3f1f1;
+  .weui-tabbar
+    position: absolute;
+    flex: 0;
+    left: 0;
+    bottom: 0;
+    height: 60px;
+    .weui-tabbar__label
+      font-size: 18px;
+      display: inline-block;
+      position: relative;
+      line-height: 18px;
+      top: 48%;
+      vertical-align: top;
+      margin-top: -9px;
 </style>

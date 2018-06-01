@@ -12,7 +12,7 @@
       <!--列表区域-->
       <div class="xctm_list">
         <router-link :to="{path:'/detail'}">
-          <a class="xctm_list_href">
+          <div class="xctm_list_href" @click="closeTabbarC">
             <!--车辆图片-->
             <div class="xctm_list_img">
               <img src="../../assets/images/img/car_01.jpg" width="100%" alt="">
@@ -44,7 +44,7 @@
                 <span class="xctm_list_canyu_time">剩 3天19时50分28秒 结束</span>
               </p>
             </div>
-          </a>
+          </div>
         </router-link>
       </div>
 
@@ -57,15 +57,25 @@
 </template>
 
 <script type="text/javascript">
+import detail from 'components/temai/detail';
 export default {
   props: {
   },
   data() {
     return {
     };
+  },
+  methods: {
+    closeTabbarC() {
+      this.$emit('closeTabbarC', 'false');
+    }
+  },
+  components: {
+    detail
   }
 };
 </script>
 
 <style scoped lang="stylus">
+@import ('../../../static/css/temailist');
 </style>

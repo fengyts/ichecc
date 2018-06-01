@@ -1,4 +1,4 @@
-<!--  -->
+<!-- 特卖详情页 -->
 <template>
   <div class="temai-detail-wrapper" ref="detailWrapper">
     <div class="temai-detail">
@@ -47,31 +47,6 @@
           <p class="notice">免购置税：购置税全部由平台代为缴纳</p>
           <p class="notice">送保险：免费赠送第一年保险</p>
           <p class="notice">0首付：按揭购车可享0首付，最高可分60期</p>
-
-          <p class="notice">免购置税：购置税全部由平台代为缴纳</p>
-          <p class="notice">送保险：免费赠送第一年保险</p>
-          <p class="notice">0首付：按揭购车可享0首付，最高可分60期</p>
-          <p class="notice">免购置税：购置税全部由平台代为缴纳</p>
-          <p class="notice">送保险：免费赠送第一年保险</p>
-          <p class="notice">0首付：按揭购车可享0首付，最高可分60期</p>
-          <p class="notice">免购置税：购置税全部由平台代为缴纳</p>
-          <p class="notice">送保险：免费赠送第一年保险</p>
-          <p class="notice">0首付：按揭购车可享0首付，最高可分60期</p>
-          <p class="notice">免购置税：购置税全部由平台代为缴纳</p>
-          <p class="notice">送保险：免费赠送第一年保险</p>
-          <p class="notice">0首付：按揭购车可享0首付，最高可分60期</p>
-          <p class="notice">免购置税：购置税全部由平台代为缴纳</p>
-          <p class="notice">送保险：免费赠送第一年保险</p>
-          <p class="notice">0首付：按揭购车可享0首付，最高可分60期</p>
-          <p class="notice">免购置税：购置税全部由平台代为缴纳</p>
-          <p class="notice">送保险：免费赠送第一年保险</p>
-          <p class="notice">0首付：按揭购车可享0首付，最高可分60期</p>
-          <p class="notice">免购置税：购置税全部由平台代为缴纳</p>
-          <p class="notice">送保险：免费赠送第一年保险</p>
-          <p class="notice">0首付：按揭购车可享0首付，最高可分60期</p>
-          <p class="notice">免购置税：购置税全部由平台代为缴纳</p>
-          <p class="notice">送保险：免费赠送第一年保险</p>
-          <p class="notice">0首付：按揭购车可享0首付，最高可分60期</p>
         </div>
         <div>
           <div class="tmxq_bottom">
@@ -84,10 +59,8 @@
 </template>
 
 <script type="text/javascript">
-import BScroll from 'better-scroll';
+import BScroll from 'better-scroll'
 export default {
-  props: {
-  },
   data() {
     return {
     }
@@ -101,33 +74,28 @@ export default {
     _initScroll() {
       if (!this.scroll) {
         this.scroll = new BScroll(this.$refs.detailWrapper, {
+          // scrollY: true,
           click: true
         });
       } else {
         this.scroll.refresh();
       }
     }
+  },
+  components: {
   }
 }
 </script>
 
 <style scoped lang="stylus">
-// @import ('../../../static/css/temaidetail');
+@import ('../../../static/css/temaidetail');
 .temai-detail-wrapper
-  position: fixed;
+  position: absolute;
   top: 0;
-  bottom: 0;
   left: 0;
-  z-index: 630;
-  background: #fff;
+  z-index: 510;
   width: 100%;
-  // .temai-detail
-  // position: relative;
-  // padding: 18px;
-  // width: 100%;
-  // height: 56px;
-  // &:nth-child(odd)
-  // background: red;
-  // &:nth-child(even)
-  // background: green;
+  // height: 100%;
+  // overflow: hidden;
+  background: #ffffff;
 </style>
