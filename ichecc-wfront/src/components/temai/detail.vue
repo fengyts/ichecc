@@ -6,6 +6,9 @@
         <!--车辆图片-->
         <div class="tmxq_img">
           <img src="../../assets/images/img/car_01.jpg" width="100%" alt="">
+          <div class="back" @click="closeDetail($event)">
+            <i class="icon-arrow_lift"></i>
+          </div>
         </div>
 
         <!--车辆标题-->
@@ -47,31 +50,6 @@
           <p class="notice">免购置税：购置税全部由平台代为缴纳</p>
           <p class="notice">送保险：免费赠送第一年保险</p>
           <p class="notice">0首付：按揭购车可享0首付，最高可分60期</p>
-
-          <p class="notice">免购置税：购置税全部由平台代为缴纳</p>
-          <p class="notice">送保险：免费赠送第一年保险</p>
-          <p class="notice">0首付：按揭购车可享0首付，最高可分60期</p>
-          <p class="notice">免购置税：购置税全部由平台代为缴纳</p>
-          <p class="notice">送保险：免费赠送第一年保险</p>
-          <p class="notice">0首付：按揭购车可享0首付，最高可分60期</p>
-          <p class="notice">免购置税：购置税全部由平台代为缴纳</p>
-          <p class="notice">送保险：免费赠送第一年保险</p>
-          <p class="notice">0首付：按揭购车可享0首付，最高可分60期</p>
-          <p class="notice">免购置税：购置税全部由平台代为缴纳</p>
-          <p class="notice">送保险：免费赠送第一年保险</p>
-          <p class="notice">0首付：按揭购车可享0首付，最高可分60期</p>
-          <p class="notice">免购置税：购置税全部由平台代为缴纳</p>
-          <p class="notice">送保险：免费赠送第一年保险</p>
-          <p class="notice">0首付：按揭购车可享0首付，最高可分60期</p>
-          <p class="notice">免购置税：购置税全部由平台代为缴纳</p>
-          <p class="notice">送保险：免费赠送第一年保险</p>
-          <p class="notice">0首付：按揭购车可享0首付，最高可分60期</p>
-          <p class="notice">免购置税：购置税全部由平台代为缴纳</p>
-          <p class="notice">送保险：免费赠送第一年保险</p>
-          <p class="notice">0首付：按揭购车可享0首付，最高可分60期</p>
-          <p class="notice">免购置税：购置税全部由平台代为缴纳</p>
-          <p class="notice">送保险：免费赠送第一年保险</p>
-          <p class="notice">0首付：按揭购车可享0首付，最高可分60期</p>
         </div>
         <div>
           <div class="tmxq_bottom">
@@ -90,6 +68,7 @@ export default {
   },
   data() {
     return {
+      showFlag: false
     }
   },
   created() {
@@ -106,6 +85,18 @@ export default {
       } else {
         this.scroll.refresh();
       }
+    },
+    show(){
+      this.showFlag = true;
+    },
+    closeDetail(event) {
+      if (!event._constructed) {
+        // 防止pc端重复点击
+        return;
+      }
+      // this.showFlag = false;
+      // window.history.go(-1);
+      this.$router.go(-1);
     }
   }
 }
@@ -121,13 +112,4 @@ export default {
   z-index: 630;
   background: #fff;
   width: 100%;
-  // .temai-detail
-  // position: relative;
-  // padding: 18px;
-  // width: 100%;
-  // height: 56px;
-  // &:nth-child(odd)
-  // background: red;
-  // &:nth-child(even)
-  // background: green;
 </style>

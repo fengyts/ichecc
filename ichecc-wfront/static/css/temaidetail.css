@@ -4,7 +4,8 @@
 }
 
 .tmxq_img {
-  height: 375px;
+  /* height: 375px; */
+  height: 100%;
   width: 100%;
 }
 
