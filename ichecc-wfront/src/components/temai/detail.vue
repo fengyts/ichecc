@@ -1,4 +1,4 @@
-<!-- 特卖详情页 -->
+<!--  -->
 <template>
   <div class="temai-detail-wrapper" ref="detailWrapper">
     <div class="temai-detail">
@@ -6,6 +6,9 @@
         <!--车辆图片-->
         <div class="tmxq_img">
           <img src="../../assets/images/img/car_01.jpg" width="100%" alt="">
+          <div class="back" @click="closeDetail($event)">
+            <i class="icon-arrow_lift"></i>
+          </div>
         </div>
 
         <!--车辆标题-->
@@ -59,10 +62,13 @@
 </template>
 
 <script type="text/javascript">
-import BScroll from 'better-scroll'
+import BScroll from 'better-scroll';
 export default {
+  props: {
+  },
   data() {
     return {
+      showFlag: false
     }
   },
   created() {
@@ -74,15 +80,24 @@ export default {
     _initScroll() {
       if (!this.scroll) {
         this.scroll = new BScroll(this.$refs.detailWrapper, {
-          // scrollY: true,
           click: true
         });
       } else {
         this.scroll.refresh();
       }
+    },
+    show(){
+      this.showFlag = true;
+    },
+    closeDetail(event) {
+      if (!event._constructed) {
+        // 防止pc端重复点击
+        return;
+      }
+      // this.showFlag = false;
+      // window.history.go(-1);
+      this.$router.go(-1);
     }
-  },
-  components: {
   }
 }
 </script>
@@ -90,14 +105,11 @@ export default {
 <style scoped lang="stylus">
 @import ('../../../static/css/temaidetail');
 .temai-detail-wrapper
-  height: 100%;
-  .temai-detail
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 510;
-    width: 100%;
-    // height: 100%;
-    // overflow: auto;
-    background: #ffffff;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 630;
+  background: #fff;
+  width: 100%;
 </style>

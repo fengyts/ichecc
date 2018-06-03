@@ -8,6 +8,8 @@ import weui from 'jquery-weui/dist/js/jquery-weui.min'
 import 'jquery-weui/dist//css/jquery-weui.min.css'
 import picker from 'jquery-weui/dist/js/city-picker.min'
 
+import 'common/stylus/index';
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
@@ -18,4 +20,4 @@ new Vue({
   template: '<App/>'
 })
 
-// router.push('/home');
+router.push('/home/list');

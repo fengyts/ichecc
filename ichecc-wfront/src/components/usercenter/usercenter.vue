@@ -1,7 +1,7 @@
 <!-- 用户中心 -->
 <template>
   <!--个人中心-->
-  <div id="tab3" class="weui-tab__bd-item">
+  <div id="tab3" class="weui-tab__bd-item" style="display:inline">
     <!--个人资料-->
     <div class="userinfo">
       <div class="usericon">
@@ -17,20 +17,24 @@
     </div>
 
     <!--vip会员-->
-    <a href="../../views/mine/vip/vipadd.html" class="href">
-      <div class="vip">
+    <router-link :to="{path:'/vip'}">
+      <div class="href vip">
         <div class="listicon">
           <img src="../../assets/images/icon/icon_nav_car.png" alt="" class="icon2">
         </div>
         <div class="title">
-          <p>VIP会员</p>
+          <p>
+            VIP会员
+          </p>
         </div>
       </div>
-    </a>
+    </router-link>
+
     <hr class="hr" />
+
     <!--身份认证-->
-    <a href="./assets/views/mine/idconfirm.html" class="href">
-      <div class="idconfirm">
+    <router-link :to="{path:'/authentication'}">
+      <div class="href idconfirm">
         <div class="listicon">
           <img src="../../assets/images/icon/id.png" alt="" class="icon2">
         </div>
@@ -38,10 +42,11 @@
           <p>身份认证</p>
         </div>
       </div>
-    </a>
+    </router-link>
+
     <!--砍价记录-->
-    <a href="../../views/mine/kanjiarecord.html" class="href">
-      <div class="kanjiarecord">
+    <router-link :to="{path:'/bargainRecord'}">
+      <div class="href kanjiarecord">
         <div class="listicon">
           <img src="../../assets/images/icon/kanjia.png" alt="" class="icon2">
         </div>
@@ -49,11 +54,13 @@
           <p>砍价记录</p>
         </div>
       </div>
-    </a>
+    </router-link>
+
     <hr class="hr">
+
     <!--选车记录-->
-    <a href="../../views/mine/xuancherecord.html" class="href">
-      <div class="xuancherecord">
+    <router-link :to="{path:'/choiceRecord'}">
+      <div class="href xuancherecord">
         <div class="listicon">
           <img src="../../assets/images/icon/xuanche.png" alt="" class="icon2">
         </div>
@@ -61,10 +68,11 @@
           <p>选车记录</p>
         </div>
       </div>
-    </a>
+    </router-link>
+
     <!--常见问题-->
-    <a href="../../views/mine/help.html" class="href">
-      <div class="help">
+    <router-link :to="{path:'/help'}">
+      <div class="href help">
         <div class="listicon">
           <img src="../../assets/images/icon/help.png" alt="" class="icon2">
         </div>
@@ -72,7 +80,9 @@
           <p>常见问题</p>
         </div>
       </div>
-    </a>
+    </router-link>
+
+    <router-view></router-view>
   </div>
 </template>
 
@@ -88,4 +98,7 @@ export default {
 </script>
 
 <style scoped lang="stylus">
+@import ('../../../static/css/mine');
+#tab3
+  display: flex;
 </style>

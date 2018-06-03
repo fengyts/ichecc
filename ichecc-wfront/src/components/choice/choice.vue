@@ -1,7 +1,7 @@
 <!-- 选车页 -->
 <template>
   <!--帮你选车-->
-  <div id="tab2" class="weui-tab__bd-item">
+  <div id="tab2" class="weui-tab__bd-item" style="display:inline">
     <!--表单-->
     <div class="form">
       <div class="weui-cells__title">购车预算</div>
@@ -94,4 +94,5 @@ export default {
 </script>
 
 <style scoped lang="stylus">
+@import ('../../../static/css/xuanche');
 </style>

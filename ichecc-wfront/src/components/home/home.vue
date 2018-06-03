@@ -1,71 +1,82 @@
 <!-- 特卖页 -->
 <template>
-  <!--新车特卖-->
-  <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active">
-    <div>
-      <!--头部区域-->
-      <div class="xctm_top">
-        <p class="xctm_top_title">本期特卖</p>
-        <p class="xctm_top_time">期号 : H180404&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时间 : 4.23 ~ 4.29</p>
+  <div class="home" style="height:100%;">
+    <div class="weui-tab">
+      <!--页面内容-->
+      <div class="weui-tab__bd" style="height:91%">
+        <!-- 新车特卖 -->
+        <!-- <temailist></temailist> -->
+        <!--帮你选车-->
+        <!-- <choice></choice> -->
+        <!--个人中心-->
+        <!-- <usercenter></usercenter> -->
+        <router-view></router-view>
       </div>
 
-      <!--列表区域-->
-      <div class="xctm_list">
-        <router-link :to="{path:'/detail'}" replace>
-          <a class="xctm_list_href">
-            <!--车辆图片-->
-            <div class="xctm_list_img">
-              <img src="../../assets/images/img/car_01.jpg" width="100%" alt="">
-            </div>
-            <!--车辆标题-->
-            <div class="xctm_list_title">
-              <p>上汽斯柯达明锐 2018款 1.6L 自动舒适版</p>
-            </div>
-            <!--车辆价格-->
-            <div class="xctm_list_price">
-              <p class="price">
-                <span>指导价 : </span>
-                <span class="price_num_zhidao">13.69万</span>
-              </p>
-              <p class="price">
-                <span>市场价 : </span>
-                <span class="price_num_shichang">10.69万</span>
-              </p>
-              <p class="price">
-                <span>特卖价 : </span>
-                <span class="price_num_temai">5.88万</span>
-              </p>
-            </div>
-            <!--参与人数等-->
-            <div class="xctm_list_canyu">
-              <hr class="hr" />
-              <p class="xctm_list_canyu_content">
-                <span class="xctm_list_canyu_num">578人已参与</span>
-                <span class="xctm_list_canyu_time">剩 3天19时50分28秒 结束</span>
-              </p>
-            </div>
-          </a>
-        </router-link>
-      </div>
-
-      <!--尾部区域-->
-      <div class="xctm_bottom">
-        <p>~ 没有更多了 ~</p>
+      <!--底部导航-->
+      <div class="weui-tabbar" style="height:9%;">
+        <a href="#" class="weui-tabbar__item weui-bar__item--on">
+          <p class="weui-tabbar__label">
+            <router-link to="/home/list" tag="span">
+              新车特卖
+            </router-link>
+          </p>
+        </a>
+        <a href="#" class="weui-tabbar__item weui-bar__item">
+          <p class="weui-tabbar__label">
+            <router-link to="/home/choice" tag="span">
+              帮你选车
+            </router-link>
+          </p>
+        </a>
+        <a href="#" class="weui-tabbar__item weui-bar__item">
+          <p class="weui-tabbar__label">
+            <router-link to="/home/usercenter" tag="span">
+              个人中心
+            </router-link>
+          </p>
+        </a>
       </div>
     </div>
   </div>
 </template>
 
 <script type="text/javascript">
+import temailist from 'components/temai/list';
+import choice from 'components/choice/choice';
+import usercenter from 'components/usercenter/usercenter';
 export default {
   props: {
   },
   data() {
     return {
     };
+  },
+  components: {
+    temailist, choice, usercenter
   }
 };
 </script>
 
 <style scoped lang="stylus">
+// @import ('../../../static/css/weui.v1.1.2.min');
+.weui-tab
+  display: flex;
+  .weui-tab__bd
+    flex: 1;
+    background: #f3f1f1;
+  .weui-tabbar
+    position: fixed;
+    flex: 0;
+    left: 0;
+    bottom: 0;
+    // height: 60px;
+    .weui-tabbar__label
+      font-size: 18px;
+      display: inline-block;
+      position: relative;
+      line-height: 18px;
+      top: 48%;
+      vertical-align: top;
+      margin-top: -9px;
 </style>
