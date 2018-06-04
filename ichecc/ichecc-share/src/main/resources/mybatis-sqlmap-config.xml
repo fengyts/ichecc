@@ -27,6 +27,10 @@
 		<mapper resource="sqlmap/topicItem-mybatis-sqlmap.xml" />
 		<mapper resource="sqlmap/bargainRecord-mybatis-sqlmap.xml" />
 		<mapper resource="sqlmap/item-mybatis-sqlmap.xml" />
+		<mapper resource="sqlmap/specGroupLink-mybatis-sqlmap.xml" />
+		<mapper resource="sqlmap/specGroup-mybatis-sqlmap.xml" />
+		<mapper resource="sqlmap/itemAttribute-mybatis-sqlmap.xml" />
+		<mapper resource="sqlmap/spec-mybatis-sqlmap.xml" />
 		
 	</mappers>
 </configuration>

@@ -1,19 +1,19 @@
 package com.ichecc.domain;
 
-import java.util.Date;
-
 import ng.bayue.common.BaseDO;
+
+import java.util.Date;
 
 /**
  * 选车订单
  * 
- * @author fengyts Wed May 09 09:29:19 CST 2018
+ * @author fengyts Mon Jun 04 14:08:05 CST 2018
  */
 
 public class ChoiceOrderDO extends BaseDO {
 
 	/**  */
-	private static final long serialVersionUID = 2619741428314656620L;
+	private static final long serialVersionUID = -4697380894105891198L;
 
 	/** 主键 */
 	private Long id;
@@ -25,22 +25,22 @@ public class ChoiceOrderDO extends BaseDO {
 	private Long userId;
 
 	/** 预算金额 */
-	private Double budget;
+	private String budget;
 
-	/** 能源：01-其他；02-新能源；03-汽油；04-柴油 */
+	/** 品牌 */
+	private String brand;
+
+	/** 能源类型 */
 	private String energy;
 
-	/** 车型：01-其他；02-SUV；03-MPV；04-小轿车 */
+	/** 车型 */
 	private String type;
 
-	/** 座位类型：01-其他；02-5座；03-其他 */
+	/** 座位类型 */
 	private String seat;
 
-	/** 变速箱：01-手动；02-自动 */
+	/** 变速箱 */
 	private String gearbox;
-
-	/** 自选品牌 */
-	private String customerBrand;
 
 	/** 其他需求 */
 	private String otherRequirement;
@@ -89,12 +89,21 @@ public class ChoiceOrderDO extends BaseDO {
 	 * 
 	 * @param budget
 	 */
-	public void setBudget(Double budget) {
+	public void setBudget(String budget) {
 		this.budget = budget;
 	}
 
 	/**
-	 * 设置 能源：01-其他；02-新能源；03-汽油；04-柴油
+	 * 设置 品牌
+	 * 
+	 * @param brand
+	 */
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+
+	/**
+	 * 设置 能源类型
 	 * 
 	 * @param energy
 	 */
@@ -103,7 +112,7 @@ public class ChoiceOrderDO extends BaseDO {
 	}
 
 	/**
-	 * 设置 车型：01-其他；02-SUV；03-MPV；04-小轿车
+	 * 设置 车型
 	 * 
 	 * @param type
 	 */
@@ -112,7 +121,7 @@ public class ChoiceOrderDO extends BaseDO {
 	}
 
 	/**
-	 * 设置 座位类型：01-其他；02-5座；03-其他
+	 * 设置 座位类型
 	 * 
 	 * @param seat
 	 */
@@ -121,21 +130,12 @@ public class ChoiceOrderDO extends BaseDO {
 	}
 
 	/**
-	 * 设置 变速箱：01-手动；02-自动
+	 * 设置 变速箱
 	 * 
 	 * @param gearbox
 	 */
 	public void setGearbox(String gearbox) {
 		this.gearbox = gearbox;
-	}
-
-	/**
-	 * 设置 自选品牌
-	 * 
-	 * @param customerBrand
-	 */
-	public void setCustomerBrand(String customerBrand) {
-		this.customerBrand = customerBrand;
 	}
 
 	/**
@@ -215,12 +215,21 @@ public class ChoiceOrderDO extends BaseDO {
 	 * 
 	 * @return budget
 	 */
-	public Double getBudget() {
+	public String getBudget() {
 		return budget;
 	}
 
 	/**
-	 * 获取 能源：01-其他；02-新能源；03-汽油；04-柴油
+	 * 获取 品牌
+	 * 
+	 * @return brand
+	 */
+	public String getBrand() {
+		return brand;
+	}
+
+	/**
+	 * 获取 能源类型
 	 * 
 	 * @return energy
 	 */
@@ -229,7 +238,7 @@ public class ChoiceOrderDO extends BaseDO {
 	}
 
 	/**
-	 * 获取 车型：01-其他；02-SUV；03-MPV；04-小轿车
+	 * 获取 车型
 	 * 
 	 * @return type
 	 */
@@ -238,7 +247,7 @@ public class ChoiceOrderDO extends BaseDO {
 	}
 
 	/**
-	 * 获取 座位类型：01-其他；02-5座；03-其他
+	 * 获取 座位类型
 	 * 
 	 * @return seat
 	 */
@@ -247,21 +256,12 @@ public class ChoiceOrderDO extends BaseDO {
 	}
 
 	/**
-	 * 获取 变速箱：01-手动；02-自动
+	 * 获取 变速箱
 	 * 
 	 * @return gearbox
 	 */
 	public String getGearbox() {
 		return gearbox;
-	}
-
-	/**
-	 * 获取 自选品牌
-	 * 
-	 * @return customerBrand
-	 */
-	public String getCustomerBrand() {
-		return customerBrand;
 	}
 
 	/**

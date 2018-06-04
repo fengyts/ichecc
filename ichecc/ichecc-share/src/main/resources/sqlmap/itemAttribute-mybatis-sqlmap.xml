@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ichecc.domain.ItemAttributeMapper">
+
+	<resultMap type="com.ichecc.domain.ItemAttributeDO" id="ItemAttributeDOResultMap">
+		<id column="id" property="id" />
+        <result column="name" property="name"/>
+        <result column="value" property="value"/>
+        <result column="create_user_id" property="createUserId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_user_id" property="modifyUserId"/>
+        <result column="modify_time" property="modifyTime"/>
+	</resultMap>
+
+	<sql id="MybatisItemAttributeDAO_all_column_fields">
+	      id,name,value,create_user_id,create_time,modify_user_id,modify_time
+ 	</sql>
+	<!-- 只有varchar char text类型 做 !='' 判断，生成代码时,其他类型时只做!=null 决断 0或fasle与空''是相同的，在mybatis中的动态语句中 -->
+	<sql id="MybatisItemAttributeDAO_dynamic_where_fields"><!-- xml转义字符需要 <![CDATA[   ]]> 标签-->
+		<where>
+			<if test="name != null  and name != '' "> AND name=#{name} </if>
+			<if test="value != null  and value != '' "> AND value=#{value} </if>
+			<if test="createUserId != null "> AND create_user_id=#{createUserId} </if>
+			<if test="modifyUserId != null "> AND modify_user_id=#{modifyUserId} </if>
+		</where>
+ 	</sql>
+	
+	<select id="MybatisItemAttributeDAO_selectById" parameterType="long" resultMap="ItemAttributeDOResultMap">
+		SELECT
+			<include refid="MybatisItemAttributeDAO_all_column_fields" />
+		FROM
+			item_attribute
+		WHERE
+			 id = #{id}
+	</select>
+	
+	
+	
+    <insert id="MybatisItemAttributeDAO_insert" parameterType="com.ichecc.domain.ItemAttributeDO" useGeneratedKeys="true">
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        INSERT INTO item_attribute(
+				id,
+				name,
+				value,
+				create_user_id,
+				create_time,
+				modify_user_id,
+				modify_time
+		)values(
+				#{id},
+				#{name},
+				#{value},
+				#{createUserId},
+				#{createTime},
+				#{modifyUserId},
+				#{modifyTime}
+		)
+    </insert>
+	
+
+	<update id="MybatisItemAttributeDAO_updateById" parameterType="com.ichecc.domain.ItemAttributeDO">
+		UPDATE item_attribute
+		SET
+					name = #{name},
+					value = #{value},
+					create_user_id = #{createUserId},
+					modify_user_id = #{modifyUserId},
+					modify_time = #{modifyTime}
+		WHERE
+			id = #{id}
+	</update>
+
+	<delete id="MybatisItemAttributeDAO_deleteById" parameterType="long">
+		DELETE FROM item_attribute WHERE id = #{id}
+	</delete>
+	
+	
+	<update id="MybatisItemAttributeDAO_update_dynamic" parameterType="com.ichecc.domain.ItemAttributeDO">
+		UPDATE item_attribute
+		<set>
+					<if test="name != null  and name != '' ">name=#{name},</if>
+					<if test="value != null  and value != '' ">value=#{value},</if>
+					<if test="createUserId != null ">create_user_id=#{createUserId},</if>
+					<if test="modifyUserId != null ">modify_user_id=#{modifyUserId},</if>
+					<if test="modifyTime != null ">modify_time=#{modifyTime},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
+ 	<select id="MybatisItemAttributeDAO_select_dynamic" resultMap="ItemAttributeDOResultMap" parameterType="com.ichecc.domain.ItemAttributeDO">
+	     SELECT
+	     	<include refid="MybatisItemAttributeDAO_all_column_fields" />
+		 FROM
+		 	item_attribute
+			<include refid="MybatisItemAttributeDAO_dynamic_where_fields" />
+ 	</select>
+
+ 	<select id="MybatisItemAttributeDAO_select_dynamic_count" resultType="long" parameterType="com.ichecc.domain.ItemAttributeDO">
+	     SELECT
+	     	count(1)
+		 FROM
+		 	item_attribute
+	 	<include refid="MybatisItemAttributeDAO_dynamic_where_fields" />
+ 	</select>
+
+ 	<select id="MybatisItemAttributeDAO_select_dynamic_page_query" resultMap="ItemAttributeDOResultMap" parameterType="com.ichecc.domain.ItemAttributeDO">
+	     SELECT
+	     	<include refid="MybatisItemAttributeDAO_all_column_fields" />
+		 FROM
+		 	item_attribute
+	 	<include refid="MybatisItemAttributeDAO_dynamic_where_fields" />
+	 	ORDER BY item_attribute.id DESC
+	 	Limit #{start},#{pageSize}
+ 	</select>
+
+</mapper>

@@ -7,13 +7,13 @@ import java.util.Date;
 /**
  * 专题商品
  * 
- * @author fengyts Tue May 15 11:14:56 CST 2018
+ * @author fengyts Mon Jun 04 14:08:04 CST 2018
  */
 
 public class TopicItemDO extends BaseDO {
 
 	/**  */
-	private static final long serialVersionUID = 3794903127541533532L;
+	private static final long serialVersionUID = -7628768386474916535L;
 
 	/** 主键 */
 	private Long id;
@@ -50,6 +50,9 @@ public class TopicItemDO extends BaseDO {
 
 	/** 专题商品是否上线：1-上线；0-下线 */
 	private Boolean status;
+
+	/** 特卖描述,关联商品属性表id,多个属性用逗号分隔 */
+	private String attributes;
 
 	/** 创建人 */
 	private Long createUserId;
@@ -169,6 +172,15 @@ public class TopicItemDO extends BaseDO {
 	 */
 	public void setStatus(Boolean status) {
 		this.status = status;
+	}
+
+	/**
+	 * 设置 特卖描述,关联商品属性表id,多个属性用逗号分隔
+	 * 
+	 * @param attributes
+	 */
+	public void setAttributes(String attributes) {
+		this.attributes = attributes;
 	}
 
 	/**
@@ -313,6 +325,15 @@ public class TopicItemDO extends BaseDO {
 	 */
 	public Boolean getStatus() {
 		return status;
+	}
+
+	/**
+	 * 获取 特卖描述,关联商品属性表id,多个属性用逗号分隔
+	 * 
+	 * @return attributes
+	 */
+	public String getAttributes() {
+		return attributes;
 	}
 
 	/**
