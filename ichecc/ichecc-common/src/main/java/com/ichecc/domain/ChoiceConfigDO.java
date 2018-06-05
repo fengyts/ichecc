@@ -5,27 +5,33 @@ import ng.bayue.common.BaseDO;
 import java.util.Date;
 
 /**
- * 商品属性
+ * 选车配置
  * 
- * @author fengyts Mon Jun 04 14:08:04 CST 2018
+ * @author fengyts Tue Jun 05 09:32:59 CST 2018
  */
 
-public class ItemAttributeDO extends BaseDO {
+public class ChoiceConfigDO extends BaseDO {
 
 	/**  */
-	private static final long serialVersionUID = -7134663300334599362L;
+	private static final long serialVersionUID = 1293804076640621274L;
 
 	/** 主键 */
 	private Long id;
 
-	/** 属性名称 */
+	/** 配置名称 */
 	private String name;
 
-	/** 属性值 */
-	private String value;
+	/** 级别：1-父选项；2-子选项 */
+	private Integer level;
 
-	/** 排序 */
-	private Integer sort;
+	/** 父选项id */
+	private Long parentId;
+
+	/** 状态：1-有效；0-无效 */
+	private Boolean status;
+
+	/** 备注 */
+	private String remark;
 
 	/**  */
 	private Long createUserId;
@@ -49,7 +55,7 @@ public class ItemAttributeDO extends BaseDO {
 	}
 
 	/**
-	 * 设置 属性名称
+	 * 设置 配置名称
 	 * 
 	 * @param name
 	 */
@@ -58,21 +64,39 @@ public class ItemAttributeDO extends BaseDO {
 	}
 
 	/**
-	 * 设置 属性值
+	 * 设置 级别：1-父选项；2-子选项
 	 * 
-	 * @param value
+	 * @param level
 	 */
-	public void setValue(String value) {
-		this.value = value;
+	public void setLevel(Integer level) {
+		this.level = level;
 	}
 
 	/**
-	 * 设置 排序
+	 * 设置 父选项id
 	 * 
-	 * @param sort
+	 * @param parentId
 	 */
-	public void setSort(Integer sort) {
-		this.sort = sort;
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
+	}
+
+	/**
+	 * 设置 状态：1-有效；0-无效
+	 * 
+	 * @param status
+	 */
+	public void setStatus(Boolean status) {
+		this.status = status;
+	}
+
+	/**
+	 * 设置 备注
+	 * 
+	 * @param remark
+	 */
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 	/**
@@ -121,7 +145,7 @@ public class ItemAttributeDO extends BaseDO {
 	}
 
 	/**
-	 * 获取 属性名称
+	 * 获取 配置名称
 	 * 
 	 * @return name
 	 */
@@ -130,21 +154,39 @@ public class ItemAttributeDO extends BaseDO {
 	}
 
 	/**
-	 * 获取 属性值
+	 * 获取 级别：1-父选项；2-子选项
 	 * 
-	 * @return value
+	 * @return level
 	 */
-	public String getValue() {
-		return value;
+	public Integer getLevel() {
+		return level;
 	}
 
 	/**
-	 * 获取 排序
+	 * 获取 父选项id
 	 * 
-	 * @return sort
+	 * @return parentId
 	 */
-	public Integer getSort() {
-		return sort;
+	public Long getParentId() {
+		return parentId;
+	}
+
+	/**
+	 * 获取 状态：1-有效；0-无效
+	 * 
+	 * @return status
+	 */
+	public Boolean getStatus() {
+		return status;
+	}
+
+	/**
+	 * 获取 备注
+	 * 
+	 * @return remark
+	 */
+	public String getRemark() {
+		return remark;
 	}
 
 	/**

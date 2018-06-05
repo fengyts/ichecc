@@ -31,6 +31,7 @@
 		<mapper resource="sqlmap/specGroup-mybatis-sqlmap.xml" />
 		<mapper resource="sqlmap/itemAttribute-mybatis-sqlmap.xml" />
 		<mapper resource="sqlmap/spec-mybatis-sqlmap.xml" />
+		<mapper resource="sqlmap/choiceConfig-mybatis-sqlmap.xml" />
 		
 	</mappers>
 </configuration>
