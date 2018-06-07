@@ -55,7 +55,7 @@ public class TopicServiceImpl  implements TopicService{
 			String currentTotalPeriod = "01";
 			if (year == Integer.parseInt(previousPeriodNo.substring(1, 3))) {
 				int tem = Integer.parseInt(previousPeriodNo.substring(7)) + 1;
-				currentTotalPeriod = String.format("%02d", tem);
+				currentTotalPeriod = String.format("%03d", tem);
 			}
 			periodNo.append(currentTotalPeriod);
 		}

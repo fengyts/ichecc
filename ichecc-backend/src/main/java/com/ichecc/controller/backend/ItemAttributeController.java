@@ -16,7 +16,7 @@ import com.ichecc.util.ResultMessage;
 import ng.bayue.common.Page;
 
 @Controller
-@RequestMapping("/itemAttribute/")
+@RequestMapping("/itemAttribute")
 public class ItemAttributeController {
 
 	@Autowired
@@ -31,12 +31,12 @@ public class ItemAttributeController {
 		if (CollectionUtils.isEmpty(page.getList())) {
 			model.addAttribute("noRecoders", "暂无数据");
 		}
-		return BackendConstant.BACKEND_VIEW_PATH + "itemAttriute/list";
+		return BackendConstant.BACKEND_VIEW_PATH + "itemAttribute/list";
 	}
 
 	@RequestMapping("add")
 	public String add() {
-		return BackendConstant.BACKEND_VIEW_PATH + "itemAttriute/add";
+		return BackendConstant.BACKEND_VIEW_PATH + "itemAttribute/add";
 	}
 
 	@RequestMapping("save")
@@ -49,7 +49,7 @@ public class ItemAttributeController {
 	@RequestMapping("edit")
 	public String add(Model model, Long id) {
 		model.addAttribute("attributeDO", attributeAO.selectById(id));
-		return BackendConstant.BACKEND_VIEW_PATH + "itemAttriute/edit";
+		return BackendConstant.BACKEND_VIEW_PATH + "itemAttribute/edit";
 	}
 
 	@RequestMapping("update")

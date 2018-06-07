@@ -16,7 +16,7 @@ import com.ichecc.util.ResultMessage;
 import ng.bayue.common.Page;
 
 @Controller
-@RequestMapping("/spec/")
+@RequestMapping("/spec")
 public class SpecController {
 
 	@Autowired
