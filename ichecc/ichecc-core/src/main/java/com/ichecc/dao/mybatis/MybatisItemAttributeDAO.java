@@ -62,4 +62,11 @@ public class MybatisItemAttributeDAO extends MybatisBaseDAO implements ItemAttri
 		return getSqlSession().selectList(getStatement("select_dynamic_page_query"), itemAttributeDO);
 	}
 
+	@Override
+	public List<ItemAttributeDO> selectByIds(List<Long> ids) {
+		return getSqlSession().selectList(getStatement("select_by_ids"), ids);
+	}
+	
+	
+
 }

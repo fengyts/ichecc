@@ -1,7 +1,9 @@
 package com.ichecc.service.impl;
 
+import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
@@ -128,6 +130,17 @@ public class ItemAttributeServiceImpl  implements ItemAttributeService{
 		}
 		return new Page<ItemAttributeDO>();
 	}
+
+
+	@Override
+	public List<ItemAttributeDO> selectByIds(List<Long> ids) {
+		if(CollectionUtils.isEmpty(ids)){
+			return Collections.emptyList();
+		}
+		return itemAttributeDAO.selectByIds(ids);
+	}
+	
+	
 	
 	
 }

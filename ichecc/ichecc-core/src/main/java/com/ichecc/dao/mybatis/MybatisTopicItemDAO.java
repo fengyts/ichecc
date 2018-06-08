@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 import com.ichecc.dao.TopicItemDAO;
 import com.ichecc.dao.base.MybatisBaseDAO;
 import com.ichecc.domain.TopicItemDO;
+import com.ichecc.front.dto.FrontTopicItemDTO;
+
 import ng.bayue.exception.CommonDAOException;
 
 @Component(value="topicItemDAO")
@@ -66,5 +68,12 @@ public class MybatisTopicItemDAO extends MybatisBaseDAO implements TopicItemDAO 
 	public int updateItemRedundance(TopicItemDO topicItemDO) {
 		return getSqlSession().update(getStatement("update_item_redundance"), topicItemDO);
 	}
+
+	@Override
+	public List<FrontTopicItemDTO> selectListFront(Long topicId) {
+		return getSqlSession().selectList(getStatement("select_list_front"), topicId);
+	}
+	
+	
 
 }

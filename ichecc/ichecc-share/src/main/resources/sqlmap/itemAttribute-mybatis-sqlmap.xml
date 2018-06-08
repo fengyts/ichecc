@@ -121,5 +121,19 @@
 	 	ORDER BY item_attribute.id DESC
 	 	Limit #{start},#{pageSize}
  	</select>
+ 	
+ 	
+ 	<select id="MybatisItemAttributeDAO_select_by_ids" resultMap="ItemAttributeDOResultMap" parameterType="list">
+ 		SELECT
+	     	<include refid="MybatisItemAttributeDAO_all_column_fields" />
+		 FROM
+		 	item_attribute
+ 		WHERE id IN
+ 		(
+ 			<foreach collection="list" item="id" separator=",">
+ 				#{id}
+ 			</foreach>
+ 		)
+ 	</select>
 
 </mapper>

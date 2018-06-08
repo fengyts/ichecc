@@ -193,30 +193,39 @@ $(function() {
 	$("#associateConfirm").on('click', function(){
 		var _checkedList = $("#attributeDataList :checkbox:checked");
 		if(_checkedList.length < 1){
-			layer.tips("必须选中至少一个属性", "#associateConfirm", {tips:2, time: 1000});
+			layer.tips("必须选中至少一个属性", "#associateConfirm", {tips:2, time: 1500});
 			return;
 		}
 		
-		var _parentChecked = window.parent.$("#attributeCheckedList tr");
+		var _parentChecked = window.parent.$(".attributes");
 		var _pArray = [];
 		$.each(_parentChecked, function(i,v){
-			_pArray.push($(v).children().eq(0).text());
+			_pArray.push($(v).val());
 		});
-		
-		var _trs = "";
+		var _trs = "", _isRepeat = false;
 		var _tds, _id, _name, _val;
 		$.each(_checkedList, function(i, v){
 			_tds = $(v).parent().nextAll();
 			_id = _tds.eq(0).text();
+			var _inArray = $.inArray(_id, _pArray);
+			if(-1 != _inArray){
+				_isRepeat = true;
+				return;
+			}
 			_name = _tds.eq(1).text();
 			_val = _tds.eq(2).text();
-			_trs = "<tr>" +
-					"<td class='display'>" + _id + "</td>" +
-					"<td>" + _name + "</td>" +
-					"<td>" + _val + "</td>" +
-					"<td><button type='button' class='btn btn-primary'>删除</button></td>" +
+			_trs += "<tr>" +
+					"<td class='display'><input type='hidden' name='attributes' value='" + _id + "' class='attributes'/></td>" +
+					"<td class='td_center'>" + _name + "</td>" +
+					"<td class='td_center'>" + _val + "</td>" +
+					"<td class='td_center'><button type='button' class='btn btn-primary deleteAttribute'>删除</button></td>" +
 					"</tr>";
 		});
+		
+		if(_isRepeat){
+			layer.tips("属性已存在，请不要重复关联", "#associateConfirm", {tips:2, time: 1500});
+			return;
+		}
 		
 		window.parent.$("#attributeCheckedList").append(_trs);
 		var _index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
@@ -225,4 +234,10 @@ $(function() {
 	});
 	
 	
+	$("#attributeCheckedList").on('click', '.deleteAttribute', function(){
+		$(this).parent().parent().remove();
+	});
+	
+	
 });
+

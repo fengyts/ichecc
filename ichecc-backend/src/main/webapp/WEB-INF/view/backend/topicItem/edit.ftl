@@ -75,8 +75,36 @@ css=[
 			</label>
 		</div>
 	</div>
+	<hr/>
 	<div class="form-group">
-		
+		<div class="col-md-10" style="margin-left:50px;">
+		<span><button type="button" class="btn btn-primary" id="associateAttribute">关联商品属性</button></span>
+		<table class="table table-bordered mt15">
+			<#--
+			<caption>专题商品属性</caption>
+			-->
+			<thead>
+				<tr>
+					<th class="display"></th>
+					<th class="col-md-3 td_center">属性名称</th>
+					<th class="col-md-6 td_center">属性值</th>
+					<th class="col-md-1 td_center">操作</th>
+				</tr>
+			</thead>
+			<tbody id="attributeCheckedList">
+			<#if attributes?default([])?size &gt; 0>
+				<#list attributes as attribute>
+					<tr>
+						<td class='display'><input type='hidden' class='attributes' name='attributes' value=${attribute.id} /></td>
+						<td class='td_center'>${attribute.name}</td>
+						<td class='td_center'>${attribute.value}</td>
+						<td class='td_center'><button type='button' class='btn btn-primary deleteAttribute'>删除</button></td>
+					</tr>
+				</#list>
+			</#if>
+			</tbody>
+		</table>
+		</div>
 	</div>
 	
 	

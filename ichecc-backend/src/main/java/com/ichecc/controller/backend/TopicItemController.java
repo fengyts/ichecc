@@ -74,7 +74,7 @@ public class TopicItemController {
 	public String edit(Model model, Long id) {
 		TopicItemDO topicItemDO = topicItemAO.selectById(id);
 		model.addAttribute("topicItemDO", topicItemDO);
-
+		model.addAttribute("attributes", topicItemAO.selectAttributes(topicItemDO.getAttributes()));
 		return BackendConstant.BACKEND_VIEW_PATH + "topicItem/edit";
 	}
 

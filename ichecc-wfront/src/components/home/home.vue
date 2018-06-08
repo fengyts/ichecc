@@ -42,18 +42,18 @@
 </template>
 
 <script type="text/javascript">
-import temailist from 'components/temai/list';
-import choice from 'components/choice/choice';
-import usercenter from 'components/usercenter/usercenter';
+import temailist from "components/temai/list";
+import choice from "components/choice/choice";
+import usercenter from "components/usercenter/usercenter";
 export default {
-  props: {
-  },
+  props: {},
   data() {
-    return {
-    };
+    return {};
   },
   components: {
-    temailist, choice, usercenter
+    temailist,
+    choice,
+    usercenter
   }
 };
 </script>

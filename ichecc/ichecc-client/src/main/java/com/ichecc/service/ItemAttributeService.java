@@ -1,7 +1,10 @@
 package com.ichecc.service;
 
-import ng.bayue.service.common.GeneralService;
+import java.util.List;
+
 import com.ichecc.domain.ItemAttributeDO;
+
+import ng.bayue.service.common.GeneralService;
 
  /**
  * 商品属性 Service
@@ -9,5 +12,6 @@ import com.ichecc.domain.ItemAttributeDO;
  */
 public interface ItemAttributeService extends GeneralService<ItemAttributeDO, ItemAttributeDO> {
 	
+	public List<ItemAttributeDO> selectByIds(List<Long> ids);
 	
 }

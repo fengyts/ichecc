@@ -96,7 +96,6 @@ css=[
 		</div>
 	</div>
 	
-	
 	<hr/>
 	<div>
 		<div class="col-sm-12 panel-toolbar text-left dr-slash-text" id="operateBtn">

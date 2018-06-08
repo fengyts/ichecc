@@ -1,6 +1,10 @@
 package com.ichecc.dao;
 
+import java.util.List;
+
 import com.ichecc.domain.TopicItemDO;
+import com.ichecc.front.dto.FrontTopicItemDTO;
+
 import ng.bayue.service.common.GeneralDAO;
 
  /**
@@ -18,5 +22,14 @@ public interface TopicItemDAO extends GeneralDAO<TopicItemDO> {
 	 * @return
 	 */
 	public int updateItemRedundance(TopicItemDO topicItemDO);
+	
+	/**
+	 * 获取专题商品
+	 * @param topicId
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
+	List<FrontTopicItemDTO> selectListFront(Long topicId);
 
 }

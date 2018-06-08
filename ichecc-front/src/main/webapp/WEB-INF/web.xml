@@ -7,8 +7,7 @@
 	<display-name>Archetype Created Web Application</display-name>
 	
 	<welcome-file-list>
-		<!-- <welcome-file>index.jsp</welcome-file> -->
-		<welcome-file>/view/index/index.ftl</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 
 	<context-param>
@@ -42,10 +41,6 @@
 	
 	<servlet-mapping>
 		<servlet-name>springmvc</servlet-name>
-		<url-pattern>*.htm</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>springmvc</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	<!-- springMVC前端控制器配置结束 -->
@@ -53,7 +48,7 @@
 	<!-- XSS攻击过滤器 -->
 	<filter>  
         <filter-name>XSSEscape</filter-name>  
-        <filter-class>com.checc.interceptor.XSSFilter</filter-class>  
+        <filter-class>com.ichecc.interceptor.XSSFilter</filter-class>  
     </filter>  
     <filter-mapping>  
         <filter-name>XSSEscape</filter-name>  
@@ -84,36 +79,5 @@
 	</filter-mapping>
 	<!-- POST中文乱码过滤器配置结束 -->
 	
-	<!-- 配置druid监控 -->
-	<filter>
-		<filter-name>DruidWebStatFilter</filter-name>
-		<filter-class>com.alibaba.druid.support.http.WebStatFilter</filter-class>
-		<init-param>
-			<param-name>exclusions</param-name>
-			<param-value>*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>DruidWebStatFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-
-	<servlet>
-		<servlet-name>DruidStatView</servlet-name>
-		<servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>DruidStatView</servlet-name>
-		<url-pattern>/druid/*</url-pattern>
-	</servlet-mapping>
-	
-	<error-page>
-		<error-code>500</error-code>
-		<location>/error/error.htm?statusCode=500</location>
-	</error-page>
-	<error-page>
-		<error-code>404</error-code>
-		<location>/error/error.htm?statusCode=404</location>
-	</error-page>
 
 </web-app>

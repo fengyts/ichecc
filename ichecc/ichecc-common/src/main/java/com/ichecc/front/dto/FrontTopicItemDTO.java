@@ -1,38 +1,32 @@
-package com.ichecc.dto;
+package com.ichecc.front.dto;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class TopicItemDTO implements Serializable {
+public class FrontTopicItemDTO extends BaseDTO {
 
-	private static final long serialVersionUID = -4998297441365163831L;
+	private static final long serialVersionUID = -8164738068064295345L;
 
-	/** topicItem 主键ID */
-	private Long id;
+	/** 专题id */
 	private Long topicId;
+	/** 专题期号 */
+	private String periodNo;
 	/** 专题开始时间 */
 	private Date startTime;
 	/** 专题结束时间 */
 	private Date endTime;
-	/** 专题状态 */
-	private String status;
 
+	/** 专题商品id */
+	private Long tiId;
 	private Long itemId;
+	private String picture;
 	private String itemTitle;
+	private String subTitle;
 	private Double marketPrice;
 	private Double guidePrice;
 	private Double specialPrice;
-	private Integer bargainMaxTimes;
-	private Integer residueTimes;
-	private Boolean itemStatus;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
+	/** 当前参与人数 */
+	private Integer participationNum;
 
 	public Long getTopicId() {
 		return topicId;
@@ -40,6 +34,14 @@ public class TopicItemDTO implements Serializable {
 
 	public void setTopicId(Long topicId) {
 		this.topicId = topicId;
+	}
+
+	public String getPeriodNo() {
+		return periodNo;
+	}
+
+	public void setPeriodNo(String periodNo) {
+		this.periodNo = periodNo;
 	}
 
 	public Date getStartTime() {
@@ -58,12 +60,12 @@ public class TopicItemDTO implements Serializable {
 		this.endTime = endTime;
 	}
 
-	public String getStatus() {
-		return status;
+	public Long getTiId() {
+		return tiId;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setTiId(Long tiId) {
+		this.tiId = tiId;
 	}
 
 	public Long getItemId() {
@@ -74,12 +76,28 @@ public class TopicItemDTO implements Serializable {
 		this.itemId = itemId;
 	}
 
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+
 	public String getItemTitle() {
 		return itemTitle;
 	}
 
 	public void setItemTitle(String itemTitle) {
 		this.itemTitle = itemTitle;
+	}
+
+	public String getSubTitle() {
+		return subTitle;
+	}
+
+	public void setSubTitle(String subTitle) {
+		this.subTitle = subTitle;
 	}
 
 	public Double getMarketPrice() {
@@ -106,28 +124,12 @@ public class TopicItemDTO implements Serializable {
 		this.specialPrice = specialPrice;
 	}
 
-	public Integer getBargainMaxTimes() {
-		return bargainMaxTimes;
+	public Integer getParticipationNum() {
+		return participationNum;
 	}
 
-	public void setBargainMaxTimes(Integer bargainMaxTimes) {
-		this.bargainMaxTimes = bargainMaxTimes;
-	}
-
-	public Integer getResidueTimes() {
-		return residueTimes;
-	}
-
-	public void setResidueTimes(Integer residueTimes) {
-		this.residueTimes = residueTimes;
-	}
-
-	public Boolean getItemStatus() {
-		return itemStatus;
-	}
-
-	public void setItemStatus(Boolean itemStatus) {
-		this.itemStatus = itemStatus;
+	public void setParticipationNum(Integer participationNum) {
+		this.participationNum = participationNum;
 	}
 
 }

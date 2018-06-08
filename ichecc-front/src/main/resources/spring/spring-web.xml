@@ -11,21 +11,16 @@
        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 	   http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-<!-- 	<mvc:annotation-driven /> -->
+	<mvc:annotation-driven />
 
-	<context:component-scan base-package="com.checc.*">
+	<context:component-scan base-package="com.ichecc.*">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" />
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />
 	</context:component-scan>
 	
-	<bean id="stringHttpMessageConverter"
-		class="org.springframework.http.converter.StringHttpMessageConverter" />
-	<bean
-		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
-
-	<bean id="jsonHttpMessageConverter"
-		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+	<bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter" />
+	<bean id="jsonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 		<property name="supportedMediaTypes">
 			<list>
 				<value>application/json;charset=UTF-8</value>
@@ -33,10 +28,9 @@
 			</list>
 		</property>
 	</bean>
-
-	<!-- 线程安全的访问session -->
-	<bean
-		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+	<!-- DefaultAnnotationHandlerMapping RequestMappingHandlerMapping 会在 <mvc:annotation-driven />中自动注册 -->
+<!-- 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" /> -->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<property name="synchronizeOnSession" value="true" />
 		<property name="messageConverters">
 			<list>
@@ -45,7 +39,30 @@
 			</list>
 		</property>
 	</bean>
-
+	
+	<!--To enable @RequestMapping process on type level and method level. like <mvc:annotation-driven /> -->
+<!-- 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" /> -->
+<!-- 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" > -->
+<!-- 		<property name="messageConverters"> -->
+<!-- 			<list> -->
+<!-- 				<bean class="org.springframework.http.converter.BufferedImageHttpMessageConverter" /> -->
+<!-- 				<bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter" /> -->
+<!-- 				<bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter" /> -->
+<!-- 				<bean class="org.springframework.http.converter.xml.XmlAwareFormHttpMessageConverter" /> -->
+<!-- 				<bean class="org.springframework.http.converter.StringHttpMessageConverter" /> -->
+<!-- 				<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"> -->
+<!-- 					<property name="supportedMediaTypes"> -->
+<!-- 						<list> -->
+<!-- 							<value>application/json;charset=UTF-8</value> -->
+<!-- 						</list> -->
+<!-- 					</property> -->
+<!-- 				</bean> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+	
+	<mvc:default-servlet-handler />
+	
 	<!-- jsp视图解析(*.jsp) -->
 	<bean id="internalResourceViewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -110,43 +127,10 @@
 		class="org.springframework.context.support.ResourceBundleMessageSource"
 		p:basename="i18n/messages" />
 	<!-- 静态资源路径 -->
-	<mvc:resources mapping="/statics/**" location="/statics/" />
-	<!-- 错误页面 -->
-<!-- 	<mvc:resources mapping="/error/**" location="/WEB-INF/view/error/" /> -->
+<!-- 	<mvc:resources mapping="/statics/**" location="/statics/" /> -->
 	
-<!-- 	<bean id="exceptionHandler" class="com.checc.interceptor.ExceptionHandler" /> -->
 	
-	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-<!-- 		<property name="defaultErrorView" value="/WEB-INF/view/error/error" /> -->
-		<property name="order" value="0" />
-		<property name="defaultErrorView" value="/error/error" />
-		<property name="defaultStatusCode" value="500" />
-		<property name="exceptionMappings">
-			<props>
-				<prop key="java.lang.Exception">/error/caonima</prop>
-				<prop key="java.lang.NullPointerException">/error/error</prop>
-			</props>
-		</property>
-	</bean>
 	
 
-	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/**" />
-			<bean id="tokenInterceptor" class="com.checc.interceptor.TokenInterceptor">
-				<property name="enable" value="true" />
-			</bean>
-		</mvc:interceptor>
-		<mvc:interceptor>
-			<mvc:mapping path="/user/bis/**" />
-			<mvc:mapping path="/user/deposit/**" />
-			<mvc:mapping path="/topicItem/auctionAction/**" />
-			<mvc:mapping path="/auction/**" />
-			<mvc:mapping path="/pay/wechat/payQRCode" />
-			<bean id="loginStatusInterceptor" class="com.checc.interceptor.LoginStatusInterceptor">
-				<property name="enable" value="true" />
-			</bean>
-		</mvc:interceptor>
-	</mvc:interceptors>
 
 </beans>
