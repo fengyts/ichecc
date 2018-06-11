@@ -1,6 +1,6 @@
 package com.ichecc.controller;
 
-import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ichecc.ao.TopicItemAO;
 import com.ichecc.common.Constants;
 import com.ichecc.common.ResultData;
-import com.ichecc.front.dto.FrontTopicItemDTO;
 
 
 @Controller
@@ -24,8 +23,8 @@ public class HomeController {
 	@RequestMapping(value ="/itemList", method = {RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
 	public ResultData itemList() {
-		List<FrontTopicItemDTO> list = topicItemAO.selectList();
-		return ResultData.success(list);
+		Map<String, Object> result = topicItemAO.homeData();
+		return ResultData.success(result);
 	}
 
 }

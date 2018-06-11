@@ -4,12 +4,6 @@
     <div class="weui-tab">
       <!--页面内容-->
       <div class="weui-tab__bd" style="height:91%">
-        <!-- 新车特卖 -->
-        <!-- <temailist></temailist> -->
-        <!--帮你选车-->
-        <!-- <choice></choice> -->
-        <!--个人中心-->
-        <!-- <usercenter></usercenter> -->
         <router-view></router-view>
       </div>
 
@@ -70,7 +64,7 @@ export default {
     flex: 0;
     left: 0;
     bottom: 0;
-    // height: 60px;
+    height: 60px;
     .weui-tabbar__label
       font-size: 18px;
       display: inline-block;
