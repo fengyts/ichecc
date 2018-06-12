@@ -9,6 +9,15 @@
           <div class="back" @click="closeDetail($event)">
             <i class="icon-arrow_lift"></i>
           </div>
+          
+          <div class="time">
+            <div class="time_bg"> 
+            </div>
+            <div class="time_content">
+              剩 3天19时50分28秒 结束 / 已结束
+            </div>
+          </div>
+          
         </div>
 
         <!--车辆标题-->
@@ -28,18 +37,12 @@
         </div>
       </div>
       <div class="tmxq_middle">
-        <!--特卖价，参与按钮-->
+        <!--特卖价-->
         <div class="tmxq_price2">
-          <span>
+          <span class="price_canyu">
             <font class="price_temai">特卖价 : </font>
             <font class="price_num_temai">5.58万</font>&nbsp;
-            <font class="xianzhi">仅限1辆</font>
-          </span>
-          <span class="canyu">
-            <!-- <button type="button" class="button_canyu" onclick="javascript:window.location.href='./kanjia.html'">立即参与</button> -->
-            <router-link :to="{path:'/detail/bargain'}">
-              <button class="button_canyu">立即参与</button>
-            </router-link>
+            <font class="xianzhi">&nbsp;仅限1辆&nbsp;</font>
           </span>
         </div>
         <!--特卖说明-->
@@ -51,13 +54,27 @@
           <p class="notice">送保险：免费赠送第一年保险</p>
           <p class="notice">0首付：按揭购车可享0首付，最高可分60期</p>
         </div>
-        <div>
-          <div class="tmxq_bottom">
-            <p>本期特卖剩 3天19时50分28秒 结束<br>(本期特卖已结束)</p>
-          </div>
-        </div>
       </div>
+
+      <router-link :to="{path:'/carDescribe'}">
+        <div class="tmxq_jieshao">
+            <p class="jieshao">查看车型介绍</p>
+        </div>
+      </router-link>
+
+      <div class="tmxq_bottom">
+        <p>- 没有更多了 -</p>
+      </div>
+
     </div>
+
+    <!--立即参与按钮-->
+    <div class="canyu">
+      <router-link :to="{path:'/bargain'}">
+        <button class="button_canyu">立即参与</button>
+      </router-link>
+    </div>
+
   </div>
 </template>
 
@@ -110,6 +127,6 @@ export default {
   bottom: 0;
   left: 0;
   z-index: 630;
-  background: #fff;
+  background: #f3f1f1;
   width: 100%;
 </style>

@@ -10,6 +10,8 @@ import authentication from 'components/usercenter/authentication'
 import bargainRecord from 'components/usercenter/bargainRecord'
 import choiceRecord from 'components/usercenter/choiceRecord'
 import help from 'components/other/help'
+import carDescribe from 'components/temai/carDescribe'
+import bargain from 'components/temai/bargain'
 
 Vue.use(Router)
 
@@ -64,6 +66,14 @@ export default new Router({
     {
       path: '/help',
       component: help
+    },
+    {
+      path: '/carDescribe',
+      component: carDescribe
+    },
+    {
+      path: '/bargain',
+      component: bargain
     }
   ],
   linkActiveClass: '--active' // 指定超链接激活的样式,等同于class="active"

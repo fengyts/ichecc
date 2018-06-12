@@ -6,18 +6,19 @@
       <!--头部区域-->
       <div class="xctm_top">
         <p class="xctm_top_title">本期特卖</p>
-        <p class="xctm_top_time">期号 : H180404&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时间 : 4.23 ~ 4.29</p>
+        <p class="xctm_top_time">期号 : H180404&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时间 : 4.23 - 4.29</p>
       </div>
 
       <!--列表区域-->
       <div class="xctm_list">
         <router-link :to="{path:'/detail'}">
+
         <!-- <div class="xctm_list_href" @click="showDetail($event)"> -->
-        <div class="xctm_list_href">
           <!--车辆图片-->
           <div class="xctm_list_img">
             <img src="../../assets/images/img/car_01.jpg" width="100%" alt="">
           </div>
+      
           <!--车辆标题-->
           <div class="xctm_list_title">
             <p>上汽斯柯达明锐 2018款 1.6L 自动舒适版</p>
@@ -35,24 +36,18 @@
             <p class="price">
               <span>特卖价 : </span>
               <span class="price_num_temai">5.88万</span>
+              <span class="xctm_list_canyu_num">578人正在参与</span>
             </p>
           </div>
-          <!--参与人数等-->
-          <div class="xctm_list_canyu">
-            <hr class="hr" />
-            <p class="xctm_list_canyu_content">
-              <span class="xctm_list_canyu_num">578人已参与</span>
-              <span class="xctm_list_canyu_time">剩 3天19时50分28秒 结束</span>
-            </p>
-          </div>
-        </div>
+
         </router-link>
       </div>
 
       <!--尾部区域-->
       <div class="xctm_bottom">
-        <p>~ 没有更多了 ~</p>
+        <p>- 没有更多了 -</p>
       </div>
+
     </div>
     <!-- <detail ref="detailC"></detail> -->
   </div>

@@ -1,24 +1,24 @@
 .xctm_top{
     text-align: center;
-    padding-top:22px;
+    padding-top:30px;
 }
 
 .xctm_top_title{
     color:#2aa515;
-    font-size:24px;
+    font-size:22px;
     font-weight: bold;
 }
 
 .xctm_top_time{
     color:gray;
-    font-size:14px;
-    margin-top:4px;
+    font-size:12px;
+    margin-top:14px;
 }
 
 .xctm_list{
     background: #fff;
     width:92%;
-    margin-top:22px;
+    margin-top:25px;
     margin-left:4%;
     border-radius:5px;
 }
@@ -26,18 +26,22 @@
     width:100%;
     margin:0 auto;
     border-radius:5px;
+    position: relative;
 }
 .xctm_list_title{
-    font-size:21px;
+    font-size:20px;
     color: #000000;
     margin-left:4%;
+    margin-top:10px;
     font-weight: bold;
+    line-height: 28px;
     width:92%;
 }
 .xctm_list_price{
-    font-size: 17px;
+    font-size: 15px;
     color:gray; 
-    margin-top:6px;
+    padding-top:10px;
+    padding-bottom: 10px;
     margin-left:4%;
 }
 
@@ -49,51 +53,23 @@
 }
 
 .price{
-    line-height: 32px;
+    line-height: 28px;
 }
 .price_num_temai{
     color:red;
     font-weight: bold;
 }
 
-.hr{
-    width:92%;
-    margin-left:4%;
-    height:1px;
-    border:none;
-    border-top:1px 
-    dashed gray;
-}
-.xctm_list_canyu{
-    color:gray;
-    font-size: 14px;
-    margin-top:9px;
-    height:48px;
-}
-.xctm_list_canyu_content{
-    padding-top:10px;
-    width:92%;
-    margin-left:4%;
-}
-
 .xctm_bottom{
     margin-top:23px;
     margin-bottom: 23px;
-    font-size:14px;
-    color:gray;
+    font-size:12px;
+    color:#bdbaba;
     text-align: center;
 }
 
 .xctm_list_canyu_num{
-    float:left;
-}
-
-.xctm_list_canyu_time{
     float:right;
+    margin-right: 4%;
 }
 
-.xctm_list_href{
-    text-decoration: none; 
-    color: #000000;
-
-}

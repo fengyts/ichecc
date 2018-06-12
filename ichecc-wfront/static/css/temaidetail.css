@@ -1,18 +1,55 @@
+.temai-detail{
+  background-color: #f3f1f1;
+}
+
 .tmxq_top,
 .tmxq_middle {
   background: #ffffff;
+  
+}
+
+.tmxq_middle{
+  margin-top:16px;
 }
 
 .tmxq_img {
   /* height: 375px; */
   height: 100%;
   width: 100%;
+  position: relative;
+}
+
+.time{
+  position: relative;
+}
+.time_bg{
+  position: absolute;
+  height:45px;
+  width:100%;
+  border: none;
+  bottom:0;
+  left:0;
+  margin-bottom: 3px;
+  background:#2aa515;
+  opacity: 0.3;
+  z-index: 1;
+
+}
+.time_content{
+  margin-left: 4%;
+  z-index: 2;
+  color:white;
+  font-size:18px;
+  float:left;
+  position: absolute;
+  margin-top: -33px;
 }
 
 .back {
   position: absolute;
   top: 10px;
-  left: 0
+  left: 0;
+  
 }
 
 .icon-arrow_lift {
@@ -22,66 +59,64 @@
   color: #fff;
 }
 
-/* .tmxq_middle {
-  margin-top: 16px;
-} */
-
-.tmxq_bottom {
-  /* position: absolute; */
-  /* margin-top: 15px; */
-  /* margin-bottom: 200px; */
+.tmxq_jieshao {
   width: 100%;
-  text-align: center;
-  font-size: 18px;
-  color: #2aa515;
+  height:60px;
+  font-size: 15px;
+  color: black;
+  margin-top:16px;
+  background: #ffffff;
+
 }
 
 .tmxq_title {
-  font-size: 21px;
+  font-size: 20px;
   color: #000000;
-  margin-left: 3%;
+  margin-left: 4%;
   font-weight: bold;
-  width: 94%;
-  padding-top: 6px;
+  width: 92%;
+  margin-top: 10px;
+  line-height: 28px;
 }
 
 .tmxq_price1 {
-  font-size: 17px;
+  font-size: 15px;
   color: gray;
-  margin-top: 6px;
+  padding-top: 12px;
   padding-bottom: 12px;
-  margin-left: 3%;
+  margin-left: 4%;
 }
 
 .tmxq_price2 {
-  font-size: 17px;
+  font-size: 18px;
   color: gray;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  margin-left: 3%;
-  width: 94%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-left: 4%;
+  width: 92%;
+  
 }
 
 .hr {
-  width: 94%;
-  margin-left: 3%;
-  height: 1px;
+  width: 92%;
+  margin-left: 4%;
+  height: 0.6px;
   border: none;
-  border-top: 1px dashed gray;
+  border-top: 0.6px dashed #bdbaba;
 }
 
 .tmxq_notice {
   padding-top: 10px;
-  padding-bottom: 13px;
-  width: 94%;
-  margin-left: 3%;
+  padding-bottom: 10px;
+  width: 92%;
+  margin-left: 4%;
   line-height: 35px;
   color: gray;
   font-size: 15px;
 }
 
 .price {
-  line-height: 32px;
+  line-height: 28px;
 }
 
 .price_temai {
@@ -90,8 +125,9 @@
 }
 
 .canyu {
-  float: right;
-  vertical-align: middle;
+  position:fixed;
+  bottom:0;
+  width:100%;
 }
 
 .xianzhi {
@@ -111,9 +147,22 @@
 .button_canyu {
   background: #2aa515;
   border: none;
-  border-radius: 3px;
-  width: 100px;
-  height: 32px;
-  font-size: 18px;
+  width: 100%;
+  height: 55px;
+  font-size: 20px;
   color: white;
+}
+
+.jieshao{
+  margin-left: 4%;
+  padding-top:22px;
+}
+
+
+.tmxq_bottom{
+  margin-top:35px;
+  margin-bottom: 23px;
+  font-size:12px;
+  color:#bdbaba;
+  text-align: center;
 }
