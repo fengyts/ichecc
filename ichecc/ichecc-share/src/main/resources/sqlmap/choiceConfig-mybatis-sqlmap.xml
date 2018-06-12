@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ichecc.domain.ChoiceConfigMapper">
+
+	<resultMap type="com.ichecc.domain.ChoiceConfigDO" id="ChoiceConfigDOResultMap">
+		<id column="id" property="id" />
+        <result column="name" property="name"/>
+        <result column="level" property="level"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="status" property="status"/>
+        <result column="remark" property="remark"/>
+        <result column="create_user_id" property="createUserId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_user_id" property="modifyUserId"/>
+        <result column="modify_time" property="modifyTime"/>
+	</resultMap>
+
+	<sql id="MybatisChoiceConfigDAO_all_column_fields">
+	      id,name,level,parent_id,status,remark,create_user_id,create_time,modify_user_id,modify_time
+ 	</sql>
+	<!-- 只有varchar char text类型 做 !='' 判断，生成代码时,其他类型时只做!=null 决断 0或fasle与空''是相同的，在mybatis中的动态语句中 -->
+	<sql id="MybatisChoiceConfigDAO_dynamic_where_fields"><!-- xml转义字符需要 <![CDATA[   ]]> 标签-->
+		<where>
+			<if test="name != null  and name != '' "> AND name=#{name} </if>
+			<if test="level != null "> AND level=#{level} </if>
+			<if test="parentId != null "> AND parent_id=#{parentId} </if>
+			<if test="status != null "> AND status=#{status} </if>
+			<if test="remark != null  and remark != '' "> AND remark=#{remark} </if>
+			<if test="createUserId != null "> AND create_user_id=#{createUserId} </if>
+			<if test="modifyUserId != null "> AND modify_user_id=#{modifyUserId} </if>
+		</where>
+ 	</sql>
+	
+	<select id="MybatisChoiceConfigDAO_selectById" parameterType="long" resultMap="ChoiceConfigDOResultMap">
+		SELECT
+			<include refid="MybatisChoiceConfigDAO_all_column_fields" />
+		FROM
+			choice_config
+		WHERE
+			 id = #{id}
+	</select>
+	
+	
+	
+    <insert id="MybatisChoiceConfigDAO_insert" parameterType="com.ichecc.domain.ChoiceConfigDO" useGeneratedKeys="true">
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        INSERT INTO choice_config(
+				id,
+				name,
+				level,
+				parent_id,
+				status,
+				remark,
+				create_user_id,
+				create_time,
+				modify_user_id,
+				modify_time
+		)values(
+				#{id},
+				#{name},
+				#{level},
+				#{parentId},
+				#{status},
+				#{remark},
+				#{createUserId},
+				#{createTime},
+				#{modifyUserId},
+				#{modifyTime}
+		)
+    </insert>
+	
+
+	<update id="MybatisChoiceConfigDAO_updateById" parameterType="com.ichecc.domain.ChoiceConfigDO">
+		UPDATE choice_config
+		SET
+					name = #{name},
+					level = #{level},
+					parent_id = #{parentId},
+					status = #{status},
+					remark = #{remark},
+					create_user_id = #{createUserId},
+					modify_user_id = #{modifyUserId},
+					modify_time = #{modifyTime}
+		WHERE
+			id = #{id}
+	</update>
+
+	<delete id="MybatisChoiceConfigDAO_deleteById" parameterType="long">
+		DELETE FROM choice_config WHERE id = #{id}
+	</delete>
+	
+	
+	<update id="MybatisChoiceConfigDAO_update_dynamic" parameterType="com.ichecc.domain.ChoiceConfigDO">
+		UPDATE choice_config
+		<set>
+					<if test="name != null  and name != '' ">name=#{name},</if>
+					<if test="level != null ">level=#{level},</if>
+					<if test="parentId != null ">parent_id=#{parentId},</if>
+					<if test="status != null ">status=#{status},</if>
+					<if test="remark != null  and remark != '' ">remark=#{remark},</if>
+					<if test="createUserId != null ">create_user_id=#{createUserId},</if>
+					<if test="modifyUserId != null ">modify_user_id=#{modifyUserId},</if>
+					<if test="modifyTime != null ">modify_time=#{modifyTime},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
+ 	<select id="MybatisChoiceConfigDAO_select_dynamic" resultMap="ChoiceConfigDOResultMap" parameterType="com.ichecc.domain.ChoiceConfigDO">
+	     SELECT
+	     	<include refid="MybatisChoiceConfigDAO_all_column_fields" />
+		 FROM
+		 	choice_config
+			<include refid="MybatisChoiceConfigDAO_dynamic_where_fields" />
+ 	</select>
+
+ 	<select id="MybatisChoiceConfigDAO_select_dynamic_count" resultType="long" parameterType="com.ichecc.domain.ChoiceConfigDO">
+	     SELECT
+	     	count(1)
+		 FROM
+		 	choice_config
+	 	<include refid="MybatisChoiceConfigDAO_dynamic_where_fields" />
+ 	</select>
+
+ 	<select id="MybatisChoiceConfigDAO_select_dynamic_page_query" resultMap="ChoiceConfigDOResultMap" parameterType="com.ichecc.domain.ChoiceConfigDO">
+	     SELECT
+	     	<include refid="MybatisChoiceConfigDAO_all_column_fields" />
+		 FROM
+		 	choice_config
+	 	<include refid="MybatisChoiceConfigDAO_dynamic_where_fields" />
+	 	ORDER BY choice_config.id DESC
+	 	Limit #{start},#{pageSize}
+ 	</select>
+
+</mapper>

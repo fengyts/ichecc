@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ichecc.domain.SpecGroupLinkMapper">
+
+	<resultMap type="com.ichecc.domain.SpecGroupLinkDO" id="SpecGroupLinkDOResultMap">
+		<id column="spec_group_id" property="specGroupId" />
+        <result column="spec_id" property="specId"/>
+	</resultMap>
+
+	<sql id="MybatisSpecGroupLinkDAO_all_column_fields">
+	      spec_group_id,spec_id
+ 	</sql>
+	<!-- 只有varchar char text类型 做 !='' 判断，生成代码时,其他类型时只做!=null 决断 0或fasle与空''是相同的，在mybatis中的动态语句中 -->
+	<sql id="MybatisSpecGroupLinkDAO_dynamic_where_fields"><!-- xml转义字符需要 <![CDATA[   ]]> 标签-->
+		<where>
+			<if test="specId != null "> AND spec_id=#{specId} </if>
+		</where>
+ 	</sql>
+	
+	<select id="MybatisSpecGroupLinkDAO_selectById" parameterType="long" resultMap="SpecGroupLinkDOResultMap">
+		SELECT
+			<include refid="MybatisSpecGroupLinkDAO_all_column_fields" />
+		FROM
+			spec_group_link
+		WHERE
+			 spec_group_id = #{specGroupId}
+	</select>
+	
+	
+	
+    <insert id="MybatisSpecGroupLinkDAO_insert" parameterType="com.ichecc.domain.SpecGroupLinkDO" useGeneratedKeys="true">
+        <selectKey resultType="long" keyProperty="specGroupId" order="AFTER">
+            SELECT LAST_INSERT_ID() AS spec_group_id
+        </selectKey>
+        INSERT INTO spec_group_link(
+				spec_group_id,
+				spec_id
+		)values(
+				#{specGroupId},
+				#{specId}
+		)
+    </insert>
+	
+
+	<update id="MybatisSpecGroupLinkDAO_updateById" parameterType="com.ichecc.domain.SpecGroupLinkDO">
+		UPDATE spec_group_link
+		SET
+					spec_id = #{specId}
+		WHERE
+			spec_group_id = #{specGroupId}
+	</update>
+
+	<delete id="MybatisSpecGroupLinkDAO_deleteById" parameterType="long">
+		DELETE FROM spec_group_link WHERE spec_group_id = #{specGroupId}
+	</delete>
+	
+	
+	<update id="MybatisSpecGroupLinkDAO_update_dynamic" parameterType="com.ichecc.domain.SpecGroupLinkDO">
+		UPDATE spec_group_link
+		<set>
+					<if test="specId != null ">spec_id=#{specId},</if>
+		</set>
+		WHERE spec_group_id = #{specGroupId}
+	</update>
+
+ 	<select id="MybatisSpecGroupLinkDAO_select_dynamic" resultMap="SpecGroupLinkDOResultMap" parameterType="com.ichecc.domain.SpecGroupLinkDO">
+	     SELECT
+	     	<include refid="MybatisSpecGroupLinkDAO_all_column_fields" />
+		 FROM
+		 	spec_group_link
+			<include refid="MybatisSpecGroupLinkDAO_dynamic_where_fields" />
+ 	</select>
+
+ 	<select id="MybatisSpecGroupLinkDAO_select_dynamic_count" resultType="long" parameterType="com.ichecc.domain.SpecGroupLinkDO">
+	     SELECT
+	     	count(1)
+		 FROM
+		 	spec_group_link
+	 	<include refid="MybatisSpecGroupLinkDAO_dynamic_where_fields" />
+ 	</select>
+
+ 	<select id="MybatisSpecGroupLinkDAO_select_dynamic_page_query" resultMap="SpecGroupLinkDOResultMap" parameterType="com.ichecc.domain.SpecGroupLinkDO">
+	     SELECT
+	     	<include refid="MybatisSpecGroupLinkDAO_all_column_fields" />
+		 FROM
+		 	spec_group_link
+	 	<include refid="MybatisSpecGroupLinkDAO_dynamic_where_fields" />
+	 	ORDER BY spec_group_link.id DESC
+	 	Limit #{start},#{pageSize}
+ 	</select>
+
+</mapper>

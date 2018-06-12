@@ -1,20 +1,23 @@
 package com.ichecc.ao.backend;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import com.ichecc.domain.ItemAttributeDO;
 import com.ichecc.domain.ItemDO;
 import com.ichecc.domain.TopicDO;
 import com.ichecc.domain.TopicItemDO;
 import com.ichecc.dto.TopicItemDTO;
 import com.ichecc.enums.TopicStatusEnum;
+import com.ichecc.service.ItemAttributeService;
 import com.ichecc.service.ItemService;
 import com.ichecc.service.TopicItemService;
 import com.ichecc.service.TopicService;
@@ -22,6 +25,7 @@ import com.ichecc.util.ResultMessage;
 import com.ichecc.util.UserHandler;
 
 import ng.bayue.common.Page;
+import ng.bayue.util.StringUtils;
 
 @Service
 public class TopicItemAO {
@@ -32,6 +36,8 @@ public class TopicItemAO {
 	private TopicService topicService;
 	@Autowired
 	private ItemService itemService;
+	@Autowired
+	private ItemAttributeService attributeService;
 
 	private void topicStatus(TopicDO topicDO) {
 		Date startTime = topicDO.getStartTime();
@@ -117,6 +123,9 @@ public class TopicItemAO {
 		
 		// 默认初始剩余次数为最大砍价次数
 		topicItemDO.setResidueTimes(topicItemDO.getBargainMaxTimes());
+		if(StringUtils.isBlank(topicItemDO.getAttributes())){
+			topicItemDO.setAttributes("");
+		}
 
 		Long tid = topicItemService.insert(topicItemDO);
 
@@ -142,6 +151,19 @@ public class TopicItemAO {
 	public TopicItemDO selectById(Long id) {
 		return topicItemService.selectById(id);
 	}
+	
+	public List<ItemAttributeDO> selectAttributes(String attributes){
+		if(StringUtils.isBlank(attributes)){
+			return Collections.emptyList();
+		}
+		List<String> idsStr = Arrays.asList(attributes.split(","));
+		List<Long> ids = new ArrayList<Long>();
+		for(String id : idsStr){
+			ids.add(Long.valueOf(id));
+		}
+		List<ItemAttributeDO> list = attributeService.selectByIds(ids);
+		return list;
+	}
 
 	public ResultMessage update(TopicItemDO topicItemDO) {
 		Long topicId = topicItemDO.getTopicId();
@@ -166,6 +188,9 @@ public class TopicItemAO {
 			if (list.get(0).getId().longValue() != topicItemDO.getId().longValue()) {
 				return ResultMessage.failure("该专题已经存在此商品");
 			}
+		}
+		if(StringUtils.isBlank(topicItemDO.getAttributes())){
+			topicItemDO.setAttributes("");
 		}
 
 		Date date = new Date();

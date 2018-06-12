@@ -5,9 +5,9 @@
 </template>
 
 <script type="text/ecmascript-6">
-import temailist from 'components/temai/list';
-import choice from 'components/choice/choice';
-import usercenter from 'components/usercenter/usercenter';
+import temailist from "components/temai/list";
+import choice from "components/choice/choice";
+import usercenter from "components/usercenter/usercenter";
 export default {
   name: "App",
   data() {
@@ -23,7 +23,7 @@ export default {
   },
   watch: {
     closeTabbarFlag: {
-      handler: function (val, oldVal) {
+      handler: function(val, oldVal) {
         this.closeTabbarFlag = val;
       },
       deep: true,
@@ -31,11 +31,12 @@ export default {
     }
   },
   components: {
-    temailist, choice, usercenter
+    temailist,
+    choice,
+    usercenter
   }
 };
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-
 </style>

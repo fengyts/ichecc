@@ -34,6 +34,10 @@ public class UserHandler {
 		}
 		return userDO;
 	}
+	
+	public static Long getUserId (){
+		return getUser().getId();
+	}
 
 	public static Subject getSubject() {
 		return SecurityUtils.getSubject();

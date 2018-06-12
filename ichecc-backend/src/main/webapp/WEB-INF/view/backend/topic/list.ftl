@@ -43,7 +43,7 @@ css=[]
 				    	<input class="ml10 btn btn82 btn_search" onclick="$('#topicForm').submit();" type="button" value="查询" name="button" />
 				    </a>
 				    <input class="btn btn82 btn_add" type ="button" value="新增" id="addTopic" />
-				    <span><font color='#66a3ff'>(注：专题期号由系统自动生成，规则：专题类型（B）+年份后2位+专题创建月份+期数创建日期（天）+当前年总期数 )</font></span>
+				    <span><font color='#66a3ff'>(注：专题期号由系统自动生成，规则：'H' + 年份后2位+专题创建月份+期数创建日期（天）+当前年总期数 )</font></span>
 				</div>
 			</div>
 		</div>

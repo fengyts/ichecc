@@ -10,8 +10,6 @@ public class TopicItemDTO implements Serializable {
 	/** topicItem 主键ID */
 	private Long id;
 	private Long topicId;
-	/** 专题类型 */
-	private String topicType;
 	/** 专题开始时间 */
 	private Date startTime;
 	/** 专题结束时间 */
@@ -42,14 +40,6 @@ public class TopicItemDTO implements Serializable {
 
 	public void setTopicId(Long topicId) {
 		this.topicId = topicId;
-	}
-
-	public String getTopicType() {
-		return topicType;
-	}
-
-	public void setTopicType(String topicType) {
-		this.topicType = topicType;
 	}
 
 	public Date getStartTime() {
