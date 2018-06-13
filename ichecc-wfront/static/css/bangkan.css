@@ -123,6 +123,7 @@
 }
 .kanjia_button1{
     width:90%;
+    margin-left: 5%;
     height:55px;
     background: #2aa515;
     border: none;
@@ -131,16 +132,18 @@
     color:white;
 }
 
-.hr{
-    width:90%;
-    margin-left:5%;
-    height:1px;
-    border:none;
-    border-top:1px 
-    dashed #bdbaba;
-    margin-top:12px;
-
+.kanjia_button2{
+  width:90%;
+  margin-left: 5%;
+  height:55px;
+  background: #2aa515;
+  border: none;
+  border-radius:8px;
+  font-size:22px;
+  color:white;
+  display: none;
 }
+
 
 .kanjia_bottom_title{
     line-height: 24px;

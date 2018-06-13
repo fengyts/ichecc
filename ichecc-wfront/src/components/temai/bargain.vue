@@ -7,7 +7,8 @@
       </div>
       <div class="notice">
         <p class="content">
-          还差<font style="color:#2aa515;font-size:22px">57244.46</font>元，点击右上角继续分享</p>
+          还差
+          <font style="color:#2aa515;font-size:22px">57244.46</font>元，点击右上角继续分享</p>
         <p class="content">喊好友帮你砍价吧~</p>
         <p class="content">（ 时间有限，要抓紧噢！）</p>
       </div>
@@ -57,6 +58,14 @@
             <button type="button" class="kanjia_button1" @click="shareFriends">喊好友帮忙砍价</button>
             <!--</router-link>-->
           </p>
+
+          <!--测试好友帮砍-->
+          <p>
+            <router-link :to="{path:'/helpBargain'}">
+            <button type="button" class="kanjia_button1" @click="">测试好友帮砍页面</button>
+            </router-link>
+          </p>
+
         </div>
         <div class="kanjia_time">
           <span><img src="../../assets/images/icon/icon_time.png" class="kanjia_time_icon"></span>
