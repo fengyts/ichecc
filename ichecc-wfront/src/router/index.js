@@ -7,6 +7,7 @@ import choice from 'components/choice/choice'
 import usercenter from 'components/usercenter/usercenter'
 import vip from 'components/usercenter/vip'
 import authentication from 'components/usercenter/authentication'
+import authenticationDid from 'components/usercenter/authenticationDid'
 import bargainRecord from 'components/usercenter/bargainRecord'
 import bargainDetail from 'components/usercenter/bargainDetail'
 import choiceRecord from 'components/usercenter/choiceRecord'
@@ -49,6 +50,7 @@ export default new Router({
     {path: '/carDescribe', component: carDescribe},
     {path: '/bargain', component: bargain},
     {path: '/helpBargain', components: helpBargain},
+    {path:'/authenticationDid', components:authenticationDid},
   ],
   linkActiveClass: '--active' // 指定超链接激活的样式,等同于class="active"
 })
