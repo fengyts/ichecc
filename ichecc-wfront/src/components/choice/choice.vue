@@ -10,6 +10,9 @@
     </div>
     <!--表单-->
     <div class="form">
+      <!-- <div>
+        点击选择日期和时间:<input type="text" id="datetime-picker" v-on:focus="datepicker" />
+      </div> -->
       <div class="weui-cells__title">购车预算</div>
       <div class="weui-cells">
         <div class="weui-cell">
@@ -18,19 +21,11 @@
           </div>
         </div>
       </div>
-      <div class="weui-cells__title">test</div>
-      <div class="weui-cells">
-        <div class="weui-cell">
-          <div class="weui-cell__bd">
-            <input id="test" class="weui-input" type="text" placeholder="请选择品牌类型" @click="selectOption" readonly>
-          </div>
-        </div>
-      </div>
       <div class="weui-cells__title">品牌类型</div>
       <div class="weui-cells">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input id="pinpai" class="weui-input" type="text" placeholder="请选择品牌类型" @click="selectOption" readonly>
+            <input id="pinpai" class="weui-input" type="text" placeholder="请选择品牌类型" v-on:focus="selectOption('pinpai', '品牌类型', 'brand')" readonly>
           </div>
         </div>
       </div>
@@ -38,7 +33,7 @@
       <div class="weui-cells">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input id="nengyuan" class="weui-input" type="text" placeholder="请选择能源类型" onclick="select();" readonly>
+            <input id="nengyuan" class="weui-input" type="text" placeholder="请选择能源类型" v-on:focus="selectOption('nengyuan', '能源类型', 'energy')" readonly>
           </div>
         </div>
       </div>
@@ -96,13 +91,19 @@
 </template>
 
 <script type="text/javascript">
-// import $ from 'jquery';
-import weui from '../../assets/plugins/jquery-weui/js/jquery-weui.min.js';
+import $ from "jquery";
+// import weui from '../../assets/plugins/jquery-weui/js/jquery-weui.min.js';
 // import swiper from '../../assets/plugins/jquery-weui/js/swiper.min.js';
+// import weui from "jquery-weui/dist/js/jquery-weui.min";
+import picker from "jquery-weui/dist/js/city-picker.min";
 export default {
   props: {},
   data() {
     return {
+      typeList: {
+        brand: "brand", //品牌类型
+        energy: "energy" //能源类型
+      },
       configData: {}
     };
   },
@@ -115,17 +116,35 @@ export default {
     });
   },
   methods: {
-    selectOption() {
-      // console.log($('#yusuan').val());
-      $.alert('这里是个弹窗');
-      $("#test").select({
-        title: "品牌类型",
-        items: ["国产品牌", "合资品牌", "进口品牌"]
+    selectOption(_id, _title, _type) {
+      var _that = this;
+      $("#" + _id).select({
+        // title: "品牌类型",
+        // items: ["国产品牌", "合资品牌", "进口品牌"]
+        closeByOutsideClick: true,
+        title: _title,
+        items: _that._getListData(_type)
       });
-      $("#pinpai").select({
-        title: "品牌类型",
-        items: ["国产品牌", "合资品牌", "进口品牌"]
-      });
+    },
+    // datepicker: function() {
+    //   $("#datetime-picker").calendar({ closeByOutsideClick: true });
+    // },
+    _getListData(type) {
+      let arr = [];
+      let temp;
+      if (type === "brand") {
+        temp = this.configData.brand;
+        for (var i = 0; i < temp.length; i++) {
+          arr.push(temp[i].name);
+        }
+      }
+      if (type === "energy") {
+        temp = this.configData.energy;
+        for (var i = 0; i < temp.length; i++) {
+          arr.push(temp[i].name);
+        }
+      }
+      return arr;
     }
   }
 };
