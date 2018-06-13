@@ -23,79 +23,32 @@ export default new Router({
   routes: [{
       path: '/',
       component: home,
-      children: [{
-          path: 'list',
-          component: list
-        }, {
-          path: 'choice',
-          component: choice
-        },
-        {
-          path: 'usercenter',
-          component: usercenter
-        }
+      children: [
+        {path: 'list', component: list}, 
+        {path: 'choice', component: choice},
+        {path: 'usercenter', component: usercenter}
       ]
     }, 
     {
       path: '/home',
       component: home,
-      children: [{
-          path: 'list',
-          component: list
-        }, {
-          path: 'choice',
-          component: choice
-        },
-        {
-          path: 'usercenter',
-          component: usercenter
-        }
+      children: [
+        {path: 'list', component: list}, 
+        {path: 'choice', component: choice},
+        {path: 'usercenter', component: usercenter}
       ]
     }, 
-    {
-      path: '/detail',
-      component: temaidetail
-    }, 
-    {
-      path: '/vip',
-      component: vip
-    }, 
-    {
-      path: '/authentication',
-      component: authentication
-    }, 
-    {
-      path: '/bargainRecord',
-      component: bargainRecord
-    },
-    {
-      path: '/bargainDetail',
-      component: bargainDetail
-    },
-    {
-      path: '/choiceRecord',
-      component: choiceRecord
-    },
-    {
-      path: '/help',
-      component: help
-    },
-    {
-      path: '/carDescribe',
-      component: carDescribe
-    },
-    {
-      path: '/bargain',
-      component: bargain
-    },
-    {
-      path:'/helpBargain',
-      components:helpBargain
-    },
-    {
-      path:'/choiceDetail',
-      components:choiceDetail
-    },
+    {path: '/detail', component: temaidetail}, 
+    {path: '/vip', component: vip}, 
+    {path: '/authentication', component: authentication}, 
+    {path: '/bargainRecord', component: bargainRecord},
+    {path: '/bargainDetail', component: bargainDetail},
+    {path: '/choiceRecord', component: choiceRecord},
+    {path: '/choiceDetail', components: choiceDetail},
+    {path: '/help', component: help},
+    {path: '/carDescribe', component: carDescribe},
+    {path: '/bargain', component: bargain},
+    {path: '/helpBargain', components: helpBargain},
   ],
   linkActiveClass: '--active' // 指定超链接激活的样式,等同于class="active"
 })
