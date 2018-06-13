@@ -12,13 +12,13 @@
 .xctm_top_time{
     color:gray;
     font-size:12px;
-    margin-top:14px;
+
 }
 
 .xctm_list{
     background: #fff;
     width:92%;
-    margin-top:25px;
+    margin-top:20px;
     margin-left:4%;
     border-radius:5px;
 }
@@ -41,7 +41,7 @@
     font-size: 15px;
     color:gray; 
     padding-top:10px;
-    padding-bottom: 10px;
+    padding-bottom: 15px;
     margin-left:4%;
 }
 
@@ -62,7 +62,7 @@
 
 .xctm_bottom{
     margin-top:23px;
-    margin-bottom: 23px;
+    margin-bottom: 30px;
     font-size:12px;
     color:#bdbaba;
     text-align: center;

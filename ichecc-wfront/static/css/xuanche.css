@@ -9,6 +9,20 @@
 .weui-tab__bd{
 } */
 
+.choice_top{
+  margin-top:30px;
+  text-align: center;
+}
+.title1{
+  color:#2aa515;
+  font-size:22px;
+  font-weight: bold;
+}
+.title2{
+  font-size:12px;
+  color:gray;
+}
+
 .weui-tabbar__label{
     font-size:18px;
     display: inline-block;
@@ -20,7 +34,7 @@
 }
 
 .form{
-    margin-top:15px;
+    margin-top:20px;
     width:90%;
     margin-left: 5%;
     line-height: 40px;
@@ -28,7 +42,7 @@
 
 
 .submit{
-    margin-top:40px;
+    margin-top:50px;
     line-height: 20px;
 }
 .button{
@@ -42,9 +56,6 @@
     border-radius: 6px;
 }
 .tips{
-    text-align: center;
-    margin-top:10px;
-    margin-bottom: 30px;
-    color:#bdbaba;
-    font-size:12px;
+    height: 50px;
+    margin-top:30px;
 }

@@ -5,19 +5,19 @@
     <div class="list-content">
       <!--头部区域-->
       <div class="xctm_top">
-        <!-- <p class="xctm_top_time">期号 : H180404&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时间 : 4.23 - 4.29</p> -->
-        <p class="xctm_top_time" v-show="resData.periodNo!=''">期号 : {{resData.periodNo}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时间 : {{resData.startTime | formatDate}} ~ {{resData.endTime | formatDate}}</p>
+        <p class="xctm_top_title">本期特卖</p>
+        <p class="xctm_top_time">期号 : H180602&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时间 : 4.23 - 4.29</p>
+        <!--<p class="xctm_top_time" v-show="resData.periodNo!=''">期号 : {{resData.periodNo}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时间 : {{resData.startTime | formatDate}} ~ {{resData.endTime | formatDate}}</p>-->
       </div>
 
-      <!--列表区域-->
-      <div class="xctm_list" v-for="item in resData.itemList">
+      <div class="xctm_list">
         <router-link :to="{path:'/detail'}">
-        <!-- <div class="xctm_list_href" @click="showDetail($event)"> -->
+          <!-- <div class="xctm_list_href" @click="showDetail($event)"> -->
           <!--车辆图片-->
           <div class="xctm_list_img">
             <img src="../../assets/images/img/car_01.jpg" width="100%" alt="">
           </div>
-      
+
           <!--车辆标题-->
           <div class="xctm_list_title">
             <p>上汽斯柯达明锐 2018款 1.6L 自动舒适版</p>
@@ -38,17 +38,19 @@
               <span class="xctm_list_canyu_num">578人正在参与</span>
             </p>
           </div>
+        </router-link>
+      </div>
 
+      <!--列表区域-->
+      <!-- <div class="xctm_list" v-for="item in resData.itemList">
+        <router-link :to="{path:'/detail'}">
           <div class="xctm_list_href">
-            <!--车辆图片-->
             <div class="xctm_list_img">
               <img :src="item.picture" width="100%" alt="">
             </div>
-            <!--车辆标题-->
             <div class="xctm_list_title">
               <p>{{item.itemTitle}}</p>
             </div>
-            <!--车辆价格-->
             <div class="xctm_list_price">
               <p class="price">
                 <span>指导价 : </span>
@@ -63,14 +65,13 @@
                 <span class="price_num_temai">{{item.specialPrice | formatMoney}}万</span>
               </p>
             </div>
-            <!--参与人数等-->
             <div class="xctm_list_canyu">
               <hr class="hr" />
               <p class="xctm_list_canyu_content">
                 <span class="xctm_list_canyu_num">{{item.participationNum || "0"}}人已参与</span>
                 <span class="xctm_list_canyu_time">剩
                   <span class="countdownTime">
-                    <!-- <timecountdown :surplusTime="surplusTime" :itemId="item.tiId"></timecountdown> -->
+                    <timecountdown :surplusTime="surplusTime" :itemId="item.tiId"></timecountdown>
                   </span>
                   结束
                 </span>
@@ -78,7 +79,7 @@
             </div>
           </div>
         </router-link>
-      </div>
+      </div> -->
 
       <!--尾部区域-->
       <div class="xctm_bottom">
@@ -102,27 +103,27 @@ export default {
     };
   },
   filters: {
-    formatDate: function(startTime) {
+    formatDate: function (startTime) {
       var date = new Date(startTime);
       return formatDate(date, "M.dd");
     },
-    formatMoney: function(money) {
+    formatMoney: function (money) {
       var fmt = money / 10000;
       return parseFloat(fmt).toFixed(2);
     }
   },
   created() {
-    this.$http.post("/api/index/itemList").then(response => {
-      var result = response.data;
-      if (result.code === this.$error_code) {
-        this.resData = result.data;
-        this.surplusTime = result.data.countDownTime / 1000;
-        //倒计时
-        this.$nextTick(() => {
-          this.countdown(this.surplusTime); //结束时间到开始时间的时间差，单位秒
-        });
-      }
-    });
+    // this.$http.post("/api/index/itemList").then(response => {
+    //   var result = response.data;
+    //   if (result.code === this.$error_code) {
+    //     this.resData = result.data;
+    //     this.surplusTime = result.data.countDownTime / 1000;
+    //     //倒计时
+    //     this.$nextTick(() => {
+    //       this.countdown(this.surplusTime); //结束时间到开始时间的时间差，单位秒
+    //     });
+    //   }
+    // });
   },
   methods: {
     generateId(itemId) {
@@ -130,10 +131,10 @@ export default {
     },
     countdown(mss) {
       var _that = this;
-      this.interval = setInterval(function() {
+      this.interval = setInterval(function () {
         var ctr = _that.fmtTime(mss);
         this.ctr = ctr;
-        $(".countdownTime").each(function() {
+        $(".countdownTime").each(function () {
           $(this).html(ctr);
         });
         if (!mss--) {

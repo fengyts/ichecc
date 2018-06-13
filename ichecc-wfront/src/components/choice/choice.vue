@@ -2,6 +2,12 @@
 <template>
   <!--帮你选车-->
   <div id="tab2" class="weui-tab__bd-item" style="display:inline">
+
+      <!--大标题-->
+    <div class="choice_top">
+        <p class="title1">请提交你的购车需求</p>
+        <p class="title2">（将在24小时内处理完毕）</p>
+    </div>
     <!--表单-->
     <div class="form">
       <div class="weui-cells__title">购车预算</div>
@@ -77,7 +83,6 @@
     </div>
     <!--提示信息-->
     <div class="tips">
-      将在24小时内处理您的需求
     </div>
   </div>
 </template>

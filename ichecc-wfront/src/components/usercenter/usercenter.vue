@@ -56,7 +56,7 @@
       </div>
     </router-link>
 
-    <hr class="hr">
+    <hr class="hr" />
 
     <!--选车记录-->
     <router-link :to="{path:'/choiceRecord'}">

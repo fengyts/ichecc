@@ -30,12 +30,7 @@
             <p class="kanjia_guize">规则说明</p>
         </div>
         <div class="kanjia_button">
-            <p><button type="button" class="kanjia_button1" id="zijikan" onclick="">自己砍价</button></p>
-            <p>
-              <router-link :to="{path:'/helpBargain'}">
-                <button type="button" class="kanjia_button1" onclick="">喊好友帮忙砍价</button>
-              </router-link>
-            </p>
+            <p><button type="button" class="kanjia_button1" id="zijikan" onclick="">帮TA砍价</button></p>
         </div>
         <div class="kanjia_time">
             <span><img src="../../assets/images/icon/icon_time.png" class="kanjia_time_icon"></span>
@@ -46,7 +41,6 @@
     <!--底部-->
       <div class="kanjia_bottom_title">
           <p class="kanjia_record_title1">砍价记录</p>
-          <p class="kanjia_record_title2">（自己砍1次，好友共帮砍12次）</p>
       </div>
       <div class="kanjia_bottom_list">
           <div class="kanjia_bottom_list_userlogo">
@@ -79,5 +73,5 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-@import ('../../../static/css/kanjia');
+@import ('../../../static/css/bangkan');
 </style>

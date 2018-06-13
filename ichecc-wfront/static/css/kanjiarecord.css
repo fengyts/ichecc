@@ -16,10 +16,7 @@
     height:100px;
     border-radius: 5px;
 }
-.href{
-    text-decoration: none;
-    color:black;
-}
+
 .record{
     width:100%;
 }
@@ -46,6 +43,7 @@
 .title{
     font-size:14px;
     padding-right: 5px;
+    color:black;
 }
 .status{
     font-size:12px;

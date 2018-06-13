@@ -8,10 +8,14 @@ import usercenter from 'components/usercenter/usercenter'
 import vip from 'components/usercenter/vip'
 import authentication from 'components/usercenter/authentication'
 import bargainRecord from 'components/usercenter/bargainRecord'
+import bargainDetail from 'components/usercenter/bargainDetail'
 import choiceRecord from 'components/usercenter/choiceRecord'
+import choiceDetail from 'components/usercenter/choiceDetail'
 import help from 'components/other/help'
 import carDescribe from 'components/temai/carDescribe'
 import bargain from 'components/temai/bargain'
+import helpBargain from 'components/temai/helpBargain'
+
 
 Vue.use(Router)
 
@@ -31,7 +35,8 @@ export default new Router({
           component: usercenter
         }
       ]
-    }, {
+    }, 
+    {
       path: '/home',
       component: home,
       children: [{
@@ -46,18 +51,26 @@ export default new Router({
           component: usercenter
         }
       ]
-    }, {
+    }, 
+    {
       path: '/detail',
       component: temaidetail
-    }, {
+    }, 
+    {
       path: '/vip',
       component: vip
-    }, {
+    }, 
+    {
       path: '/authentication',
       component: authentication
-    }, {
+    }, 
+    {
       path: '/bargainRecord',
       component: bargainRecord
+    },
+    {
+      path: '/bargainDetail',
+      component: bargainDetail
     },
     {
       path: '/choiceRecord',
@@ -74,7 +87,15 @@ export default new Router({
     {
       path: '/bargain',
       component: bargain
-    }
+    },
+    {
+      path:'/helpBargain',
+      components:helpBargain
+    },
+    {
+      path:'/choiceDetail',
+      components:choiceDetail
+    },
   ],
   linkActiveClass: '--active' // 指定超链接激活的样式,等同于class="active"
 })

@@ -4,7 +4,7 @@
  <!--顶部-->
             <!--图像区-->
             <div class="userinfo">
-                <img src="../../images/icon/icon_userlogo.png" alt="">
+                <img src="../../assets/images/icon/icon_userlogo.png" alt="" class="userimg">
                 <p class="name">实心梨子</p>
             </div>
 
@@ -12,7 +12,7 @@
             <div class="kanjia_info">
                 <div class="kanjia_info2">
                     <div class="kanjia_info_carimg">
-                        <img src="../../images/img/car_01.jpg" class="carimg">
+                        <img src="../../assets/images/img/car_01.jpg" class="carimg">
                     </div>
                     <div class="kanjia_info_carmess">
                         <p>
@@ -25,11 +25,18 @@
                 </div>
             </div>
 
-			<!--中部-->  
-			<div class="kanjia_middle">
-                <p class="status">砍价成功</p>
-                <p class="quanyi">可享<span class="quanyi_num">5.88万</span>购车，请完成身份认证并在有效期内购车</p>
+			      <!--中部（成功）-->  
+			      <div class="kanjia_middle">
+                <p class="status_success">砍价成功</p>
+                <p class="quanyi">可享<span class="quanyi_num">5.88万</span>购车，当前状态：待购车 / 已购车 / 已过期</p>
                 <p class="notice">期号：H180401&nbsp;&nbsp;&nbsp;有效期至：2018-06-30</p>
+            </div>	
+
+            <!--中部（失败）-->  
+			      <div class="kanjia_middle">
+                <p class="status_failed">砍价失败</p>
+                <p class="quanyi">限砍次数用完 / 时间已结束 / 其它用户最先砍价成功</p>
+                <p class="notice">期号：H180401&nbsp;&nbsp;&nbsp;已砍<span class="quanyi_num">88888元</span>，还差<span class="quanyi_num">100元</span></p>
             </div>	
 
             <!--底部-->
@@ -40,7 +47,7 @@
             </div>
             <div class="kanjia_bottom_list">
                 <div class="kanjia_bottom_list_userlogo">
-                    <img src="../../images/icon/icon_userlogo.png" class="logo" alt="">
+                    <img src="../../assets/images/icon/icon_userlogo.png" class="logo" alt="">
                 </div>
                 <div class="kanjia_bottom_list_usermess">
                     <p class="username">旗嘉科技</p>

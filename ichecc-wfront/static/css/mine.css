@@ -38,7 +38,7 @@
 .vipbg{
     background: red;
     color:white;
-    font-size:8px;
+    font-size:12px;
     font-weight: bold;
     width:30px;
     height:16px;
@@ -48,8 +48,8 @@
     border-radius: 3px;
 }
 .phone{
-    color:#bdbaba;
-    font-size:8px;
+    color:gray;
+    font-size:12px;
     padding-top:5px;
 }
 
@@ -59,12 +59,19 @@
     margin-top:20px;
     width:100%;
 }
-.idconfirm,.xuancherecord{
+.idconfirm{
     background: white;
     height:60px;
     margin-top:0px;
     width:100%;
 }
+.xuancherecord{
+  background: white;
+  height:60px;
+  margin-top:1px;
+  width:100%;
+}
+
 
 .listicon{
     padding-top:15px;
@@ -81,11 +88,19 @@
     display: inline-block;
     float: left;
     margin-left:10px;  
-    padding-top: 16px;
+    padding-top: 17px;
 }
 .href{
     text-decoration: none; 
     color:black;
+}
+.hr1{
+    width:90%;
+    margin-left:5%;
+    height:0.6px;
+    border:none;
+    border-top:0.6px 
+    solid #ebe8e8 ;
 }
 .hr{
     width:90%;
@@ -95,3 +110,4 @@
     border-top:0.6px 
     solid #ebe8e8 ;
 }
+

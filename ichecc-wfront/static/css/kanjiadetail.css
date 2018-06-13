@@ -17,14 +17,20 @@
   margin-top:15px;
   width:100%;
 }
+
+.userimg{
+  width:50px;
+  height:50px;
+  border-radius:100%;
+}
 .kanjia_info{
     border-radius: 6px;
     padding-top:35px;
     width:94%;
     margin-left:3%;
-    margin-top:-60px;
+    margin-top:-57px;
     height:120px;
-    background: #f3f1f1;
+    background: white;
 }
 .kanjia_info2{
     margin-left: 14px;
@@ -67,26 +73,32 @@
 }
 .carmess_kanjianum{
     float: right;
+    margin-right: 8px;
 }
 
 .kanjia_middle{
     text-align: center;
     margin-top:25px;
 }
-.status{
+.status_success{
     font-size:24px;
     font-weight: bold;
     color:#2aa515;
+}
+.status_failed{
+  font-size:24px;
+  font-weight: bold;
+  color:red;
 }
 .quanyi,.notice{
     font-size:12px;
     color:gray;
 }
 .quanyi{
-    margin-top:15px;
+    margin-top:10px;
 }
 .notice{
-    margin-top:8px;
+  margin-top:5px;
 }
 .quanyi_num{
     color:#2aa515;
@@ -106,11 +118,11 @@
 
 .kanjia_bottom_title{
     line-height: 24px;
-    padding-top:12px;
-    margin-top:25px;
+    margin-top:50px;
     width:94%;
     margin-left:3%;
     text-align: center;
+    line-height: 18px;
 }
 .kanjia_record_title1{
     font-size: 18px;
@@ -123,7 +135,7 @@
 .kanjia_bottom_list{
     width:84%;
     margin-left: 8%;
-    margin-top:15px;
+    margin-top:6px;
 }
 .kanjia_bottom_list_userlogo,.kanjia_bottom_list_usermess{
     float:left;    
@@ -134,11 +146,12 @@
 .logo{
     width:35px;
     height: 35px;
+    border-radius: 100%;
 }
 .kanjia_bottom_list_usermess{
     text-align: left;
     padding-left:6px;
-    font-size:10px;
+    font-size:12px;
 }
 .time{
     color:#bdbaba;
