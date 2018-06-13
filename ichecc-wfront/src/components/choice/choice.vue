@@ -73,16 +73,19 @@
       <div class="weui-cells weui-cells_form">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <textarea class="weui-textarea" placeholder="请输入具体的购车需求" rows="3"></textarea>
+            <textarea class="weui-textarea" placeholder="请输入具体的购车需求" rows="4"></textarea>
             <div class="weui-textarea-counter">
-              <span>0</span>/200</div>
+              <span>0</span>/100
+            </div>
           </div>
         </div>
       </div>
     </div>
     <!--提交按钮-->
     <div class="submit">
-      <button class="button" id="submit" onclick="modal();">提交</button>
+      <router-link :to="{path:'/vipAdd'}">
+        <button class="button" id="submit" onclick="modal();">提交</button>
+      </router-link>
     </div>
     <!--提示信息-->
     <div class="tips">
@@ -91,11 +94,6 @@
 </template>
 
 <script type="text/javascript">
-import $ from "jquery";
-// import weui from '../../assets/plugins/jquery-weui/js/jquery-weui.min.js';
-// import swiper from '../../assets/plugins/jquery-weui/js/swiper.min.js';
-// import weui from "jquery-weui/dist/js/jquery-weui.min";
-import picker from "jquery-weui/dist/js/city-picker.min";
 export default {
   props: {},
   data() {
@@ -131,14 +129,15 @@ export default {
     _getListData(type) {
       let arr = [];
       let temp = this.configData[type];
-      for(var i = 0;i < temp.length; i++){
-         arr.push(temp[i].name);
+      for (var i = 0; i < temp.length; i++) {
+        arr.push(temp[i].name);
       }
       return arr;
     }
   }
 };
 </script>
+
 
 <style scoped lang="stylus">
 @import ('../../../static/css/xuanche');

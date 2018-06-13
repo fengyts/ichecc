@@ -3,31 +3,20 @@
     padding: 0;
 }
 
-.body{
-    width:100%;
-    height: 100%;
-}
-
 .content{
-    width:90%;
-    margin-left: 5%;
+  width:90%;
+  margin-left: 5%;
     margin-top:20px;
     line-height: 35px;
 }
 
 .title{
-    margin-top:15px;
-    margin-bottom: 15px;
-    font-size:20px;
+    margin-top:25px;
+    margin-bottom: 20px;
+    font-size:22px;
+    color:#2aa515;
 }
 
-.hr{
-    height:1px;
-    border:none;
-    border-top:1px 
-    dashed #bdbaba;
-    margin-top:20px;
-}
 .quanyi,.notice{
     color:gray;
     font-size:20px;
@@ -37,6 +26,7 @@
 }
 .addvip{
     margin-top:40px;
+    margin-bottom: 40px;
 }
 .button_add,.button_pay{
     width:90%;
@@ -46,6 +36,6 @@
     font-size:20px;
     color:white;
     border:none;
-    border-radius: 5px;
+    border-radius: 8px;
     height:50px;
 }

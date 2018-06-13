@@ -35,7 +35,9 @@
         </div>
         <!--支付按钮-->
         <div class="vippay">
-            <button class="button_pay" id="viprenewpay" onclick="">立即支付</button>
+           <router-link :to="{path:'/vipRenewResult'}">
+              <button class="button_pay" id="viprenewpay" onclick="">立即支付</button>
+           </router-link>
         </div>
         <!--说明-->
         <div class="tips">

@@ -6,6 +6,12 @@ import temaidetail from 'components/temai/detail'
 import choice from 'components/choice/choice'
 import usercenter from 'components/usercenter/usercenter'
 import vip from 'components/usercenter/vip'
+import vipAdd from 'components/usercenter/vipAdd'
+import vipAddPay from 'components/usercenter/vipAddPay'
+import vipAddResult from 'components/usercenter/vipAddResult'
+import vipCardInfo from 'components/usercenter/vipCardInfo'
+import vipRenewPay from 'components/usercenter/vipRenewPay'
+import vipRenewResult from 'components/usercenter/vipRenewResult'
 import authentication from 'components/usercenter/authentication'
 import authenticationDid from 'components/usercenter/authenticationDid'
 import bargainRecord from 'components/usercenter/bargainRecord'
@@ -42,6 +48,12 @@ export default new Router({
     }, 
     {path: '/detail', component: temaidetail}, 
     {path: '/vip', component: vip}, 
+    {path: '/vipAdd', component: vipAdd}, 
+    {path: '/vipAddPay', component: vipAddPay}, 
+    {path: '/vipAddResult', component: vipAddResult}, 
+    {path: '/vipCardInfo', component: vipCardInfo}, 
+    {path: '/vipRenewPay', component: vipRenewPay}, 
+    {path: '/vipRenewResult', component: vipRenewResult}, 
     {path: '/authentication', component: authentication}, 
     {path: '/bargainRecord', component: bargainRecord},
     {path: '/bargainDetail', component: bargainDetail},
@@ -51,7 +63,7 @@ export default new Router({
     {path: '/carDescribe', component: carDescribe},
     {path: '/bargain', component: bargain},
     {path: '/helpBargain', component: helpBargain},
-    {path: '/authenticationDid', component: authenticationDid}
+    {path:'/authenticationDid', component:authenticationDid},
   ],
   linkActiveClass: '--active' // 指定超链接激活的样式,等同于class="active"
 })

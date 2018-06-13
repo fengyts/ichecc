@@ -18,14 +18,19 @@
   margin-top:15px;
   width:100%;
 }
+.userimg{
+  width:50px;
+  height:50px;
+  border-radius:100%;
+}
 .kanjia_info{
     border-radius: 6px;
     padding-top:35px;
     width:94%;
     margin-left:3%;
-    margin-top:-60px;
+    margin-top:-57px;
     height:120px;
-    background: #f3f1f1;
+    background: white;
 }
 .kanjia_info2{
     margin-left: 14px;
@@ -68,6 +73,7 @@
 }
 .carmess_kanjianum{
     float: right;
+    margin-right: 8px;
 }
 
 .kanjia_middle{
@@ -76,6 +82,7 @@
 }
 .kanjia_time{
     text-align: center;
+    margin-top:12px;
 }
 .kanjia_time_icon{
     width:14px;
@@ -83,7 +90,7 @@
     vertical-align: middle;
 }
 .kanjia_time_num{
-    font-size:13px;
+    font-size:14px;
     color:gray;
     vertical-align: middle;
 }
@@ -107,6 +114,10 @@
     font-weight: bold;
 }
 
+.kanjia_guize{
+  color:gray;
+  font-size:13px;
+}
 .kanjia_button{
     margin-top:18px;
 }
@@ -120,21 +131,22 @@
     color:white;
 }
 
-.hr{
-    width:90%;
-    margin-left:5%;
-    height:1px;
-    border:none;
-    border-top:1px 
-    dashed #bdbaba;
-    margin-top:12px;
-
+.kanjia_button2{
+  width:90%;
+  margin-left: 5%;
+  height:55px;
+  background: #2aa515;
+  border: none;
+  border-radius:8px;
+  font-size:22px;
+  color:white;
+  display: none;
 }
+
 
 .kanjia_bottom_title{
     line-height: 24px;
-    padding-top:12px;
-    margin-top:25px;
+    margin-top:50px;
     width:94%;
     margin-left:3%;
     text-align: center;
@@ -161,11 +173,12 @@
 .logo{
     width:35px;
     height: 35px;
+    border-radius: 100%;
 }
 .kanjia_bottom_list_usermess{
     text-align: left;
     padding-left:6px;
-    font-size:10px;
+    font-size:12px;
 }
 .time{
     color:#bdbaba;
