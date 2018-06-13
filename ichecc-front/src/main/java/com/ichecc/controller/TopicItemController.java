@@ -10,7 +10,7 @@ import com.ichecc.common.Constants;
 import com.ichecc.common.ResultData;
 
 @Controller
-@RequestMapping(Constants.API_BASE_PATH + "topicItem/")
+@RequestMapping(Constants.API_BASE_PATH + "topicItem")
 public class TopicItemController {
 	
 	@Autowired

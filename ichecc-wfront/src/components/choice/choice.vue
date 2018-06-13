@@ -3,10 +3,10 @@
   <!--帮你选车-->
   <div id="tab2" class="weui-tab__bd-item" style="display:inline">
 
-      <!--大标题-->
+    <!--大标题-->
     <div class="choice_top">
-        <p class="title1">请提交你的购车需求</p>
-        <p class="title2">（将在24小时内处理完毕）</p>
+      <p class="title1">请提交你的购车需求</p>
+      <p class="title2">（将在24小时内处理完毕）</p>
     </div>
     <!--表单-->
     <div class="form">
@@ -14,7 +14,15 @@
       <div class="weui-cells">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input class="weui-input" type="text" placeholder="请输入预算金额（万元）">
+            <input class="weui-input" type="text" placeholder="请输入预算金额（万元）" value="100" id="yusuan">
+          </div>
+        </div>
+      </div>
+      <div class="weui-cells__title">test</div>
+      <div class="weui-cells">
+        <div class="weui-cell">
+          <div class="weui-cell__bd">
+            <input id="test" class="weui-input" type="text" placeholder="请选择品牌类型" @click="selectOption" readonly>
           </div>
         </div>
       </div>
@@ -22,7 +30,7 @@
       <div class="weui-cells">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input id="pinpai" class="weui-input" type="text" placeholder="请选择品牌类型" onclick="select();" readonly>
+            <input id="pinpai" class="weui-input" type="text" placeholder="请选择品牌类型" @click="selectOption" readonly>
           </div>
         </div>
       </div>
@@ -88,16 +96,42 @@
 </template>
 
 <script type="text/javascript">
-import Vue from "vue";
+// import $ from 'jquery';
+import weui from '../../assets/plugins/jquery-weui/js/jquery-weui.min.js';
+// import swiper from '../../assets/plugins/jquery-weui/js/swiper.min.js';
 export default {
-  props: {
-  },
+  props: {},
   data() {
-    return {};
+    return {
+      configData: {}
+    };
   },
+  created() {
+    this.$http.get("/api/choice/choiceConfig").then(response => {
+      var result = response.data;
+      if (result.code === this.$error_code) {
+        this.configData = result.data;
+      }
+    });
+  },
+  methods: {
+    selectOption() {
+      // console.log($('#yusuan').val());
+      $.alert('这里是个弹窗');
+      $("#test").select({
+        title: "品牌类型",
+        items: ["国产品牌", "合资品牌", "进口品牌"]
+      });
+      $("#pinpai").select({
+        title: "品牌类型",
+        items: ["国产品牌", "合资品牌", "进口品牌"]
+      });
+    }
+  }
 };
 </script>
 
 <style scoped lang="stylus">
 @import ('../../../static/css/xuanche');
+@import ('../../assets/plugins/jquery-weui/css/jquery-weui.min.css');
 </style>

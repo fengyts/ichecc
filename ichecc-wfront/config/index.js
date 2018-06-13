@@ -3,7 +3,8 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
-const apiUrl = "http://localhost:8090/ichecc-front/"
+// const apiUrl = "http://localhost:8090/ichecc-front/"
+const apiUrl = "http://47.94.199.26/ichecc-front/";
 
 module.exports = {
   dev: {
@@ -20,7 +21,7 @@ module.exports = {
     },
 
     // Various Dev Server settings
-    host: '192.168.1.100', // can be overwritten by process.env.HOST
+    host: '192.168.9.108', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,

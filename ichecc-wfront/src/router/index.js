@@ -21,7 +21,8 @@ import helpBargain from 'components/temai/helpBargain'
 Vue.use(Router)
 
 export default new Router({
-  routes: [{
+  routes: [
+    {
       path: '/',
       component: home,
       children: [
@@ -45,12 +46,12 @@ export default new Router({
     {path: '/bargainRecord', component: bargainRecord},
     {path: '/bargainDetail', component: bargainDetail},
     {path: '/choiceRecord', component: choiceRecord},
-    {path: '/choiceDetail', components: choiceDetail},
+    {path: '/choiceDetail', component: choiceDetail},
     {path: '/help', component: help},
     {path: '/carDescribe', component: carDescribe},
     {path: '/bargain', component: bargain},
-    {path: '/helpBargain', components: helpBargain},
-    {path:'/authenticationDid', components:authenticationDid},
+    {path: '/helpBargain', component: helpBargain},
+    {path: '/authenticationDid', component: authenticationDid}
   ],
   linkActiveClass: '--active' // 指定超链接激活的样式,等同于class="active"
 })
