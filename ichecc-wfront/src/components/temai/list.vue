@@ -6,7 +6,6 @@
       <!--头部区域-->
       <div class="xctm_top">
         <p class="xctm_top_title">本期特卖</p>
-        <!-- <p class="xctm_top_time">期号 : H180602&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时间 : 4.23 - 4.29</p> -->
         <p class="xctm_top_time" v-show="resData.periodNo!=''">期号 : {{resData.periodNo}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 时间 : {{resData.startTime | formatDate}} ~ {{resData.endTime | formatDate}}</p>
       </div>
 
@@ -49,13 +48,10 @@
 <script type="text/javascript">
 import { formatDate } from "../../common/js/date.js";
 import detail from "../temai/detail";
-import timecountdown from "../other/time-countdown";
 export default {
   data() {
     return {
-      resData: {},
-      surplusTime: 60,
-      interval: ""
+      resData: {}
     };
   },
   filters: {
@@ -73,66 +69,13 @@ export default {
       var result = response.data;
       if (result.code === this.$error_code) {
         this.resData = result.data;
-        this.surplusTime = result.data.countDownTime / 1000;
-        //倒计时
-        // this.$nextTick(() => {
-        //   this.countdown(this.surplusTime); //结束时间到开始时间的时间差，单位秒
-        // });
       }
     });
   },
   methods: {
-    generateId(itemId) {
-      return "time-countdown-wrapper" + itemId;
-    },
-    countdown(mss) {
-      var _that = this;
-      this.interval = setInterval(function() {
-        var ctr = _that.fmtTime(mss);
-        this.ctr = ctr;
-        $(".countdownTime").each(function() {
-          $(this).html(ctr);
-        });
-        if (!mss--) {
-          clearInterval(_that.interval);
-        }
-      }, 1000);
-    },
-    fmtTime(mss) {
-      var ss = 1,
-        mi = ss * 60,
-        hh = mi * 60,
-        dd = hh * 24;
-      var _days = Math.floor(mss / dd);
-      var _hours = Math.floor((mss % dd) / hh);
-      var _minutes = Math.floor((mss % hh) / mi);
-      var _seconds = Math.floor((mss % mi) / ss);
-
-      if (_days == 0) {
-        _days = "";
-      } else if (_days > 0 && _days < 10) {
-        _days = "0" + _days + "天";
-      } else {
-        _days += "天";
-      }
-
-      if (_hours < 10) {
-        _hours = "0" + _hours;
-      }
-      if (_minutes < 10) {
-        _minutes = "0" + _minutes;
-      }
-      if (_seconds < 10) {
-        _seconds = "0" + _seconds;
-      }
-
-      var ctr = `${_days}${_hours}时${_minutes}分${_seconds}秒`;
-      return ctr;
-    }
   },
   components: {
-    detail,
-    timecountdown
+    detail
   },
   destroyed() {
     //全部清除方法
