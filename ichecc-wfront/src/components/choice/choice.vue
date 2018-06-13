@@ -3,10 +3,10 @@
   <!--帮你选车-->
   <div id="tab2" class="weui-tab__bd-item" style="display:inline">
 
-      <!--大标题-->
+    <!--大标题-->
     <div class="choice_top">
-        <p class="title1">请提交你的购车需求</p>
-        <p class="title2">（将在24小时内处理完毕）</p>
+      <p class="title1">请提交你的购车需求</p>
+      <p class="title2">（将在24小时内处理完毕）</p>
     </div>
     <!--表单-->
     <div class="form">
@@ -22,7 +22,7 @@
       <div class="weui-cells">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input id="pinpai" class="weui-input" type="text" placeholder="请选择品牌类型" onclick="select();" readonly>
+            <input id="pinpai" class="weui-input" type="text" placeholder="请选择品牌类型" @click="selectBrand();" readonly>
           </div>
         </div>
       </div>
@@ -70,16 +70,19 @@
       <div class="weui-cells weui-cells_form">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <textarea class="weui-textarea" placeholder="请输入具体的购车需求" rows="3"></textarea>
+            <textarea class="weui-textarea" placeholder="请输入具体的购车需求" rows="4"></textarea>
             <div class="weui-textarea-counter">
-              <span>0</span>/200</div>
+              <span>0</span>/100
+            </div>
           </div>
         </div>
       </div>
     </div>
     <!--提交按钮-->
     <div class="submit">
-      <button class="button" id="submit" onclick="modal();">提交</button>
+      <router-link :to="{path:'/vipAdd'}">
+        <button class="button" id="submit" onclick="modal();">提交</button>
+      </router-link>
     </div>
     <!--提示信息-->
     <div class="tips">
@@ -89,14 +92,24 @@
 
 <script type="text/javascript">
 import Vue from "vue";
+import $ from 'jquery';
 export default {
   props: {
   },
   data() {
     return {};
   },
+  methods: {
+    selectBrand() {
+      $("#pinpai").select({
+        title: "品牌类型",
+        items: ["国产品牌", "合资品牌", "进口品牌"]
+      });   
+    }
+  }
 };
 </script>
+
 
 <style scoped lang="stylus">
 @import ('../../../static/css/xuanche');

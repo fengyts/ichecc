@@ -27,14 +27,14 @@
     <!--操作-->
     <div class="vipinfo">
        <!-- <a href="../../mine/vip/vipcardinfo.html" class="href">-->
-         <router-link :to="{path:'./vipCardInfo'}">
-            <p>会员卡详情</p>
+         <router-link :to="{path:'/vipCardInfo'}">
+            <p class="cardinfo">会员卡详情</p>
          </router-link>
         <!--</a>-->
         <hr class="hr2">
         <!--<a href="../../mine/vip/viprenewpay.html" class="href">-->
-          <router-link :to="{path:'./vipRenewPay'}">
-            <p>续费</p>
+          <router-link :to="{path:'/vipRenewPay'}">
+            <p class="renew">续费</p>
           </router-link>
         <!--</a>-->
         <hr class="hr2">

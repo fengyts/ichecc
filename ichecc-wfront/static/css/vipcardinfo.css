@@ -14,14 +14,9 @@
 }
 .notice{
     font-size:20px;
+    color:#2aa515;
 }
-.hr{
-    margin-top:20px;
-    height:1px;
-    border:none;
-    border-top:1px 
-    solid #ebe8e8;
-}
+
 .title{
     margin-top:22px;
     color:gray;
