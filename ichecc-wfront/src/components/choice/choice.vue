@@ -131,18 +131,9 @@ export default {
     // },
     _getListData(type) {
       let arr = [];
-      let temp;
-      if (type === "brand") {
-        temp = this.configData.brand;
-        for (var i = 0; i < temp.length; i++) {
-          arr.push(temp[i].name);
-        }
-      }
-      if (type === "energy") {
-        temp = this.configData.energy;
-        for (var i = 0; i < temp.length; i++) {
-          arr.push(temp[i].name);
-        }
+      let temp = this.configData[type];
+      for(var i = 0;i < temp.length; i++){
+         arr.push(temp[i].name);
       }
       return arr;
     }
