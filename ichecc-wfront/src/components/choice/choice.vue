@@ -121,7 +121,6 @@ export default {
       $("#" + _id).select({
         // title: "品牌类型",
         // items: ["国产品牌", "合资品牌", "进口品牌"]
-        closeByOutsideClick: true,
         title: _title,
         items: _that._getListData(_type)
       });
