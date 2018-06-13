@@ -16,7 +16,6 @@ import com.ichecc.common.BaseController;
 import com.ichecc.domain.ItemDO;
 import com.ichecc.dto.ItemDTO;
 import com.ichecc.enums.ItemStatusEnum;
-import com.ichecc.enums.ItemTypeEnum;
 import com.ichecc.util.ResultMessage;
 
 import ng.bayue.common.Page;
@@ -34,7 +33,6 @@ public class ItemController extends BaseController {
 		Page<ItemDO> page = itemAO.queryPageList(itemDO, pageNo, pageSize);
 		model.addAttribute("page", page);
 		model.addAttribute("itemDO", itemDO);
-		model.addAttribute("itemTypes", ItemTypeEnum.values());
 		model.addAttribute("itemStatus", ItemStatusEnum.values());
 		if (CollectionUtils.isEmpty(page.getList())) {
 			model.addAttribute("noRecoders", "暂无数据");
@@ -45,7 +43,6 @@ public class ItemController extends BaseController {
 	@RequestMapping({ "/addItem" })
 	public String addItemInfo(Model model, String iframeName) {
 		model.addAttribute("listIframeName", iframeName);
-		model.addAttribute("itemTypes", ItemTypeEnum.values());
 		model.addAttribute("itemStatus", ItemStatusEnum.values());
 		return BackendConstant.BACKEND_VIEW_PATH + "item/add";
 	}
@@ -74,7 +71,6 @@ public class ItemController extends BaseController {
 	@RequestMapping({"/editItem"})
 	public String editItem(Model model, String iframeName, Long itemId){
 		model.addAttribute("listIframeName", iframeName);
-		model.addAttribute("itemTypes", ItemTypeEnum.values());
 		model.addAttribute("itemStatus", ItemStatusEnum.values());
 		
 		ItemDTO itemDTO = itemAO.selectByItemId(itemId);

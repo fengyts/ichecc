@@ -27,7 +27,8 @@ import helpBargain from 'components/temai/helpBargain'
 Vue.use(Router)
 
 export default new Router({
-  routes: [{
+  routes: [
+    {
       path: '/',
       component: home,
       children: [

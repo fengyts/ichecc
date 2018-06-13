@@ -56,7 +56,7 @@ $(function(){
 		datatype: "json",
 	    
 		loadonce:true,
-	    height: "300",
+	    height: "600",
 	    autowidth:true,
         colNames:colNames,
         colModel:colModel,

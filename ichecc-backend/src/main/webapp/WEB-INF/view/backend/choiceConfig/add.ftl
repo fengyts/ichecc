@@ -16,7 +16,7 @@ css=[]
 		   
 		     <table class="form_table" border="0" cellpadding="0" cellspacing="0">
 		     	<tr style="display:none;">
-          			<td><input type="hidden" id="level" name="level" value="${choiceConfigDO.level}" /></td>
+          			<td><input type="hidden" id="level" name="level" value="1" /></td>
           		 </tr>
 		      	 <tr>
 					<td>所属类别:</td>
