@@ -200,5 +200,19 @@
 		LEFT JOIN item_picture ipic ON ipic.item_id = ti.item_id AND ipic.`type` = '01' AND ipic.`status` = 1
 		WHERE ti.topic_id = #{topicId}
 	</select>
+	
+	
+	<select id="MybatisTopicItemDAO_select_detail_by_tiId" parameterType="long" resultType="com.ichecc.dto.TopicItemDetailDTO">
+		SELECT 
+			ti.id id, ti.topic_id topicId, ti.item_id itemId, ti.item_title itemTitle, ti.sub_title subTitle,
+			ti.market_price marketPrice, ti.guide_price guidePrice, ti.special_price specialPrice, ti.attributes attributes,
+			ti.bargain_max_times bargainMaxTimes, top.period_no periodNo, top.start_time startTime, top.end_time endTime,
+			ipic.picture picture
+		FROM topic_item ti
+		LEFT JOIN topic top ON top.id = ti.topic_id
+		LEFT JOIN item_picture ipic ON ipic.item_id = ti.item_id AND ipic.`type` = '01' AND ipic.`status` = 1 
+		LEFT JOIN item_desc idesc ON idesc.item_id = ti.item_id
+		WHERE ti.id = #{tiId}
+	</select>
 
 </mapper>

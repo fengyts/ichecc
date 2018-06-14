@@ -14,4 +14,6 @@ public interface ItemAttributeService extends GeneralService<ItemAttributeDO, It
 	
 	public List<ItemAttributeDO> selectByIds(List<Long> ids);
 	
+	public List<ItemAttributeDO> selectByIdsStr(String idsStr);
+	
 }

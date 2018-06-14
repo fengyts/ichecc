@@ -3,6 +3,7 @@ package com.ichecc.service;
 import java.util.List;
 
 import com.ichecc.domain.TopicItemDO;
+import com.ichecc.dto.TopicItemDetailDTO;
 import com.ichecc.front.dto.FrontTopicItemDTO;
 
 import ng.bayue.service.common.GeneralService;
@@ -21,5 +22,12 @@ public interface TopicItemService extends GeneralService<TopicItemDO, TopicItemD
 	 * @return
 	 */
 	List<FrontTopicItemDTO> selectListFront(Long topicId);
+	
+	/**
+	 * 根据专题商品id-tiId获取该商品详情信息
+	 * @param tiId
+	 * @return
+	 */
+	TopicItemDetailDTO topicItemDetail(Long tiId);
 
 }

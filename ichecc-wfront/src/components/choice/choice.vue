@@ -22,7 +22,7 @@
       <div class="weui-cells">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input id="pinpai" class="weui-input" type="text" placeholder="请选择品牌类型" v-on:focus="selectOption('pinpai', '品牌类型', 'brand')" readonly>
+            <input id="pinpai" class="weui-input" type="text" placeholder="请选择品牌类型" v-on:focus="selectOption('pinpai', '品牌类型', typeList.brand)" readonly>
           </div>
         </div>
       </div>
@@ -30,7 +30,7 @@
       <div class="weui-cells">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input id="nengyuan" class="weui-input" type="text" placeholder="请选择能源类型" v-on:focus="selectOption('nengyuan', '能源类型', 'energy')" readonly>
+            <input id="nengyuan" class="weui-input" type="text" placeholder="请选择能源类型" @focus="selectOption('nengyuan', '能源类型', typeList.energy)" readonly>
           </div>
         </div>
       </div>
@@ -38,7 +38,7 @@
       <div class="weui-cells">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input id="jibie" class="weui-input" type="text" placeholder="请选择车辆类型" onclick="select();" readonly>
+            <input id="jibie" class="weui-input" type="text" placeholder="请选择车辆类型" @focus="selectOption('jibie', '车辆类型', typeList.car)" readonly>
           </div>
         </div>
       </div>
@@ -46,7 +46,7 @@
       <div class="weui-cells">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input id="zuowei" class="weui-input" type="text" placeholder="请选择座位数量" onclick="select();" readonly>
+            <input id="zuowei" class="weui-input" type="text" placeholder="请选择座位数量" @focus="selectOption('zuowei', '座位数量', typeList.seat)" readonly>
           </div>
         </div>
       </div>
@@ -54,7 +54,7 @@
       <div class="weui-cells">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input id="jiegou" class="weui-input" type="text" placeholder="请选择车型结构" onclick="select();" readonly>
+            <input id="jiegou" class="weui-input" type="text" placeholder="请选择车型结构" @focus="selectOption('jiegou', '车型结构', typeList.carStructure)" readonly>
           </div>
         </div>
       </div>
@@ -62,7 +62,7 @@
       <div class="weui-cells">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input id="biansuxiang" class="weui-input" type="text" placeholder="请选择变速箱类型" onclick="select();" readonly>
+            <input id="biansuxiang" class="weui-input" type="text" placeholder="请选择变速箱类型" @focus="selectOption('biansuxiang', '变速箱类型', typeList.gearbox)" readonly>
           </div>
         </div>
       </div>
@@ -97,7 +97,11 @@ export default {
     return {
       typeList: {
         brand: "brand", //品牌类型
-        energy: "energy" //能源类型
+        energy: "energy", //能源类型
+        car: "car", // 车辆类型
+        seat: "seat", // 座位数量
+        carStructure: "carStructure", //车型结构
+        gearbox: "gearbox" // 变速箱类型
       },
       configData: {}
     };

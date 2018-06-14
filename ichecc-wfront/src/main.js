@@ -7,6 +7,7 @@ import $ from 'jquery'
 import weui from 'jquery-weui/dist/js/jquery-weui.min'
 import 'jquery-weui/dist/css/jquery-weui.min.css'
 import axios from 'axios'
+import filter from './common/filters/filter'
 
 window.JQuery = $;
 window.$ = $;
@@ -19,6 +20,9 @@ axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? process.env.BAS
 Vue.prototype.$http = axios
 Vue.prototype.$error_code = "1"; // 接口错误代码
 
+for(let key in filter){
+  Vue.filter(key, filter[key]);
+}
 
 /* eslint-disable no-new */
 new Vue({

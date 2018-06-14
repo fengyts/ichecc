@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import com.ichecc.dao.TopicItemDAO;
 import com.ichecc.dao.base.MybatisBaseDAO;
 import com.ichecc.domain.TopicItemDO;
+import com.ichecc.dto.TopicItemDetailDTO;
 import com.ichecc.front.dto.FrontTopicItemDTO;
 
 import ng.bayue.exception.CommonDAOException;
@@ -72,6 +73,11 @@ public class MybatisTopicItemDAO extends MybatisBaseDAO implements TopicItemDAO 
 	@Override
 	public List<FrontTopicItemDTO> selectListFront(Long topicId) {
 		return getSqlSession().selectList(getStatement("select_list_front"), topicId);
+	}
+
+	@Override
+	public TopicItemDetailDTO topicItemDetail(Long tiId) {
+		return getSqlSession().selectOne(getStatement("select_detail_by_tiId"), tiId);
 	}
 	
 	

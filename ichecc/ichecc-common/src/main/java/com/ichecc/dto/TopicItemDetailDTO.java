@@ -2,10 +2,13 @@ package com.ichecc.dto;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
-public class TopicItemDTO implements Serializable {
+import com.ichecc.domain.ItemAttributeDO;
 
-	private static final long serialVersionUID = -4998297441365163831L;
+public class TopicItemDetailDTO implements Serializable {
+
+	private static final long serialVersionUID = 243072924546589284L;
 
 	/** topicItem 主键ID */
 	private Long id;
@@ -16,16 +19,23 @@ public class TopicItemDTO implements Serializable {
 	private Date endTime;
 	/** 专题状态 */
 	private String status;
+	private String periodNo;
 
 	private Long itemId;
 	private String itemTitle;
+	private String itemSubTitle;
 	private Double marketPrice;
 	private Double guidePrice;
 	private Double specialPrice;
-	/** 砍价最大次数  */
+	/** 砍价最大次数 */
 	private Integer bargainMaxTimes;
 	private Integer residueTimes;
 	private Boolean itemStatus;
+
+	private String attributes;
+	private List<ItemAttributeDO> attributeList;
+	private String picture;
+	private String description;
 
 	public Long getId() {
 		return id;
@@ -67,6 +77,14 @@ public class TopicItemDTO implements Serializable {
 		this.status = status;
 	}
 
+	public String getPeriodNo() {
+		return periodNo;
+	}
+
+	public void setPeriodNo(String periodNo) {
+		this.periodNo = periodNo;
+	}
+
 	public Long getItemId() {
 		return itemId;
 	}
@@ -81,6 +99,14 @@ public class TopicItemDTO implements Serializable {
 
 	public void setItemTitle(String itemTitle) {
 		this.itemTitle = itemTitle;
+	}
+
+	public String getItemSubTitle() {
+		return itemSubTitle;
+	}
+
+	public void setItemSubTitle(String itemSubTitle) {
+		this.itemSubTitle = itemSubTitle;
 	}
 
 	public Double getMarketPrice() {
@@ -129,6 +155,38 @@ public class TopicItemDTO implements Serializable {
 
 	public void setItemStatus(Boolean itemStatus) {
 		this.itemStatus = itemStatus;
+	}
+
+	public String getAttributes() {
+		return attributes;
+	}
+
+	public void setAttributes(String attributes) {
+		this.attributes = attributes;
+	}
+
+	public List<ItemAttributeDO> getAttributeList() {
+		return attributeList;
+	}
+
+	public void setAttributeList(List<ItemAttributeDO> attributeList) {
+		this.attributeList = attributeList;
+	}
+
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

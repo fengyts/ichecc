@@ -14,6 +14,8 @@ public class FrontTopicItemDTO extends BaseDTO {
 	private Date startTime;
 	/** 专题结束时间 */
 	private Date endTime;
+	/** 专题状态，根据专题时间来判断 */
+	private String status;
 
 	/** 专题商品id */
 	private Long tiId;
@@ -58,6 +60,14 @@ public class FrontTopicItemDTO extends BaseDTO {
 
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public Long getTiId() {

@@ -11,7 +11,7 @@
 
       <!--列表区域-->
       <div class="xctm_list" v-for="item in resData.itemList">
-        <router-link :to="{path:'/detail'}">
+        <router-link :to="{path:'/detail/' + item.tiId}">
           <div class="xctm_list_img">
             <img :src="item.picture" width="100%" alt="">
           </div>
@@ -72,8 +72,7 @@ export default {
       }
     });
   },
-  methods: {
-  },
+  methods: {},
   components: {
     detail
   },

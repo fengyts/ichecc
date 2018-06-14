@@ -46,7 +46,7 @@ export default new Router({
         {path: 'usercenter', component: usercenter}
       ]
     }, 
-    {path: '/detail', component: temaidetail}, 
+    {path: '/detail/:tiId', component: temaidetail}, 
     {path: '/vip', component: vip}, 
     {path: '/vipAdd', component: vipAdd}, 
     {path: '/vipAddPay', component: vipAddPay}, 
@@ -60,7 +60,7 @@ export default new Router({
     {path: '/choiceRecord', component: choiceRecord},
     {path: '/choiceDetail', component: choiceDetail},
     {path: '/help', component: help},
-    {path: '/carDescribe', component: carDescribe},
+    {path: '/carDescribe', name: 'carDescribe', component: carDescribe},
     {path: '/bargain', component: bargain},
     {path: '/helpBargain', component: helpBargain},
     {path:'/authenticationDid', component:authenticationDid},

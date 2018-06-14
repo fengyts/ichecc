@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.ichecc.dao.TopicItemDAO;
 import com.ichecc.domain.TopicItemDO;
+import com.ichecc.dto.TopicItemDetailDTO;
 import com.ichecc.front.dto.FrontTopicItemDTO;
 import com.ichecc.service.TopicItemService;
 
@@ -134,6 +135,14 @@ public class TopicItemServiceImpl implements TopicItemService {
 			return Collections.emptyList();
 		}
 		return topicItemDAO.selectListFront(topicId);
+	}
+
+	@Override
+	public TopicItemDetailDTO topicItemDetail(Long tiId) {
+		if(null == tiId || tiId < 0){
+			return null;
+		}
+		return topicItemDAO.topicItemDetail(tiId);
 	}
 
 }

@@ -1,20 +1,23 @@
 package com.ichecc.service.impl;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.ichecc.dao.ItemAttributeDAO;
 import com.ichecc.domain.ItemAttributeDO;
 import com.ichecc.service.ItemAttributeService;
+
+import ng.bayue.common.Page;
 import ng.bayue.exception.CommonDAOException;
 import ng.bayue.exception.CommonServiceException;
-import ng.bayue.common.Page;
 
 @Service(value="itemAttributeService")
 public class ItemAttributeServiceImpl  implements ItemAttributeService{
@@ -138,6 +141,20 @@ public class ItemAttributeServiceImpl  implements ItemAttributeService{
 			return Collections.emptyList();
 		}
 		return itemAttributeDAO.selectByIds(ids);
+	}
+
+
+	@Override
+	public List<ItemAttributeDO> selectByIdsStr(String idsStr) {
+		if(StringUtils.isBlank(idsStr)){
+			return Collections.emptyList();
+		}
+		String[] idsStrArr = idsStr.split(",");
+		List<Long> ids = new ArrayList<Long>();
+		for(String id : idsStrArr){
+			ids.add(Long.valueOf(id));
+		}
+		return this.selectByIds(ids);
 	}
 	
 	

@@ -3,6 +3,7 @@ package com.ichecc.dao;
 import java.util.List;
 
 import com.ichecc.domain.TopicItemDO;
+import com.ichecc.dto.TopicItemDetailDTO;
 import com.ichecc.front.dto.FrontTopicItemDTO;
 
 import ng.bayue.service.common.GeneralDAO;
@@ -31,5 +32,12 @@ public interface TopicItemDAO extends GeneralDAO<TopicItemDO> {
 	 * @return
 	 */
 	List<FrontTopicItemDTO> selectListFront(Long topicId);
+	
+	/**
+	 * 根据专题商品id-tiId获取商品详细信息
+	 * @param tiId
+	 * @return
+	 */
+	TopicItemDetailDTO topicItemDetail(Long tiId);
 
 }
