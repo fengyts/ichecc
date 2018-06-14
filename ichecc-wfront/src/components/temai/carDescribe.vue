@@ -30,15 +30,16 @@ export default {
     };
   },
   created() {
-    console.log(this.$route.params.itemId);
     this.$http
       .get("/api/topicItem/itemDesc/" + this.$route.params.itemId)
       .then(response => {
         let result = response.data;
         if (this.$error_code === result.code) {
           this.description = result.data;
+          console.log(result.data);
           this.$nextTick(() => {
-            document.getElementById("description").innerHTML=result.data;
+            document.getElementById("description").innerHTML = result.data;
+            $("img").css("width", "100%");
           });
         }
       });
