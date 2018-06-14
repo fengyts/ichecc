@@ -10,9 +10,6 @@
     </div>
     <!--表单-->
     <div class="form">
-      <!-- <div>
-        点击选择日期和时间:<input type="text" id="datetime-picker" v-on:focus="datepicker" />
-      </div> -->
       <div class="weui-cells__title">购车预算</div>
       <div class="weui-cells">
         <div class="weui-cell">
@@ -117,16 +114,10 @@ export default {
     selectOption(_id, _title, _type) {
       var _that = this;
       $("#" + _id).select({
-        // title: "品牌类型",
-        // items: ["国产品牌", "合资品牌", "进口品牌"]
-        closeByOutsideClick: true,
         title: _title,
         items: _that._getListData(_type)
       });
     },
-    // datepicker: function() {
-    //   $("#datetime-picker").calendar({ closeByOutsideClick: true });
-    // },
     _getListData(type) {
       let arr = [];
       let temp = this.configData[type];
@@ -142,5 +133,4 @@ export default {
 
 <style scoped lang="stylus">
 @import ('../../../static/css/xuanche');
-@import ('../../assets/plugins/jquery-weui/css/jquery-weui.min.css');
 </style>

@@ -4,9 +4,35 @@
     padding: 0;
 }
 
+
 .body{
-    width:100%;
-    height: 100%;
+  position: absolute;
+}
+
+.notice{
+  height: 1000px;
+  width:100%;
+  text-align: center;
+  background:black;
+  opacity: 0.99;
+  position: absolute;
+  display: none;
+}
+
+.QRcode{
+  margin-top:45%;
+}
+.QRCodeImg{
+  width:80%;
+}
+.close{
+  font-size:15px;
+  color:#2aa515;
+  padding-top: 30%;
+}
+
+.content{
+  color:white;
 }
 
 .name{
@@ -117,9 +143,10 @@
 .kanjia_guize{
   color:gray;
   font-size:13px;
+  margin-top:15px;
 }
 .kanjia_button{
-    margin-top:18px;
+    margin-top:24px;
 }
 .kanjia_button1{
     width:90%;

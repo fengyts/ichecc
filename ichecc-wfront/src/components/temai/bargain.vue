@@ -11,8 +11,12 @@
           <font style="color:#2aa515;font-size:22px">57244.46</font>元，点击右上角继续分享</p>
         <p class="content">喊好友帮你砍价吧~</p>
         <p class="content">（ 时间有限，要抓紧噢！）</p>
+        <div class="close">
+          点击关闭
+        </div>
       </div>
     </div>
+
     <!--页面内容-->
     <div class="bargain">
       <!--图像区-->
@@ -47,11 +51,14 @@
           <p class="kanjia_price_des">已砍
             <font class="kanjia_price_num1">1555.54</font>元，还差
             <font class="kanjia_price_num2">57244.46</font>元</p>
-          <p class="kanjia_guize">规则说明</p>
         </div>
+        <div class="kanjia_guize">
+          <div @click="guize" id="guize">规则说明</div>
+        </div>
+
         <div class="kanjia_button">
           <p>
-            <button type="button" class="kanjia_button1" id="zijikan" onclick="">自己砍价</button>
+            <button type="button" class="kanjia_button1" id="zijikan" @click="bargain">自己砍价</button>
           </p>
           <p>
             <!-- <router-link :to="{path:'/helpBargain'}">-->
@@ -62,7 +69,7 @@
           <!--测试好友帮砍-->
           <p>
             <router-link :to="{path:'/helpBargain'}">
-            <button type="button" class="kanjia_button1" @click="">测试好友帮砍页面</button>
+              <button type="button" class="kanjia_button1" @click="">测试好友帮砍页面</button>
             </router-link>
           </p>
 
@@ -106,6 +113,12 @@ export default {
   components: {
   },
   methods: {
+    bargain() {
+      $(document).on("click", "#zijikan", function () {
+        $.toast("恭喜！成功砍掉888元", "text");
+      });
+    },
+
     shareFriends() {
       document.getElementById("share").style.display = "block";
       document.getElementById("body").style.position = "fixed";
@@ -113,6 +126,20 @@ export default {
     shutdown() {
       document.getElementById("share").style.display = "none";
       document.getElementById("body").style.position = "absolute";
+    },
+
+    guize() {
+      $(document).on("click", "#guize", function () {
+        $.alert({
+          title: '砍价规则说明',
+          text: '1、在限砍次数内以及时间结束之前，最先将价格砍至特卖价的那位用户为砍价成功，此时砍价宣布结束，其余用户均砍价失败；'+
+          '2、每次砍价，能砍掉的金额均为随机，能否砍价成功，全看用户的运气；'+'3、用户可以自己砍价，或者邀请好友帮忙砍价，邀的越多，砍价成功的概率越高；'+
+          '4、砍价记录可在个人中心里查看，如果砍价成功，我们会尽快安排你到店购车。',
+          onOK: function () {
+            //点击确认
+          }
+        });
+      });
     }
   }
 }

@@ -1,12 +1,14 @@
 .xctm_top{
     text-align: center;
     padding-top:30px;
+    padding-bottom:5px;
 }
 
 .xctm_top_title{
     color:#2aa515;
     font-size:22px;
     font-weight: bold;
+
 }
 
 .xctm_top_time{
@@ -61,8 +63,8 @@
 }
 
 .xctm_bottom{
-    margin-top:23px;
-    margin-bottom: 30px;
+    margin-top:30px;
+    margin-bottom: 20px;
     font-size:12px;
     color:#bdbaba;
     text-align: center;
