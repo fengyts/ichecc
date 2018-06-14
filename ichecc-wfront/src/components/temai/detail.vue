@@ -24,7 +24,7 @@
 
         <!--车辆标题-->
         <div class="tmxq_title">
-          <p>{{resData.detail.subTitle}}</p>
+          <p>{{resData.detail.itemTitle}}</p>
         </div>
         <!--车辆价格-->
         <div class="tmxq_price1">
