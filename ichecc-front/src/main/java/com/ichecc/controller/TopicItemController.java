@@ -32,5 +32,14 @@ public class TopicItemController {
 		}
 		return topicItemAO.topicItemDetail(tiId);
 	}
+	
+	@RequestMapping("itemDesc/{itemId}")
+	@ResponseBody
+	public ResultData itemDesc(@PathVariable Long itemId) {
+		if (itemId == null || itemId < 0l) {
+			return ResultData.failure("参数错误");
+		}
+		return topicItemAO.getItemDesc(itemId);
+	}
 
 }

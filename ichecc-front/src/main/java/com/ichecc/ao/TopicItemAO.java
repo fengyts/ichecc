@@ -16,11 +16,13 @@ import org.springframework.stereotype.Service;
 
 import com.ichecc.common.ResultData;
 import com.ichecc.domain.ItemAttributeDO;
+import com.ichecc.domain.ItemDescDO;
 import com.ichecc.domain.TopicDO;
 import com.ichecc.dto.TopicItemDetailDTO;
 import com.ichecc.enums.TopicStatusEnum;
 import com.ichecc.front.dto.FrontTopicItemDTO;
 import com.ichecc.service.ItemAttributeService;
+import com.ichecc.service.ItemDescService;
 import com.ichecc.service.TopicItemService;
 import com.ichecc.service.TopicService;
 
@@ -40,6 +42,8 @@ public class TopicItemAO {
 	private TopicService topicService;
 	@Autowired
 	private ItemAttributeService attributeService;
+	@Autowired
+	private ItemDescService itemDescService;
 
 	public Map<String, Object> homeData() {
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -126,6 +130,16 @@ public class TopicItemAO {
 			logger.info("获取专题商品详情异常");
 		}
 		return ResultData.success(result);
+	}
+	
+	public ResultData getItemDesc(Long itemId){
+		ItemDescDO desc = new ItemDescDO();	
+		desc.setItemId(itemId);
+		List<ItemDescDO> list = itemDescService.selectDynamic(desc);
+		if(CollectionUtils.isEmpty(list)){
+			return ResultData.failure("数据异常");
+		}
+		return ResultData.success(list.get(0).getDescription());
 	}
 
 }

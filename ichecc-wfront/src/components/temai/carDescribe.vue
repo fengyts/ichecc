@@ -7,11 +7,12 @@
       <p class="title2">（仅供参考，请以实车为准）</p>
     </div>
     <!--车型图片-->
-    <div class="cxms_img">
+    <div class="cxms_img" id="description">
+      <!-- <img src="../../assets/images/img/car_01.jpg" width="100%" alt="" class="img">
       <img src="../../assets/images/img/car_01.jpg" width="100%" alt="" class="img">
       <img src="../../assets/images/img/car_01.jpg" width="100%" alt="" class="img">
-      <img src="../../assets/images/img/car_01.jpg" width="100%" alt="" class="img">
-      <img src="../../assets/images/img/car_01.jpg" width="100%" alt="" class="img">
+      <img src="../../assets/images/img/car_01.jpg" width="100%" alt="" class="img"> -->
+      <!-- {{description}} -->
     </div>
     <!--底部提示-->
     <div class="cxms_tips">
@@ -24,16 +25,23 @@
 <script type="text/javascript">
 export default {
   data() {
-    return {};
+    return {
+      description: ""
+    };
   },
   created() {
-    console.log(this.$route.params);
-    this.$http.get("").then(response => {
-      let result = response.data;
-      if (this.$error_code === result.code) {
-        
-      }
-    });
+    console.log(this.$route.params.itemId);
+    this.$http
+      .get("/api/topicItem/itemDesc/" + this.$route.params.itemId)
+      .then(response => {
+        let result = response.data;
+        if (this.$error_code === result.code) {
+          this.description = result.data;
+          this.$nextTick(() => {
+            document.getElementById("description").innerHTML=result.data;
+          });
+        }
+      });
   }
 };
 </script>
