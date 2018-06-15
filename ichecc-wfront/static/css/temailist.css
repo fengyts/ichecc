@@ -22,13 +22,17 @@
     width:92%;
     margin-top:20px;
     margin-left:4%;
-    border-radius:5px;
+    border-radius:4px;
 }
 .xctm_list_img{
     width:100%;
     margin:0 auto;
     border-radius:5px;
     position: relative;
+}
+.car_img{
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
 }
 .xctm_list_title{
     font-size:20px;

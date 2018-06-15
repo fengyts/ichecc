@@ -15,7 +15,7 @@
       <div class="xctm_list" v-for="item in resData.itemList">
         <router-link :to="{path:'/detail/' + item.tiId}">
           <div class="xctm_list_img">
-            <img :src="item.picture" width="100%" alt="">
+            <img :src="item.picture" width="100%" alt="" class="car_img">
           </div>
           <div class="xctm_list_title">
             <p>{{item.itemTitle}}</p>
