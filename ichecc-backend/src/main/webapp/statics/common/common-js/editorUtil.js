@@ -54,6 +54,7 @@ $(function(){
 			uploadJson : domain + '/uploadImg/uploadItemEditor.htm',
 			imageSizeLimit : "300KB",
 			allowFileManager: false,
+			urlType: 'domain',
 			afterChange: function() {
 				this.sync();
 			},

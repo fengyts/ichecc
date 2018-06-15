@@ -31,14 +31,14 @@ public class UploadController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UploadController.class);
 	
-	@Value("#{meta['dfs.uploadTempPath']}")
+	@Value("#{share['dfs.uploadTempPath']}")
 	private String uploadTempPath;
 //	@Value("${item.picture.MaxSize}")
-	@Value("#{meta['item.picture.MaxSize']}")
+	@Value("#{share['item.picture.MaxSize']}")
 	private int itemPictureMaxSize;
 	
-	@Value("${dfs.group1.host}")
-	private String host;
+//	@Value("#{share['dfs.group1.host']}")
+//	private String host1;
 	
 	@Autowired
 	private DfsAO dfsAO;
@@ -116,7 +116,6 @@ public class UploadController {
 			logger.error("服务器错误,上传失败!");
 		}else{
 			obj.put("path", dfsPath);
-//			obj.put("path", imageUrlUtil.getFileFullUrl(dfsPath));
 			obj.put("key",dfsPath);
 			obj.put("type", "success");
 			obj.put("success", 1);
@@ -170,6 +169,7 @@ public class UploadController {
 			}
 			try{
 				mf.transferTo(file);
+//				dfsPath =  "group1/M00/00/00/rBGZ2lsjYraAbgX8AAF11I2gEKw00..jpg";
 				dfsPath =  dfsAO.uploadFile(file);
 			}catch(IOException e){
 				fileName = null;
@@ -180,9 +180,8 @@ public class UploadController {
 		}
 		JSONObject json = new JSONObject();
 		json.put("error", 0);
-		json.put("url",imageUrlUtil.getFileFullUrl(dfsPath));
-//		json.put("url", "C:\\Users\\Public\\Pictures\\Sample Pictures\\tx4.jpg");
-//		json.put("url", "http://pic56.nipic.com/file/20141227/19674963_215052431000_2.jpg");
+		String url = imageUrlUtil.getFileFullUrl(dfsPath);
+		json.put("url",url);
 //		return json.toJSONString();
 		return json;
 	}

@@ -22,7 +22,7 @@
       <div class="weui-cells">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input id="pinpai" class="weui-input" type="text" placeholder="请选择品牌类型" v-on:focus="selectOption('pinpai', '品牌类型', typeList.brand)" readonly>
+            <input id="pinpai" class="weui-input" type="text" placeholder="请选择品牌类型" v-on:focus="selectOption('pinpai', typeList.brand)" readonly>
           </div>
         </div>
       </div>
@@ -30,7 +30,7 @@
       <div class="weui-cells">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input id="nengyuan" class="weui-input" type="text" placeholder="请选择能源类型" @focus="selectOption('nengyuan', '能源类型', typeList.energy)" readonly>
+            <input id="nengyuan" class="weui-input" type="text" placeholder="请选择能源类型" @focus="selectOption('nengyuan', typeList.energy)" readonly>
           </div>
         </div>
       </div>
@@ -38,7 +38,7 @@
       <div class="weui-cells">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input id="jibie" class="weui-input" type="text" placeholder="请选择车辆类型" @focus="selectOption('jibie', '车辆类型', typeList.car)" readonly>
+            <input id="jibie" class="weui-input" type="text" placeholder="请选择车辆类型" @focus="selectOption('jibie', typeList.car)" readonly>
           </div>
         </div>
       </div>
@@ -46,7 +46,7 @@
       <div class="weui-cells">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input id="zuowei" class="weui-input" type="text" placeholder="请选择座位数量" @focus="selectOption('zuowei', '座位数量', typeList.seat)" readonly>
+            <input id="zuowei" class="weui-input" type="text" placeholder="请选择座位数量" @focus="selectOption('zuowei', typeList.seat)" readonly>
           </div>
         </div>
       </div>
@@ -54,7 +54,7 @@
       <div class="weui-cells">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input id="jiegou" class="weui-input" type="text" placeholder="请选择车型结构" @focus="selectOption('jiegou', '车型结构', typeList.carStructure)" readonly>
+            <input id="jiegou" class="weui-input" type="text" placeholder="请选择车型结构" @focus="selectOption('jiegou', typeList.carStructure)" readonly>
           </div>
         </div>
       </div>
@@ -62,7 +62,7 @@
       <div class="weui-cells">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input id="biansuxiang" class="weui-input" type="text" placeholder="请选择变速箱类型" @focus="selectOption('biansuxiang', '变速箱类型', typeList.gearbox)" readonly>
+            <input id="biansuxiang" class="weui-input" type="text" placeholder="请选择变速箱类型" @focus="selectOption('biansuxiang', typeList.gearbox)" readonly>
           </div>
         </div>
       </div>
@@ -96,37 +96,59 @@ export default {
   data() {
     return {
       typeList: {
-        brand: "brand", //品牌类型
-        energy: "energy", //能源类型
-        car: "car", // 车辆类型
-        seat: "seat", // 座位数量
-        carStructure: "carStructure", //车型结构
-        gearbox: "gearbox" // 变速箱类型
+        brand: {type: "brand", desc: "品牌类型"},
+        energy: {type: "energy", desc: "能源类型"},
+        car: {type: "car", desc: "车辆类型"},
+        seat: {type: "seat", desc: "座位数量"},
+        carStructure: {type: "carStructure", desc: "车型结构"},
+        gearbox: {type: "gearbox", desc:"变速箱类型"}
       },
-      configData: {}
+      resData: {},
+      // selectedData: {}
     };
   },
   created() {
     this.$http.get("/api/choice/choiceConfig").then(response => {
       var result = response.data;
       if (result.code === this.$error_code) {
-        this.configData = result.data;
+        this.resData = result.data;
       }
     });
   },
   methods: {
-    selectOption(_id, _title, _type) {
+    selectOption(_id, _type) {
       var _that = this;
       $("#" + _id).select({
-        title: _title,
-        items: _that._getListData(_type)
+        title: _type.desc,
+        items: _that._getListData(_type.type),
+        onChange: function(res){
+          _type.selected = res.titles;
+        }
       });
     },
+    // selectOption(_id, _type) {
+    //   var _that = this;
+    //   $("#" + _id).picker({
+    //    title: _type.desc,
+    //     cols: [
+    //       {
+    //         textAlign: "center",
+    //         values: _that._getListData(_type.type)
+    //       }
+    //     ],
+    //     onChange: function(_res){
+    //       console.log(_res.value);
+    //     }
+    //   });
+    // },
     _getListData(type) {
       let arr = [];
-      let temp = this.configData[type];
+      let temp = this.resData[type];
       for (var i = 0; i < temp.length; i++) {
-        arr.push(temp[i].name);
+        let item = {};
+        item.title = temp[i].name;
+        item.value = temp[i].id;
+        arr.push(item);
       }
       return arr;
     }

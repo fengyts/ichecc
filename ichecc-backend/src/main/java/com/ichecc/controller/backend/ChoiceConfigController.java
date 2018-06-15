@@ -13,7 +13,7 @@ import com.ichecc.domain.ChoiceConfigDO;
 import com.ichecc.util.ResultMessage;
 
 @Controller
-@RequestMapping("/choiceConfig/")
+@RequestMapping("/choiceConfig")
 public class ChoiceConfigController {
 
 	@Autowired
