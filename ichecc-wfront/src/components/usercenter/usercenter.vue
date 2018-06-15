@@ -12,7 +12,7 @@
           <span>实心梨子</span>
           <span class="viplogo"><input type="text" value="VIP" class="vipbg"></span>
         </p>
-        <p class="phone">未绑定手机 / 已绑定手机153*****678</p>
+        <p class="tips">未进行身份认证 / 身份已认证</p>
       </div>
     </div>
 

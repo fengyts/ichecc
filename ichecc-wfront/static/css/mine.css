@@ -21,8 +21,8 @@
     float: left;
 }
 .icon1{
-    width:78px;
-    height:78px;
+    width:76px;
+    height:76px;
 }
 .username{
     font-size:16px;
@@ -47,8 +47,8 @@
     border:none;
     border-radius: 3px;
 }
-.phone{
-    color:gray;
+.tips{
+    color:#bdbaba;
     font-size:12px;
     padding-top:5px;
 }

@@ -22,6 +22,15 @@
         </div>
       </div>
 
+      <div class="weui-cells__title">手机号码</div>
+      <div class="weui-cells">
+        <div class="weui-cell">
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="text" placeholder="请填写真实手机号码">
+          </div>
+        </div>
+      </div>
+
       <div class="weui-cells__title">居住地址</div>
       <div class="weui-cells">
         <div class="weui-cell">

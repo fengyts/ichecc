@@ -3,12 +3,12 @@
   <div class="home" style="height:100%;">
     <div class="weui-tab">
       <!--页面内容-->
-      <div class="weui-tab__bd" style="height:91%">
+      <div class="weui-tab__bd" style="height:90.5%">
         <router-view></router-view>
       </div>
 
       <!--底部导航-->
-      <div class="weui-tabbar" style="height:9%;">
+      <div class="weui-tabbar" style="height:9.5%;">
         <a href="#" class="weui-tabbar__item weui-bar__item--on">
           <p class="weui-tabbar__label">
             <router-link to="/home/list" tag="span">

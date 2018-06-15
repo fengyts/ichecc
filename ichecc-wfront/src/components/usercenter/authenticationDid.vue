@@ -14,6 +14,12 @@
                 340000201801015678
             </p>
             <p class="title">
+                手机号码
+            </p>
+            <p class="content">
+                15399616588
+            </p>
+            <p class="title">
                 居住地址
             </p>
             <p class="content">
