@@ -7,6 +7,7 @@ import $ from 'jquery'
 import weui from 'jquery-weui/dist/js/jquery-weui.min'
 import 'jquery-weui/dist/css/jquery-weui.min.css'
 import axios from 'axios'
+import wx from 'weixin-js-sdk'
 import filter from './common/filters/filter'
 
 window.JQuery = $;

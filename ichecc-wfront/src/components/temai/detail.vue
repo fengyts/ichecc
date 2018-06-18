@@ -1,7 +1,7 @@
 <!--  -->
 <template>
-  <div class="temai-detail-wrapper" ref="detailWrapper" v-if="resData.detail != undefined">
-    <div class="temai-detail">
+  <div class="temai-detail-wrapper" ref="detailWrapper">
+    <div class="temai-detail" v-if="resData.detail != undefined">
       <div class="tmxq_top">
         <!--车辆图片-->
         <div class="tmxq_img">
@@ -93,29 +93,29 @@ export default {
     };
   },
   created() {
-    this.$http
-      .get("/api/topicItem/itemDetail/" + this.$route.params.tiId)
-      .then(response => {
-        let result = response.data;
-        if (this.$error_code === result.code) {
-          this.resData = result.data;
-          this.$nextTick(() => {
-            this.countdown(result.data.countDownTime / 1000);
-            this._initScroll();
-          });
-        }
-      });
+    let _that = this;
+    this.$http.get("/api/topicItem/itemDetail/" + this.$route.params.tiId).then(response => {
+      let result = response.data;
+      if (this.$error_code === result.code) {
+        this.resData = result.data;
+        this.$nextTick(() => {
+          this._initScroll();
+          this.countdown(result.data.countDownTime / 1000);
+        });
+      }
+    });
   },
   methods: {
     countdown(mss) {
       var _that = this;
-      this.interval = setInterval(function() {
+      var itv = setInterval(function () {
         var ctr = _that.fmtTime(mss);
         document.getElementById("time-countdown-wrapper").innerHTML = ctr;
         if (!mss--) {
-          clearInterval(this.interval);
+          clearInterval(itv);
         }
       }, 1000);
+      this.interval = itv;
     },
     fmtTime(mss) {
       var ss = 1,

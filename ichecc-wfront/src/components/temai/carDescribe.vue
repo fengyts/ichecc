@@ -36,7 +36,6 @@ export default {
         let result = response.data;
         if (this.$error_code === result.code) {
           this.description = result.data;
-          console.log(result.data);
           this.$nextTick(() => {
             document.getElementById("description").innerHTML = result.data;
             $("img").css("width", "100%");

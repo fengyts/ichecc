@@ -14,7 +14,7 @@
       <div class="weui-cells">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input class="weui-input" type="text" placeholder="请输入预算金额（万元）" value="100" id="yusuan">
+            <input class="weui-input" type="text" placeholder="请输入预算金额（万元）" id="yusuan">
           </div>
         </div>
       </div>
@@ -81,8 +81,9 @@
     <!--提交按钮-->
     <div class="submit">
       <router-link :to="{path:'/vipAdd'}">
-        <button class="button" id="submit" onclick="modal();">提交</button>
+        <!-- <button class="button" id="submit" onclick="modal();">提交</button> -->
       </router-link>
+      <button class="button" id="submit" @click="choiceSubmit()">提交</button>
     </div>
     <!--提示信息-->
     <div class="tips">
@@ -96,12 +97,12 @@ export default {
   data() {
     return {
       typeList: {
-        brand: {type: "brand", desc: "品牌类型"},
-        energy: {type: "energy", desc: "能源类型"},
-        car: {type: "car", desc: "车辆类型"},
-        seat: {type: "seat", desc: "座位数量"},
-        carStructure: {type: "carStructure", desc: "车型结构"},
-        gearbox: {type: "gearbox", desc:"变速箱类型"}
+        brand: { type: "brand", desc: "品牌类型" },
+        energy: { type: "energy", desc: "能源类型" },
+        car: { type: "car", desc: "车辆类型" },
+        seat: { type: "seat", desc: "座位数量" },
+        carStructure: { type: "carStructure", desc: "车型结构" },
+        gearbox: { type: "gearbox", desc: "变速箱类型" }
       },
       resData: {},
       // selectedData: {}
@@ -116,12 +117,33 @@ export default {
     });
   },
   methods: {
+    choiceSubmit() {
+     // 公众号测试账号:
+     // appid:wx11b8b11348ff6db3
+     // secret:d2c1fd6715f20dc1b1b15ffabcd2fb25
+     // 正式公众号：
+     // appid:wxeec85623859fc30e
+     // secret:ef80f395bfbd63e7b61b6972179ad4cb
+      var appid = "wx11b8b11348ff6db3",
+        redirect_uri = encodeURIComponent("www.baidu.com"),
+        response_type = "html",
+        scope = "snsapi_userinfo",
+        state = "";
+        console.log(redirect_uri);
+      var _authUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?`
+        + `appid=${appid}&redirect_uri=${redirect_uri}`
+        + `&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`;
+      this.$http.get(_authUrl).then(response => {
+        console.log(response);
+      });  
+
+    },
     selectOption(_id, _type) {
       var _that = this;
       $("#" + _id).select({
         title: _type.desc,
         items: _that._getListData(_type.type),
-        onChange: function(res){
+        onChange: function (res) {
           _type.selected = res.titles;
         }
       });
