@@ -128,6 +128,8 @@ export default {
       // var _authUrl = this.getAuthUrl();
       var _authUrl = this.getAuthUrl('test');
       location.href = _authUrl;
+      var storeTest = this.$store.state.loginState
+      console.log(storeTest);
     },
     getAuthUrl(_envType) {
       var scope = "snsapi_userinfo";
@@ -158,21 +160,6 @@ export default {
         }
       });
     },
-    // selectOption(_id, _type) {
-    //   var _that = this;
-    //   $("#" + _id).picker({
-    //    title: _type.desc,
-    //     cols: [
-    //       {
-    //         textAlign: "center",
-    //         values: _that._getListData(_type.type)
-    //       }
-    //     ],
-    //     onChange: function(_res){
-    //       console.log(_res.value);
-    //     }
-    //   });
-    // },
     _getListData(type) {
       let arr = [];
       let temp = this.resData[type];

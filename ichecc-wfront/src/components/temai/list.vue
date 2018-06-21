@@ -67,6 +67,9 @@ export default {
     }
   },
   created() {
+    console.log(this.$store.state.loginState);
+    this._checkLogin();
+
     this.$http.get("/api/index/itemList").then(response => {
       var result = response.data;
       if (result.code === this.$error_code) {
@@ -74,7 +77,26 @@ export default {
       }
     });
   },
-  methods: {},
+  methods: {
+    _checkLogin() {
+      var _code;
+      var _query = window.location.search;
+      if (_query) {
+        _code = this._getCode(_query);
+      }
+      console.log("_code:" + _code);
+    },
+    _getCode(query) {
+      query = query.substring(1);
+      var qs = query.split("&");
+      for (var i = 0; i < qs.length; i++) {
+        let qi = qs[i].split("=");
+        if ("code" === qi[0]) {
+          return qi[1];
+        }
+      }
+    }
+  },
   components: {
     detail
   },

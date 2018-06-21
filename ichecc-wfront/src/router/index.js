@@ -22,11 +22,13 @@ import help from 'components/other/help'
 import carDescribe from 'components/temai/carDescribe'
 import bargain from 'components/temai/bargain'
 import helpBargain from 'components/temai/helpBargain'
+import wechatAuth from 'components/home/wechatAuth'
 
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
+  // mode: 'history',
   routes: [
     {
       path: '/',
@@ -63,7 +65,8 @@ export default new Router({
     {path: '/carDescribe', name: 'carDescribe', component: carDescribe},
     {path: '/bargain', component: bargain},
     {path: '/helpBargain', component: helpBargain},
-    {path:'/authenticationDid', component:authenticationDid},
+    {path:'/authenticationDid', component: authenticationDid},
+    {path:'/wechatAuth', component: wechatAuth},
   ],
   linkActiveClass: '--active' // 指定超链接激活的样式,等同于class="active"
 })

@@ -9,11 +9,12 @@ import 'jquery-weui/dist/css/jquery-weui.min.css'
 import axios from 'axios'
 import wx from 'weixin-js-sdk'
 import filter from './common/filters/filter'
+import 'common/stylus/index'; // 全局自定义样式
+import store from './store/store'
+
 
 window.JQuery = $;
 window.$ = $;
-
-import 'common/stylus/index';
 
 Vue.config.productionTip = false
 // axios.defaults.baseURL = process.env.BASE_API_URL
@@ -21,7 +22,8 @@ axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? process.env.BAS
 Vue.prototype.$http = axios
 Vue.prototype.$error_code = "1"; // 接口错误代码
 
-for(let key in filter){
+// 全局过滤器
+for (let key in filter) {
   Vue.filter(key, filter[key]);
 }
 
@@ -29,8 +31,12 @@ for(let key in filter){
 new Vue({
   el: '#app',
   router,
-  components: { App },
+  store,
+  components: {
+    App
+  },
   template: '<App/>'
 })
 
-router.push('/home/list');
+// router.push('/home/list');
+router.push('/wechatAuth');
