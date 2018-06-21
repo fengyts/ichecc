@@ -7,7 +7,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     user: {},
-    loginState: 1,
+    loginState: 0,
     code: "",
     openid: ""
   },

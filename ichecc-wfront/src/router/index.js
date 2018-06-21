@@ -23,6 +23,8 @@ import carDescribe from 'components/temai/carDescribe'
 import bargain from 'components/temai/bargain'
 import helpBargain from 'components/temai/helpBargain'
 import wechatAuth from 'components/home/wechatAuth'
+// import notfound from 'components/other/notfound'
+import authRedirect from 'components/other/authRedirect'
 
 
 Vue.use(Router);
@@ -30,6 +32,7 @@ Vue.use(Router);
 export default new Router({
   // mode: 'history',
   routes: [
+    // {path: "*", component: notfound},
     {
       path: '/',
       component: home,
@@ -66,7 +69,8 @@ export default new Router({
     {path: '/bargain', component: bargain},
     {path: '/helpBargain', component: helpBargain},
     {path:'/authenticationDid', component: authenticationDid},
-    {path:'/wechatAuth', component: wechatAuth},
+    {path:'/wechatAuth', component: wechatAuth, props: (route) => ({ query: route.query.code })},
+    // {path:'/authRedirect',redirect:'/home/list', component: authRedirect},
   ],
   linkActiveClass: '--active' // 指定超链接激活的样式,等同于class="active"
 })

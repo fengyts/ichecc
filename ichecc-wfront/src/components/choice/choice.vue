@@ -142,7 +142,8 @@ export default {
       if (_envType === "test") {
         appid = "wx11b8b11348ff6db3";
         // redirect_uri = encodeURIComponent("http://47.94.199.26/ichecc-front/");
-        redirect_uri = encodeURIComponent("http://192.168.9.108:8080");
+        // redirect_uri = encodeURIComponent("http://192.168.9.108:8080");
+        redirect_uri = encodeURIComponent("http://192.168.0.107:8080");
       }
       var _authUrl =
         `https://open.weixin.qq.com/connect/oauth2/authorize?` +

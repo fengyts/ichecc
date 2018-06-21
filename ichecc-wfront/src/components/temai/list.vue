@@ -8,7 +8,6 @@
         <p class="xctm_top_title">本期特卖</p>
         <!-- <p class="xctm_top_time">期号 : H180602&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时间 : 4.23 - 4.29</p> -->
         <p class="xctm_top_time" v-show="resData.periodNo!=''">期号 : {{resData.periodNo}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 时间 : {{resData.startTime | formatDate}} - {{resData.endTime | formatDate}}</p>
-
       </div>
 
       <!--列表区域-->
@@ -68,7 +67,6 @@ export default {
   },
   created() {
     console.log(this.$store.state.loginState);
-    this._checkLogin();
 
     this.$http.get("/api/index/itemList").then(response => {
       var result = response.data;
@@ -78,24 +76,6 @@ export default {
     });
   },
   methods: {
-    _checkLogin() {
-      var _code;
-      var _query = window.location.search;
-      if (_query) {
-        _code = this._getCode(_query);
-      }
-      console.log("_code:" + _code);
-    },
-    _getCode(query) {
-      query = query.substring(1);
-      var qs = query.split("&");
-      for (var i = 0; i < qs.length; i++) {
-        let qi = qs[i].split("=");
-        if ("code" === qi[0]) {
-          return qi[1];
-        }
-      }
-    }
   },
   components: {
     detail

@@ -1,7 +1,7 @@
 <!--  -->
 <template>
-  <div class="auth">
-    正在授权登录。。。
+  <div class="auth-req">
+    <!-- 正在获取授权信息。。。 -->
   </div>
 </template>
 
@@ -12,14 +12,23 @@ export default {
   },
   created() {
     var loginState = this.$store.state.loginState;
-    if(1 == loginState){
+    if (0 == loginState) {
+      var _code = this._getCode();
+      console.log("code:" + _code);
+      if(_code){
+        // this.code = _code;
+        console.log(this.$router);
+        this.$store.commit("setLoginState", 1);
+        this.$router.push("/home/list");
+        return;
+      }
+      this.wechatAuth();
+    } else {
       this.$router.push("/home/list");
-    }else {
-      this.choiceSubmit();
     }
   },
   methods: {
-    choiceSubmit() {
+    wechatAuth() {
       // 公众号测试账号:
       // appid:wx11b8b11348ff6db3
       // secret:d2c1fd6715f20dc1b1b15ffabcd2fb25
@@ -28,9 +37,9 @@ export default {
       // secret:ef80f395bfbd63e7b61b6972179ad4cb
 
       // var _authUrl = this.getAuthUrl();
-      var _authUrl = this.getAuthUrl('test');
+      var _authUrl = this.getAuthUrl("test");
       location.href = _authUrl;
-      var storeTest = this.$store.state.loginState
+      var storeTest = this.$store.state.loginState;
       console.log(storeTest);
     },
     getAuthUrl(_envType) {
@@ -39,19 +48,34 @@ export default {
       var appid = "wxeec85623859fc30e",
         redirect_uri = encodeURIComponent(
           "http://www.checc.cc/mp/MP_verify_KfRYessrSJskNVws.txt"
-        );
+        ),
+        state = "/wechatAuth";
       //测试环境
       if (_envType === "test") {
         appid = "wx11b8b11348ff6db3";
         // redirect_uri = encodeURIComponent("http://47.94.199.26/ichecc-front/");
-        redirect_uri = encodeURIComponent("http://192.168.9.108:8080");
+        // redirect_uri = encodeURIComponent("http://192.168.9.108:8080");
+        redirect_uri = encodeURIComponent("http://192.168.0.107:8080");
       }
       var _authUrl =
         `https://open.weixin.qq.com/connect/oauth2/authorize?` +
         `appid=${appid}&redirect_uri=${redirect_uri}` +
-        `&response_type=code&scope=${scope}&state=STATE#wechat_redirect`;
+        `&response_type=code&scope=${scope}&state=${state}#wechat_redirect`;
       return _authUrl;
     },
+    _getCode() {
+      var _query = window.location.search;
+      if (_query) {
+        _query = _query.substring(1);
+        var qs = _query.split("&");
+        for (var i = 0; i < qs.length; i++) {
+          let qi = qs[i].split("=");
+          if ("code" === qi[0]) {
+            return qi[1];
+          }
+        }
+      }
+    }
   },
   components: {}
 };
