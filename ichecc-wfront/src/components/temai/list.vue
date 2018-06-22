@@ -46,6 +46,7 @@
   </div>
 </template>
 
+
 <script type="text/javascript">
 import { formatDate } from "../../common/js/date.js";
 import detail from "../temai/detail";
@@ -55,19 +56,7 @@ export default {
       resData: {}
     };
   },
-  filters: {
-    formatDate: function(startTime) {
-      var date = new Date(startTime);
-      return formatDate(date, "M.dd");
-    },
-    formatMoney: function(money) {
-      var fmt = money / 10000;
-      return parseFloat(fmt).toFixed(2);
-    }
-  },
   created() {
-    console.log(this.$store.state.loginState);
-
     this.$http.get("/api/index/itemList").then(response => {
       var result = response.data;
       if (result.code === this.$error_code) {
@@ -75,8 +64,7 @@ export default {
       }
     });
   },
-  methods: {
-  },
+  methods: {},
   components: {
     detail
   },

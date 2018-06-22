@@ -33,20 +33,20 @@ export default new Router({
   // mode: 'history',
   routes: [
     // {path: "*", component: notfound},
-    {
-      path: '/',
-      component: home,
-      children: [
-        {path: 'list', component: list}, 
-        {path: 'choice', component: choice},
-        {path: 'usercenter', component: usercenter}
-      ]
-    }, 
+    // {
+    //   path: '/',
+    //   component: home,
+    //   children: [
+    //     {path: 'list', component: list}, 
+    //     {path: 'choice', component: choice},
+    //     {path: 'usercenter', component: usercenter}
+    //   ]
+    // }, 
     {
       path: '/home',
       component: home,
       children: [
-        {path: 'list', component: list}, 
+        {path: 'list', name:'homeList', component: list}, 
         {path: 'choice', component: choice},
         {path: 'usercenter', component: usercenter}
       ]
@@ -69,8 +69,7 @@ export default new Router({
     {path: '/bargain', component: bargain},
     {path: '/helpBargain', component: helpBargain},
     {path:'/authenticationDid', component: authenticationDid},
-    {path:'/wechatAuth', component: wechatAuth, props: (route) => ({ query: route.query.code })},
-    // {path:'/authRedirect',redirect:'/home/list', component: authRedirect},
+    {path:'/wechatAuth', component: wechatAuth},
   ],
   linkActiveClass: '--active' // 指定超链接激活的样式,等同于class="active"
 })

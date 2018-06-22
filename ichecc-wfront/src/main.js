@@ -8,10 +8,10 @@ import weui from 'jquery-weui/dist/js/jquery-weui.min'
 import 'jquery-weui/dist/css/jquery-weui.min.css'
 import axios from 'axios'
 import wx from 'weixin-js-sdk'
-import filter from './common/filters/filter'
+import filters from './common/filters/filter'
 import 'common/stylus/index'; // 全局自定义样式
-import store from './store/store'
-
+import store from './store/store' // vuex store
+import localStorage from './store/localStorage' // window localStorage
 
 window.JQuery = $;
 window.$ = $;
@@ -21,11 +21,13 @@ Vue.config.productionTip = false
 axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? process.env.BASE_API_URL : ''
 Vue.prototype.$http = axios
 Vue.prototype.$error_code = "1"; // 接口错误代码
+Vue.prototype.$localStorage = localStorage;
 
 // 全局过滤器
-for (let key in filter) {
-  Vue.filter(key, filter[key]);
+for (let key in filters) {
+  Vue.filter(key, filters[key]);
 }
+
 
 /* eslint-disable no-new */
 new Vue({

@@ -10,6 +10,11 @@ package com.ichecc.constants;
  */
 public interface ICheccConstants {
 	
+	interface ICheccRedisKeys {
+		String BASE_KEY = "ichecc_";
+		String WECHAT_AUTH = BASE_KEY + "";
+	}
+	
 	/** VIP会员权益  */
 	String VIP_BENEFIT = "vip_benefit";
 	/** VIP会员注意事项  */

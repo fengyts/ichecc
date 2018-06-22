@@ -1,14 +1,14 @@
-import '../js/date';
+import {fmtDate} from '../js/date';
 
-const filter = {
-  formatDate: function(startTime) {
+const filters = {
+  formatDate: function (startTime) {
     var date = new Date(startTime);
-    return formatDate(date, "M.dd");
+    return fmtDate(date, "M.dd");
   },
-  formatMoney: function(money) {
+  formatMoney: function (money) {
     var fmt = money / 10000;
     return parseFloat(fmt).toFixed(2);
   }
 };
 
-export default filter;
+export default filters;
