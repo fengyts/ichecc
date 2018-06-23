@@ -70,19 +70,94 @@
         <p class="kanjia_record_title1">砍价记录</p>
       </div>
       <div class="kanjia_bottom_list">
-        <div class="kanjia_bottom_list_userlogo">
-          <img src="../../assets/images/img/car_01.jpg" class="logo" alt="">
+        <div class="kanjia_bottom_list_content">
+          <div class="kanjia_bottom_list_userlogo">
+            <img src="../../assets/images/img/car_01.jpg" class="logo" alt="">
+          </div>
+          <div class="kanjia_bottom_list_usermess">
+            <p class="username">旗嘉科技</p>
+            <p class="time">04-10 10:50:29.123</p>
+          </div>
+          <div class="kanjia_bottom_list_usernum">
+            <span class="num">砍掉888.66元</span>
+          </div>
         </div>
-        <div class="kanjia_bottom_list_usermess">
-          <p class="username">旗嘉科技</p>
-          <p class="time">04-10 10:50:29.123</p>
+
+        <div class="kanjia_bottom_list_content">
+          <div class="kanjia_bottom_list_userlogo">
+            <img src="../../assets/images/img/car_01.jpg" class="logo" alt="">
+          </div>
+          <div class="kanjia_bottom_list_usermess">
+            <p class="username">旗嘉科技</p>
+            <p class="time">04-10 10:50:29.123</p>
+          </div>
+          <div class="kanjia_bottom_list_usernum">
+            <span class="num">砍掉888.66元</span>
+          </div>
         </div>
-        <div class="kanjia_bottom_list_usernum">
-          <span class="num">砍掉888.66元</span>
+
+        
+        <div class="kanjia_bottom_list_content">
+          <div class="kanjia_bottom_list_userlogo">
+            <img src="../../assets/images/img/car_01.jpg" class="logo" alt="">
+          </div>
+          <div class="kanjia_bottom_list_usermess">
+            <p class="username">旗嘉科技</p>
+            <p class="time">04-10 10:50:29.123</p>
+          </div>
+          <div class="kanjia_bottom_list_usernum">
+            <span class="num">砍掉888.66元</span>
+          </div>
         </div>
+
+        
+        <div class="kanjia_bottom_list_content">
+          <div class="kanjia_bottom_list_userlogo">
+            <img src="../../assets/images/img/car_01.jpg" class="logo" alt="">
+          </div>
+          <div class="kanjia_bottom_list_usermess">
+            <p class="username">旗嘉科技</p>
+            <p class="time">04-10 10:50:29.123</p>
+          </div>
+          <div class="kanjia_bottom_list_usernum">
+            <span class="num">砍掉888.66元</span>
+          </div>
+        </div>
+
+
+        
+        <div class="kanjia_bottom_list_content">
+          <div class="kanjia_bottom_list_userlogo">
+            <img src="../../assets/images/img/car_01.jpg" class="logo" alt="">
+          </div>
+          <div class="kanjia_bottom_list_usermess">
+            <p class="username">旗嘉科技</p>
+            <p class="time">04-10 10:50:29.123</p>
+          </div>
+          <div class="kanjia_bottom_list_usernum">
+            <span class="num">砍掉888.66元</span>
+          </div>
+        </div>
+
+
+        
+        <div class="kanjia_bottom_list_content">
+          <div class="kanjia_bottom_list_userlogo">
+            <img src="../../assets/images/img/car_01.jpg" class="logo" alt="">
+          </div>
+          <div class="kanjia_bottom_list_usermess">
+            <p class="username">旗嘉科技</p>
+            <p class="time">04-10 10:50:29.123</p>
+          </div>
+          <div class="kanjia_bottom_list_usernum">
+            <span class="num">砍掉888.66元</span>
+          </div>
+        </div>
+
       </div>
 
-      <div class="tips">
+        <div class="tips">
+        <p>- 没有更多了 - </p>
       </div>
     </div>
 
