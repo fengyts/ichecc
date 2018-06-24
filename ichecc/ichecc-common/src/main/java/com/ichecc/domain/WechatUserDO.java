@@ -5,28 +5,31 @@ import ng.bayue.common.BaseDO;
 /**
  * 微信用户授权
  * 
- * @author fengyts Wed May 09 09:29:15 CST 2018
+ * @author fengyts Sat Jun 23 12:33:14 CST 2018
  */
 
 public class WechatUserDO extends BaseDO {
 
 	/**  */
-	private static final long serialVersionUID = 3514459719056651112L;
+	private static final long serialVersionUID = 8166115817641356463L;
 
 	/** 主键 */
 	private Long id;
 
 	/** 微信用户openId */
-	private String openId;
+	private String openid;
 
-	/** 昵微信称 */
-	private String nickName;
+	/** 微信昵称 */
+	private String nickname;
+
+	/** 语言 */
+	private String language;
 
 	/** 微信头像链接 */
-	private String avatarUrl;
+	private String headimgurl;
 
 	/** 性别：1-男；0-女；-1-未知 */
-	private String gender;
+	private String sex;
 
 	/** 省 */
 	private String province;
@@ -40,6 +43,9 @@ public class WechatUserDO extends BaseDO {
 	/** unionId */
 	private String unionId;
 
+	/** 用户特权信息 */
+	private String privilege;
+
 	/**
 	 * 设置 主键
 	 * 
@@ -52,37 +58,46 @@ public class WechatUserDO extends BaseDO {
 	/**
 	 * 设置 微信用户openId
 	 * 
-	 * @param openId
+	 * @param openid
 	 */
-	public void setOpenId(String openId) {
-		this.openId = openId;
+	public void setOpenid(String openid) {
+		this.openid = openid;
 	}
 
 	/**
-	 * 设置 昵微信称
+	 * 设置 微信昵称
 	 * 
-	 * @param nickName
+	 * @param nickname
 	 */
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	/**
+	 * 设置 语言
+	 * 
+	 * @param language
+	 */
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 
 	/**
 	 * 设置 微信头像链接
 	 * 
-	 * @param avatarUrl
+	 * @param headimgurl
 	 */
-	public void setAvatarUrl(String avatarUrl) {
-		this.avatarUrl = avatarUrl;
+	public void setHeadimgurl(String headimgurl) {
+		this.headimgurl = headimgurl;
 	}
 
 	/**
 	 * 设置 性别：1-男；0-女；-1-未知
 	 * 
-	 * @param gender
+	 * @param sex
 	 */
-	public void setGender(String gender) {
-		this.gender = gender;
+	public void setSex(String sex) {
+		this.sex = sex;
 	}
 
 	/**
@@ -122,6 +137,15 @@ public class WechatUserDO extends BaseDO {
 	}
 
 	/**
+	 * 设置 用户特权信息
+	 * 
+	 * @param privilege
+	 */
+	public void setPrivilege(String privilege) {
+		this.privilege = privilege;
+	}
+
+	/**
 	 * 获取 主键
 	 * 
 	 * @return id
@@ -133,37 +157,46 @@ public class WechatUserDO extends BaseDO {
 	/**
 	 * 获取 微信用户openId
 	 * 
-	 * @return openId
+	 * @return openid
 	 */
-	public String getOpenId() {
-		return openId;
+	public String getOpenid() {
+		return openid;
 	}
 
 	/**
-	 * 获取 昵微信称
+	 * 获取 微信昵称
 	 * 
-	 * @return nickName
+	 * @return nickname
 	 */
-	public String getNickName() {
-		return nickName;
+	public String getNickname() {
+		return nickname;
+	}
+
+	/**
+	 * 获取 语言
+	 * 
+	 * @return language
+	 */
+	public String getLanguage() {
+		return language;
 	}
 
 	/**
 	 * 获取 微信头像链接
 	 * 
-	 * @return avatarUrl
+	 * @return headimgurl
 	 */
-	public String getAvatarUrl() {
-		return avatarUrl;
+	public String getHeadimgurl() {
+		return headimgurl;
 	}
 
 	/**
 	 * 获取 性别：1-男；0-女；-1-未知
 	 * 
-	 * @return gender
+	 * @return sex
 	 */
-	public String getGender() {
-		return gender;
+	public String getSex() {
+		return sex;
 	}
 
 	/**
@@ -200,6 +233,15 @@ public class WechatUserDO extends BaseDO {
 	 */
 	public String getUnionId() {
 		return unionId;
+	}
+
+	/**
+	 * 获取 用户特权信息
+	 * 
+	 * @return privilege
+	 */
+	public String getPrivilege() {
+		return privilege;
 	}
 
 }

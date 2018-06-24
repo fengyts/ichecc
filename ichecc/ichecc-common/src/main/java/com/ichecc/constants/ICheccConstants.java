@@ -12,7 +12,7 @@ public interface ICheccConstants {
 	
 	interface ICheccRedisKeys {
 		String BASE_KEY = "ichecc_";
-		String WECHAT_AUTH = BASE_KEY + "";
+		String WECHAT_AUTH_ACCESS_TOKEN = BASE_KEY + "access_token_";
 	}
 	
 	/** VIP会员权益  */

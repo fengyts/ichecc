@@ -109,7 +109,7 @@ export default {
     };
   },
   created() {
-    this.$http.get("/api/choice/choiceConfig").then(response => {
+    this.$axios.get("/api/choice/choiceConfig").then(response => {
       var result = response.data;
       if (result.code === this.$error_code) {
         this.resData = result.data;

@@ -5,6 +5,7 @@
 
 	<resultMap type="com.ichecc.domain.IcheccUserDO" id="IcheccUserDOResultMap">
 		<id column="id" property="id" />
+        <result column="openid" property="openid"/>
         <result column="nickname" property="nickname"/>
         <result column="mobile" property="mobile"/>
         <result column="password" property="password"/>
@@ -16,11 +17,12 @@
 	</resultMap>
 
 	<sql id="MybatisIcheccUserDAO_all_column_fields">
-	      id,nickname,mobile,password,salt,is_certification,create_time,modify_time,last_login_time
+	      id,openid,nickname,mobile,password,salt,is_certification,create_time,modify_time,last_login_time
  	</sql>
 	<!-- 只有varchar char text类型 做 !='' 判断，生成代码时,其他类型时只做!=null 决断 0或fasle与空''是相同的，在mybatis中的动态语句中 -->
 	<sql id="MybatisIcheccUserDAO_dynamic_where_fields"><!-- xml转义字符需要 <![CDATA[   ]]> 标签-->
 		<where>
+			<if test="openid != null  and openid != '' "> AND openid=#{openid} </if>
 			<if test="nickname != null  and nickname != '' "> AND nickname=#{nickname} </if>
 			<if test="mobile != null  and mobile != '' "> AND mobile=#{mobile} </if>
 			<if test="password != null  and password != '' "> AND password=#{password} </if>
@@ -46,6 +48,7 @@
         </selectKey>
         INSERT INTO ichecc_user(
 				id,
+				openid,
 				nickname,
 				mobile,
 				password,
@@ -56,6 +59,7 @@
 				last_login_time
 		)values(
 				#{id},
+				#{openid},
 				#{nickname},
 				#{mobile},
 				#{password},
@@ -71,6 +75,7 @@
 	<update id="MybatisIcheccUserDAO_updateById" parameterType="com.ichecc.domain.IcheccUserDO">
 		UPDATE ichecc_user
 		SET
+					openid = #{openid},
 					nickname = #{nickname},
 					mobile = #{mobile},
 					password = #{password},
@@ -90,6 +95,7 @@
 	<update id="MybatisIcheccUserDAO_update_dynamic" parameterType="com.ichecc.domain.IcheccUserDO">
 		UPDATE ichecc_user
 		<set>
+					<if test="openid != null  and openid != '' ">openid=#{openid},</if>
 					<if test="nickname != null  and nickname != '' ">nickname=#{nickname},</if>
 					<if test="mobile != null  and mobile != '' ">mobile=#{mobile},</if>
 					<if test="password != null  and password != '' ">password=#{password},</if>

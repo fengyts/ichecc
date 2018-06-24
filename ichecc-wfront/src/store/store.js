@@ -19,6 +19,9 @@ export default new Vuex.Store({
     },
     cacheCode(state, code) {
       state.code = code;
+    },
+    setUser(state, user) {
+      state.user = user;
     }
   }
 })

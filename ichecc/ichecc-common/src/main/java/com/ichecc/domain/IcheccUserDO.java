@@ -7,16 +7,18 @@ import java.util.Date;
 /**
  * 用户
  * 
- * @author fengyts Wed May 09 09:29:19 CST 2018
+ * @author fengyts Sat Jun 23 12:33:15 CST 2018
  */
 
 public class IcheccUserDO extends BaseDO {
 
-	/**  */
-	private static final long serialVersionUID = 8700680859137838654L;
+	private static final long serialVersionUID = -5555027879853077010L;
 
 	/** 主键 */
 	private Long id;
+
+	/** 关联微信openid */
+	private String openid;
 
 	/** 昵称 */
 	private String nickname;
@@ -49,6 +51,15 @@ public class IcheccUserDO extends BaseDO {
 	 */
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	/**
+	 * 设置 关联微信openid
+	 * 
+	 * @param openid
+	 */
+	public void setOpenid(String openid) {
+		this.openid = openid;
 	}
 
 	/**
@@ -130,6 +141,15 @@ public class IcheccUserDO extends BaseDO {
 	 */
 	public Long getId() {
 		return id;
+	}
+
+	/**
+	 * 获取 关联微信openid
+	 * 
+	 * @return openid
+	 */
+	public String getOpenid() {
+		return openid;
 	}
 
 	/**

@@ -3,9 +3,11 @@ package com.ichecc.dao.mybatis;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
+
 import com.ichecc.dao.WechatUserDAO;
 import com.ichecc.dao.base.MybatisBaseDAO;
 import com.ichecc.domain.WechatUserDO;
+
 import ng.bayue.exception.CommonDAOException;
 
 @Component(value="wechatUserDAO")
@@ -61,5 +63,12 @@ public class MybatisWechatUserDAO extends MybatisBaseDAO implements WechatUserDA
 	public List<WechatUserDO> selectDynamicPageQuery(WechatUserDO wechatUserDO) throws CommonDAOException {
 		return getSqlSession().selectList(getStatement("select_dynamic_page_query"), wechatUserDO);
 	}
+
+	@Override
+	public WechatUserDO selectByOpenid(String openid) {
+		return getSqlSession().selectOne(getStatement("select_by_openid"), openid);
+	}
+	
+	
 
 }

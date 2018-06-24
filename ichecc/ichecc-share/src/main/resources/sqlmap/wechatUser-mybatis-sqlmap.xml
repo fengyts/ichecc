@@ -5,30 +5,34 @@
 
 	<resultMap type="com.ichecc.domain.WechatUserDO" id="WechatUserDOResultMap">
 		<id column="id" property="id" />
-        <result column="open_id" property="openId"/>
-        <result column="nick_name" property="nickName"/>
-        <result column="avatar_url" property="avatarUrl"/>
-        <result column="gender" property="gender"/>
+        <result column="openid" property="openid"/>
+        <result column="nickname" property="nickname"/>
+        <result column="language" property="language"/>
+        <result column="headimgurl" property="headimgurl"/>
+        <result column="sex" property="sex"/>
         <result column="province" property="province"/>
         <result column="city" property="city"/>
         <result column="country" property="country"/>
         <result column="union_id" property="unionId"/>
+        <result column="privilege" property="privilege"/>
 	</resultMap>
 
 	<sql id="MybatisWechatUserDAO_all_column_fields">
-	      id,open_id,nick_name,avatar_url,gender,province,city,country,union_id
+	      id,openid,nickname,language,headimgurl,sex,province,city,country,union_id,privilege
  	</sql>
 	<!-- 只有varchar char text类型 做 !='' 判断，生成代码时,其他类型时只做!=null 决断 0或fasle与空''是相同的，在mybatis中的动态语句中 -->
 	<sql id="MybatisWechatUserDAO_dynamic_where_fields"><!-- xml转义字符需要 <![CDATA[   ]]> 标签-->
 		<where>
-			<if test="openId != null  and openId != '' "> AND open_id=#{openId} </if>
-			<if test="nickName != null  and nickName != '' "> AND nick_name=#{nickName} </if>
-			<if test="avatarUrl != null  and avatarUrl != '' "> AND avatar_url=#{avatarUrl} </if>
-			<if test="gender != null  and gender != '' "> AND gender=#{gender} </if>
+			<if test="openid != null  and openid != '' "> AND openid=#{openid} </if>
+			<if test="nickname != null  and nickname != '' "> AND nickname=#{nickname} </if>
+			<if test="language != null  and language != '' "> AND language=#{language} </if>
+			<if test="headimgurl != null  and headimgurl != '' "> AND headimgurl=#{headimgurl} </if>
+			<if test="sex != null  and sex != '' "> AND sex=#{sex} </if>
 			<if test="province != null  and province != '' "> AND province=#{province} </if>
 			<if test="city != null  and city != '' "> AND city=#{city} </if>
 			<if test="country != null  and country != '' "> AND country=#{country} </if>
 			<if test="unionId != null  and unionId != '' "> AND union_id=#{unionId} </if>
+			<if test="privilege != null  and privilege != '' "> AND privilege=#{privilege} </if>
 		</where>
  	</sql>
 	
@@ -49,24 +53,28 @@
         </selectKey>
         INSERT INTO wechat_user(
 				id,
-				open_id,
-				nick_name,
-				avatar_url,
-				gender,
+				openid,
+				nickname,
+				language,
+				headimgurl,
+				sex,
 				province,
 				city,
 				country,
-				union_id
+				union_id,
+				privilege
 		)values(
 				#{id},
-				#{openId},
-				#{nickName},
-				#{avatarUrl},
-				#{gender},
+				#{openid},
+				#{nickname},
+				#{language},
+				#{headimgurl},
+				#{sex},
 				#{province},
 				#{city},
 				#{country},
-				#{unionId}
+				#{unionId},
+				#{privilege}
 		)
     </insert>
 	
@@ -74,14 +82,16 @@
 	<update id="MybatisWechatUserDAO_updateById" parameterType="com.ichecc.domain.WechatUserDO">
 		UPDATE wechat_user
 		SET
-					open_id = #{openId},
-					nick_name = #{nickName},
-					avatar_url = #{avatarUrl},
-					gender = #{gender},
+					openid = #{openid},
+					nickname = #{nickname},
+					language = #{language},
+					headimgurl = #{headimgurl},
+					sex = #{sex},
 					province = #{province},
 					city = #{city},
 					country = #{country},
-					union_id = #{unionId}
+					union_id = #{unionId},
+					privilege = #{privilege}
 		WHERE
 			id = #{id}
 	</update>
@@ -94,14 +104,16 @@
 	<update id="MybatisWechatUserDAO_update_dynamic" parameterType="com.ichecc.domain.WechatUserDO">
 		UPDATE wechat_user
 		<set>
-					<if test="openId != null  and openId != '' ">open_id=#{openId},</if>
-					<if test="nickName != null  and nickName != '' ">nick_name=#{nickName},</if>
-					<if test="avatarUrl != null  and avatarUrl != '' ">avatar_url=#{avatarUrl},</if>
-					<if test="gender != null  and gender != '' ">gender=#{gender},</if>
+					<if test="openid != null  and openid != '' ">openid=#{openid},</if>
+					<if test="nickname != null  and nickname != '' ">nickname=#{nickname},</if>
+					<if test="language != null  and language != '' ">language=#{language},</if>
+					<if test="headimgurl != null  and headimgurl != '' ">headimgurl=#{headimgurl},</if>
+					<if test="sex != null  and sex != '' ">sex=#{sex},</if>
 					<if test="province != null  and province != '' ">province=#{province},</if>
 					<if test="city != null  and city != '' ">city=#{city},</if>
 					<if test="country != null  and country != '' ">country=#{country},</if>
 					<if test="unionId != null  and unionId != '' ">union_id=#{unionId},</if>
+					<if test="privilege != null  and privilege != '' ">privilege=#{privilege},</if>
 		</set>
 		WHERE id = #{id}
 	</update>
@@ -130,6 +142,14 @@
 	 	<include refid="MybatisWechatUserDAO_dynamic_where_fields" />
 	 	ORDER BY wechat_user.id DESC
 	 	Limit #{start},#{pageSize}
+ 	</select>
+ 	
+ 	<select id="MybatisWechatUserDAO_select_by_openid" resultMap="WechatUserDOResultMap" resultType="string" >
+ 		SELECT
+	     	<include refid="MybatisWechatUserDAO_all_column_fields" />
+		 FROM
+		 	wechat_user wu
+	 	WHERE wu.openid = #{openid}
  	</select>
 
 </mapper>

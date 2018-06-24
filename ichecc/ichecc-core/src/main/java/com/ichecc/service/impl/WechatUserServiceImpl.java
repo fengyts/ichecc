@@ -1,5 +1,6 @@
 package com.ichecc.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -7,11 +8,16 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ichecc.dao.IcheccUserDAO;
 import com.ichecc.dao.WechatUserDAO;
+import com.ichecc.domain.IcheccUserDO;
 import com.ichecc.domain.WechatUserDO;
+import com.ichecc.dto.ICheccUserDTO;
 import com.ichecc.service.WechatUserService;
+
 import ng.bayue.exception.CommonDAOException;
 import ng.bayue.exception.CommonServiceException;
+import ng.bayue.util.StringUtils;
 import ng.bayue.common.Page;
 
 @Service(value="wechatUserService")
@@ -21,6 +27,8 @@ public class WechatUserServiceImpl  implements WechatUserService{
 
 	@Autowired
 	private WechatUserDAO wechatUserDAO;
+	@Autowired
+	private IcheccUserDAO icheccUserDAO;
 
 	@Override
 	public Long insert(WechatUserDO wechatUserDO) throws CommonServiceException {
@@ -128,6 +136,48 @@ public class WechatUserServiceImpl  implements WechatUserService{
 		}
 		return new Page<WechatUserDO>();
 	}
+
+
+	@Override
+	public WechatUserDO selectByOpenid(String openid) {
+		if (StringUtils.isBlank(openid)) {
+			return null;
+		}
+		return wechatUserDAO.selectByOpenid(openid);
+	}
+
+
+	@Override
+	public ICheccUserDTO saveWechatUser(WechatUserDO wechatUserDO) throws CommonServiceException {
+		if(null == wechatUserDO){
+			return null;
+		}
+		try {
+			wechatUserDAO.insert(wechatUserDO);
+			String openid = wechatUserDO.getOpenid();
+			IcheccUserDO userDO = new IcheccUserDO();
+			userDO.setOpenid(openid);
+			userDO.setIsCertification(false);
+			Date now = new Date();
+			userDO.setLastLoginTime(now);
+			userDO.setCreateTime(now);
+			userDO.setModifyTime(now);
+			icheccUserDAO.insert(userDO);
+			
+			ICheccUserDTO dto = new ICheccUserDTO();
+			dto.setWechatUser(wechatUserDO);
+			dto.setId(userDO.getId());
+			dto.setIsCertification(userDO.getIsCertification());
+			dto.setMobile(userDO.getMobile());
+			
+			return dto;
+		} catch (CommonDAOException e) {
+			logger.error(e);
+			throw new CommonServiceException(e);
+		}
+		
+	}
+	
 	
 	
 }

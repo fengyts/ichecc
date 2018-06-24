@@ -94,7 +94,7 @@ export default {
   },
   created() {
     let _that = this;
-    this.$http.get("/api/topicItem/itemDetail/" + this.$route.params.tiId).then(response => {
+    this.$axios.get("/api/topicItem/itemDetail/" + this.$route.params.tiId).then(response => {
       let result = response.data;
       if (this.$error_code === result.code) {
         this.resData = result.data;

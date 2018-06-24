@@ -58,10 +58,17 @@ export default {
       return undefined;
     }
     if (args.length == 1) {
-      window.localStorage.removeItem(icheccwf);
+      window.localStorage.removeItem(id);
     } else {
       if (key) {
-        window.localStorage.removeItem(icheccwf[key]);
+        let _t = {};
+        for (let kt in icheccwf) {
+          if (kt === key) {
+            continue;
+          }
+          _t.kt = icheccwf[key];
+        }
+        setLocalStorage(id, _t);
       }
     }
   }

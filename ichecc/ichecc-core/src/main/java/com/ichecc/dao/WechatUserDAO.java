@@ -1,6 +1,7 @@
 package com.ichecc.dao;
 
 import com.ichecc.domain.WechatUserDO;
+
 import ng.bayue.service.common.GeneralDAO;
 
  /**
@@ -10,5 +11,14 @@ import ng.bayue.service.common.GeneralDAO;
  */
 public interface WechatUserDAO extends GeneralDAO<WechatUserDO> {
 	
+	/**
+	 * <pre>
+	 * 根据openid获取微信用户信息
+	 * </pre>
+	 *
+	 * @param openid
+	 * @return
+	 */
+	WechatUserDO selectByOpenid(String openid);
 
 }

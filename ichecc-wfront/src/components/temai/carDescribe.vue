@@ -30,7 +30,7 @@ export default {
     };
   },
   created() {
-    this.$http
+    this.$axios
       .get("/api/topicItem/itemDesc/" + this.$route.params.itemId)
       .then(response => {
         let result = response.data;

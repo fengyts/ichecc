@@ -24,7 +24,35 @@ export default {
       let redirect_tag = wechatAuth.redirect_tag;
       if (1 == redirect_tag) {
         this.$store.commit("setLoginState", 1);
+        // 这里调用后台获取用户信息
+        let _code = wechatAuth.auth_code;
+        console.log("code abc:" + _code);
+        let params = new URLSearchParams();
+        params.append("code", this.$crypto.encryptAes(_code));
+        let _that = this;
+        // this.$axios.post("/api/wechat/authorize", params).then(res => {
+        //   let result = res.data;
+        //   if (result.code === _that.$error_code) {
+        //     _that.$store.commit("setUser", result.data);
+        //     console.log("设置user");
+        //     console.log(_that.$store.state.user);
+        //     this.$router.push({ path: wechatAuth.rdPath });
+        //     return;
+        //   } else {
+        //     _that.$localStorage.setLocalStorage(
+        //       "wechatAuth",
+        //       "redirect_tag",
+        //       0
+        //     );
+        //     _that.$store.commit("setLoginState", 0);
+        //     location.href = "/";
+        //     return;
+        //   }
+        // });
         this.$localStorage.removeLocalStorage("wechatAuth");
+        // window.localStorage.removeItem("wechatAuth");
+        console.log("aaabbbccc:");
+        console.log(this.$localStorage.getLocalStorage("wechatAuth"));
         this.$router.push({ path: wechatAuth.rdPath });
         return;
       }
@@ -73,8 +101,8 @@ export default {
       if (_envType === "test") {
         appid = "wx11b8b11348ff6db3";
         // redirect_uri = encodeURIComponent("http://47.94.199.26/ichecc-front/");
-        redirect_uri = encodeURIComponent("http://192.168.9.108:8080");
-        // redirect_uri = encodeURIComponent("http://192.168.0.107:8080");
+        // redirect_uri = encodeURIComponent("http://192.168.9.108:8080");
+        redirect_uri = encodeURIComponent("http://192.168.0.107:8080");
       }
       let _authUrl =
         `https://open.weixin.qq.com/connect/oauth2/authorize?` +

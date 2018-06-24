@@ -57,7 +57,11 @@ export default {
     };
   },
   created() {
-    this.$http.get("/api/index/itemList").then(response => {
+    // window.localStorage.removeItem("wechatAuth");
+    console.log("store:")
+    console.log(JSON.stringify(this.$store.state.user));
+    console.log(window.localStorage.getItem("wechatAuth"));
+    this.$axios.get("/api/index/itemList").then(response => {
       var result = response.data;
       if (result.code === this.$error_code) {
         this.resData = result.data;
