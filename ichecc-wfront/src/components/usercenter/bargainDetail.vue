@@ -35,7 +35,7 @@
             <!--中部（失败）-->  
 			      <div class="kanjia_middle">
                 <p class="status_failed">砍价失败</p>
-                <p class="quanyi">限砍次数用完 / 时间已结束 / 其它用户最先砍价成功</p>
+                <p class="quanyi">限砍次数用完 / 砍价时间已结束 / 其它用户最先砍价成功</p>
                 <p class="notice">期号：H180401&nbsp;&nbsp;&nbsp;已砍<span class="quanyi_num">88888元</span>，还差<span class="quanyi_num">100元</span></p>
             </div>	
 
@@ -46,18 +46,66 @@
                 <hr class="hr"/>
             </div>
             <div class="kanjia_bottom_list">
-                <div class="kanjia_bottom_list_userlogo">
-                    <img src="../../assets/images/icon/icon_userlogo.png" class="logo" alt="">
-                </div>
-                <div class="kanjia_bottom_list_usermess">
-                    <p class="username">旗嘉科技</p>
-                    <p class="time">04-10 10:50:29.123</p>
-                </div>
-                <div class="kanjia_bottom_list_usernum">
-                    <span class="num">砍掉888.66元</span>
-                </div>
-            </div>
-        </div>
+              <div class="kanjia_bottom_list_content">
+                  <div class="kanjia_bottom_list_userlogo">
+                      <img src="../../assets/images/icon/icon_userlogo.png" class="logo" alt="">
+                  </div>
+                  <div class="kanjia_bottom_list_usermess">
+                      <p class="username">旗嘉科技</p>
+                      <p class="time">04-10 10:50:29.123</p>
+                  </div>
+                  <div class="kanjia_bottom_list_usernum">
+                      <span class="num">砍掉888.66元</span>
+                  </div>
+              </div>
+
+            <div class="kanjia_bottom_list_content">
+                  <div class="kanjia_bottom_list_userlogo">
+                      <img src="../../assets/images/icon/icon_userlogo.png" class="logo" alt="">
+                  </div>
+                  <div class="kanjia_bottom_list_usermess">
+                      <p class="username">旗嘉科技</p>
+                      <p class="time">04-10 10:50:29.123</p>
+                  </div>
+                  <div class="kanjia_bottom_list_usernum">
+                      <span class="num">砍掉888.66元</span>
+                  </div>
+              </div>
+
+              <div class="kanjia_bottom_list_content">
+                  <div class="kanjia_bottom_list_userlogo">
+                      <img src="../../assets/images/icon/icon_userlogo.png" class="logo" alt="">
+                  </div>
+                  <div class="kanjia_bottom_list_usermess">
+                      <p class="username">旗嘉科技</p>
+                      <p class="time">04-10 10:50:29.123</p>
+                  </div>
+                  <div class="kanjia_bottom_list_usernum">
+                      <span class="num">砍掉888.66元</span>
+                  </div>
+              </div>
+
+              <div class="kanjia_bottom_list_content">
+                  <div class="kanjia_bottom_list_userlogo">
+                      <img src="../../assets/images/icon/icon_userlogo.png" class="logo" alt="">
+                  </div>
+                  <div class="kanjia_bottom_list_usermess">
+                      <p class="username">旗嘉科技</p>
+                      <p class="time">04-10 10:50:29.123</p>
+                  </div>
+                  <div class="kanjia_bottom_list_usernum">
+                      <span class="num">砍掉888.66元</span>
+                  </div>
+              </div>
+
+
+
+            <div class="tips">
+              <p>- 没有更多了 - </p>
+           </div>
+
+      </div>
+  </div>
 </template>
 
 <script type="text/javascript">
