@@ -3,16 +3,17 @@
   <!--个人中心-->
   <div id="tab3" class="weui-tab__bd-item" style="display:inline">
     <!--个人资料-->
-    <div class="userinfo">
+    <div class="userinfo" v-if="user.wechatUser != undefined">
       <div class="usericon">
-        <img src="../../assets/images/img/car_01.jpg" alt="" class="icon1">
+        <img :src="user.wechatUser.headimgurl" alt="" class="icon1">
       </div>
       <div class="username">
         <p>
-          <span>实心梨子</span>
+          <span>{{user.wechatUser.nickname}}</span>
           <span class="viplogo"><input type="text" value="VIP" class="vipbg"></span>
         </p>
-        <p class="tips">未进行身份认证 / 身份已认证</p>
+        <p class="tips" v-if="user.isCertification">身份已认证</p>
+        <p class="tips" v-else>未进行身份认证</p>
       </div>
     </div>
 
@@ -89,11 +90,25 @@
 <script type="text/javascript">
 import Vue from "vue";
 export default {
-  props: {
-  },
+  props: {},
   data() {
-    return {};
+    return {
+      user: {},
+      avatar: "http://thirdwx.qlogo.cn/mmopen/vi_32/7LWpMIQnwK8CrkVZxOQUnm8AK5CaMOyGzogKjvDgvGgvQlOsqIpoeTmUyvyM1p5ebFxUlhCwG8ow0jMQ9SZa8Q/132"
+    };
   },
+  created() {
+    this.$nextTick(() => {
+      this._initUser();
+    });
+  },
+  methods: {
+    //初始化用户信息
+    _initUser (){
+      let _user = this.$localStorage.getLocalStorage("icheccuser");
+      this.user = _user;
+    }
+  }
 };
 </script>
 

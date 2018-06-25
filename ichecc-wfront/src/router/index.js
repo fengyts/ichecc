@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 import home from 'components/home/home'
 import list from 'components/temai/list'
 import temaidetail from 'components/temai/detail'
@@ -23,15 +24,13 @@ import carDescribe from 'components/temai/carDescribe'
 import bargain from 'components/temai/bargain'
 import helpBargain from 'components/temai/helpBargain'
 import wechatAuth from 'components/home/wechatAuth'
-// import notfound from 'components/other/notfound'
-import authRedirect from 'components/other/authRedirect'
-
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   // mode: 'history',
   routes: [
+    {path:'/wechatAuth', name:'wechatAuth', component: wechatAuth},
     // {path: "*", component: notfound},
     // {
     //   path: '/',
@@ -66,10 +65,33 @@ export default new Router({
     {path: '/choiceDetail', component: choiceDetail},
     {path: '/help', component: help},
     {path: '/carDescribe', name: 'carDescribe', component: carDescribe},
-    {path: '/bargain', component: bargain},
+    {path: '/bargain', component: bargain, meta: {requireAuth: true}},
     {path: '/helpBargain', component: helpBargain},
     {path:'/authenticationDid', component: authenticationDid},
-    {path:'/wechatAuth', component: wechatAuth},
   ],
   linkActiveClass: '--active' // 指定超链接激活的样式,等同于class="active"
 })
+
+router.beforeEach((to, from, next) => {
+  // 判断是否需要登录
+  if (to.meta.requireAuth) {
+    // console.log(this);
+    // console.log(this.a.app.$localStorage);
+    let _user = JSON.parse(window.localStorage._icheccwf_)["icheccuser"];
+    // 判断是否已经登录
+    if (_user && Object.keys(_user).length > 0) {
+      next();
+    } else {
+      next({
+        name: "wechatAuth",
+        params: {
+          "rdPath": from
+        }
+      });
+    }
+  } else {
+    next();
+  }
+});
+
+export default router;

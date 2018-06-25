@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.ichecc.dao.IcheccUserDAO;
 import com.ichecc.dao.ItemAttributeDAO;
 import com.ichecc.dao.TopicItemDAO;
 import com.ichecc.domain.ItemAttributeDO;
+import com.ichecc.dto.ICheccUserDTO;
 import com.ichecc.front.dto.FrontTopicItemDTO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -20,12 +22,14 @@ import com.ichecc.front.dto.FrontTopicItemDTO;
 public class TestDao {
 
 	@Autowired
-	private TopicItemDAO tiDAO;
+	private IcheccUserDAO userDao;
 
 	@Test
 	public void test() throws Exception {
-		List<FrontTopicItemDTO> list = tiDAO.selectListFront(2L);
-		System.out.println(list.size());
+		String openid = "oEUxH0sS0BGO3bNb_rIRv-5xs5Ts";
+		ICheccUserDTO dto = userDao.selectByOpenid(openid);
+		
+		System.out.println(dto.getIsCertification());
 	}
 	
 

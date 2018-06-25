@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 import com.ichecc.dao.IcheccUserDAO;
 import com.ichecc.dao.base.MybatisBaseDAO;
 import com.ichecc.domain.IcheccUserDO;
+import com.ichecc.dto.ICheccUserDTO;
+
 import ng.bayue.exception.CommonDAOException;
 
 @Component(value="icheccUserDAO")
@@ -61,5 +63,13 @@ public class MybatisIcheccUserDAO extends MybatisBaseDAO implements IcheccUserDA
 	public List<IcheccUserDO> selectDynamicPageQuery(IcheccUserDO icheccUserDO) throws CommonDAOException {
 		return getSqlSession().selectList(getStatement("select_dynamic_page_query"), icheccUserDO);
 	}
+
+	@Override
+	public ICheccUserDTO selectByOpenid(String openid) {
+		return getSqlSession().selectOne(getStatement("select_by_openid"), openid);
+	}
+	
+	
+	
 
 }

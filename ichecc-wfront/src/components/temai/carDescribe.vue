@@ -34,7 +34,7 @@ export default {
       .get("/api/topicItem/itemDesc/" + this.$route.params.itemId)
       .then(response => {
         let result = response.data;
-        if (this.$error_code === result.code) {
+        if (this.$resp_code === result.code) {
           this.description = result.data;
           this.$nextTick(() => {
             document.getElementById("description").innerHTML = result.data;

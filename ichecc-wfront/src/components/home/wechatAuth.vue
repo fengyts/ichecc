@@ -18,66 +18,43 @@ export default {
       this.rdPath = rdPathP;
     }
 
-    // 本地localStorage 保存了授权信息，直接重定向到跳转页(此判断步骤单纯为解决路径问题)
-    let wechatAuth = this.$localStorage.getLocalStorage("wechatAuth");
-    if (wechatAuth) {
-      let redirect_tag = wechatAuth.redirect_tag;
-      if (1 == redirect_tag) {
-        this.$store.commit("setLoginState", 1);
-        // 这里调用后台获取用户信息
-        let _code = wechatAuth.auth_code;
-        console.log("code abc:" + _code);
-        let params = new URLSearchParams();
-        params.append("code", this.$crypto.encryptAes(_code));
-        let _that = this;
-        // this.$axios.post("/api/wechat/authorize", params).then(res => {
-        //   let result = res.data;
-        //   if (result.code === _that.$error_code) {
-        //     _that.$store.commit("setUser", result.data);
-        //     console.log("设置user");
-        //     console.log(_that.$store.state.user);
-        //     this.$router.push({ path: wechatAuth.rdPath });
-        //     return;
-        //   } else {
-        //     _that.$localStorage.setLocalStorage(
-        //       "wechatAuth",
-        //       "redirect_tag",
-        //       0
-        //     );
-        //     _that.$store.commit("setLoginState", 0);
-        //     location.href = "/";
-        //     return;
-        //   }
-        // });
-        this.$localStorage.removeLocalStorage("wechatAuth");
-        // window.localStorage.removeItem("wechatAuth");
-        console.log("aaabbbccc:");
-        console.log(this.$localStorage.getLocalStorage("wechatAuth"));
-        this.$router.push({ path: wechatAuth.rdPath });
-        return;
-      }
-    }
-    // 判断是否授权，授权并冲定向
-    var loginState = this.$store.state.loginState;
-    if (0 == loginState) {
-      // 未授权
-      let _code = this._getCode().code;
-      let _rdPath = this.rdPath;
-      if (_code) {
-        // 已经授权获取了code
-        let _wechatAuth = {};
-        _wechatAuth.redirect_tag = 1;
-        _wechatAuth.auth_code = _code;
-        _wechatAuth.rdPath = _rdPath;
-        this.$localStorage.setLocalStorage("wechatAuth", _wechatAuth);
-        location.href = "/";
-        return;
-      } else {
-        this.wechatAuth();
-      }
-    } else {
-      // this.$router.push("/home/list");
+    // 判断是否已经登录
+    // let _user = this.$store.state.user;
+    let _user = this.$localStorage.getLocalStorage("icheccuser");
+    if (_user && Object.keys(_user).length > 0) {
       this.$router.push(this.rdPath);
+      return;
+    }
+
+    // 获取url params参数
+    let wrdParam = this._getCode();
+    let _code, _rdPath;
+    if (wrdParam) {
+      _code = wrdParam.code;
+      _rdPath = wrdParam.rdPath;
+    }
+
+    // code存在，获取code，并发送到后台获取用户信息
+    if (_code) {
+      let params = new URLSearchParams();
+      params.append("code", this.$crypto.encryptAes(_code));
+      let _that = this;
+      this.$axios.post("/api/wechat/authorize", params).then(res => {
+        let result = res.data;
+        if (result.code === _that.$resp_code) {
+          let user = result.data;
+          _that.$localStorage.setLocalStorage("icheccuser", user);
+          _that.$store.commit("setUser", result.data);
+          window.location.href = "/#" + _that.rdPath;
+          return;
+        } else {
+          // 后台获取用户信息失败后重新发起授权
+          this.wechatAuth();
+        }
+      });
+    } else {
+      // 调用微信授权接口获取code
+      this.wechatAuth();
     }
   },
   methods: {
@@ -101,8 +78,8 @@ export default {
       if (_envType === "test") {
         appid = "wx11b8b11348ff6db3";
         // redirect_uri = encodeURIComponent("http://47.94.199.26/ichecc-front/");
-        // redirect_uri = encodeURIComponent("http://192.168.9.108:8080");
-        redirect_uri = encodeURIComponent("http://192.168.0.107:8080");
+        redirect_uri = encodeURIComponent("http://192.168.9.108:8080");
+        // redirect_uri = encodeURIComponent("http://192.168.0.107:8080");
       }
       let _authUrl =
         `https://open.weixin.qq.com/connect/oauth2/authorize?` +

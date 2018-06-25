@@ -132,5 +132,24 @@
 	 	ORDER BY ichecc_user.id DESC
 	 	Limit #{start},#{pageSize}
  	</select>
+ 	
+ 	<resultMap type="com.ichecc.dto.ICheccUserDTO" id="IcheccUserAllResultMap">
+ 		<id column="cuId" property="id"/>
+ 		<result column="cuNickname" property="nickname"/>
+ 		<result column="mobile" property="mobile"/>
+ 		<result column="is_certification" property="isCertification"/>
+ 		<association property="wechatUser" resultMap="com.ichecc.domain.WechatUserMapper.WechatUserDOResultMap" column="id">
+ 			<id column="id" property="id"/>
+ 		</association>
+ 	</resultMap>
+ 	
+ 	<select id="MybatisIcheccUserDAO_select_by_openid" resultMap="IcheccUserAllResultMap" parameterType="string">
+ 		SELECT
+ 			cu.id cuId,cu.nickname cuNickname,cu.mobile,cu.is_certification,
+			wu.id,wu.openid,wu.nickname,wu.language,wu.headimgurl,wu.sex,wu.province,wu.city,wu.country,wu.union_id,wu.privilege
+ 		FROM ichecc_user cu
+ 		INNER JOIN wechat_user wu ON wu.openid = cu.openid
+ 		WHERE cu.openid = #{openid}
+ 	</select>
 
 </mapper>

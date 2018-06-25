@@ -57,13 +57,11 @@ export default {
     };
   },
   created() {
-    // window.localStorage.removeItem("wechatAuth");
-    console.log("store:")
-    console.log(JSON.stringify(this.$store.state.user));
-    console.log(window.localStorage.getItem("wechatAuth"));
+    console.log("list:")
+    console.log(this.$localStorage.getLocalStorage("icheccuser"));
     this.$axios.get("/api/index/itemList").then(response => {
       var result = response.data;
-      if (result.code === this.$error_code) {
+      if (result.code === this.$resp_code) {
         this.resData = result.data;
       }
     });

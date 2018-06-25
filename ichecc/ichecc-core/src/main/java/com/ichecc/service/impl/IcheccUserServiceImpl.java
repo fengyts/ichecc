@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ichecc.dao.IcheccUserDAO;
 import com.ichecc.domain.IcheccUserDO;
+import com.ichecc.dto.ICheccUserDTO;
 import com.ichecc.service.IcheccUserService;
 import ng.bayue.exception.CommonDAOException;
 import ng.bayue.exception.CommonServiceException;
+import ng.bayue.util.StringUtils;
 import ng.bayue.common.Page;
 
 @Service(value="icheccUserService")
@@ -128,6 +130,16 @@ public class IcheccUserServiceImpl  implements IcheccUserService{
 		}
 		return new Page<IcheccUserDO>();
 	}
+
+
+	@Override
+	public ICheccUserDTO selectUserInfoByOpenid(String openid) {
+		if(StringUtils.isBlank(openid)){
+			return null;
+		}
+		return icheccUserDAO.selectByOpenid(openid);
+	}
+	
 	
 	
 }
