@@ -2,7 +2,7 @@ package com.ichecc.front.dto;
 
 import java.util.Date;
 
-public class FrontTopicItemDTO extends BaseDTO {
+public class FrontTopicItemDTO extends AbstractDTO {
 
 	private static final long serialVersionUID = -8164738068064295345L;
 

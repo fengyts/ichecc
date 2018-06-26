@@ -12,6 +12,7 @@
         <result column="energy" property="energy"/>
         <result column="type" property="type"/>
         <result column="seat" property="seat"/>
+        <result column="structure" property="structure"/>
         <result column="gearbox" property="gearbox"/>
         <result column="other_requirement" property="otherRequirement"/>
         <result column="create_time" property="createTime"/>
@@ -21,7 +22,7 @@
 	</resultMap>
 
 	<sql id="MybatisChoiceOrderDAO_all_column_fields">
-	      id,order_no,user_id,budget,brand,energy,type,seat,gearbox,other_requirement,create_time,status,result,modify_time
+	      id,order_no,user_id,budget,brand,energy,type,seat,structure,gearbox,other_requirement,create_time,status,result,modify_time
  	</sql>
 	<!-- 只有varchar char text类型 做 !='' 判断，生成代码时,其他类型时只做!=null 决断 0或fasle与空''是相同的，在mybatis中的动态语句中 -->
 	<sql id="MybatisChoiceOrderDAO_dynamic_where_fields"><!-- xml转义字符需要 <![CDATA[   ]]> 标签-->
@@ -33,6 +34,7 @@
 			<if test="energy != null  and energy != '' "> AND energy=#{energy} </if>
 			<if test="type != null  and type != '' "> AND type=#{type} </if>
 			<if test="seat != null  and seat != '' "> AND seat=#{seat} </if>
+			<if test="structure != null  and structure != '' "> AND structure=#{structure} </if>
 			<if test="gearbox != null  and gearbox != '' "> AND gearbox=#{gearbox} </if>
 			<if test="otherRequirement != null  and otherRequirement != '' "> AND other_requirement=#{otherRequirement} </if>
 			<if test="status != null  and status != '' "> AND status=#{status} </if>
@@ -64,6 +66,7 @@
 				energy,
 				type,
 				seat,
+				structure,
 				gearbox,
 				other_requirement,
 				create_time,
@@ -79,6 +82,7 @@
 				#{energy},
 				#{type},
 				#{seat},
+				#{structure},
 				#{gearbox},
 				#{otherRequirement},
 				#{createTime},
@@ -92,18 +96,19 @@
 	<update id="MybatisChoiceOrderDAO_updateById" parameterType="com.ichecc.domain.ChoiceOrderDO">
 		UPDATE choice_order
 		SET
-			order_no = #{orderNo},
-			user_id = #{userId},
-			budget = #{budget},
-			brand = #{brand},
-			energy = #{energy},
-			type = #{type},
-			seat = #{seat},
-			gearbox = #{gearbox},
-			other_requirement = #{otherRequirement},
-			status = #{status},
-			result = #{result},
-			modify_time = #{modifyTime}
+					order_no = #{orderNo},
+					user_id = #{userId},
+					budget = #{budget},
+					brand = #{brand},
+					energy = #{energy},
+					type = #{type},
+					seat = #{seat},
+					structure = #{structure},
+					gearbox = #{gearbox},
+					other_requirement = #{otherRequirement},
+					status = #{status},
+					result = #{result},
+					modify_time = #{modifyTime}
 		WHERE
 			id = #{id}
 	</update>
@@ -116,18 +121,19 @@
 	<update id="MybatisChoiceOrderDAO_update_dynamic" parameterType="com.ichecc.domain.ChoiceOrderDO">
 		UPDATE choice_order
 		<set>
-			<if test="orderNo != null  and orderNo != '' ">order_no=#{orderNo},</if>
-			<if test="userId != null ">user_id=#{userId},</if>
-			<if test="budget != null  and budget != '' ">budget=#{budget},</if>
-			<if test="brand != null  and brand != '' ">brand=#{brand},</if>
-			<if test="energy != null  and energy != '' ">energy=#{energy},</if>
-			<if test="type != null  and type != '' ">type=#{type},</if>
-			<if test="seat != null  and seat != '' ">seat=#{seat},</if>
-			<if test="gearbox != null  and gearbox != '' ">gearbox=#{gearbox},</if>
-			<if test="otherRequirement != null  and otherRequirement != '' ">other_requirement=#{otherRequirement},</if>
-			<if test="status != null  and status != '' ">status=#{status},</if>
-			<if test="result != null  and result != '' ">result=#{result},</if>
-			<if test="modifyTime != null ">modify_time=#{modifyTime},</if>
+					<if test="orderNo != null  and orderNo != '' ">order_no=#{orderNo},</if>
+					<if test="userId != null ">user_id=#{userId},</if>
+					<if test="budget != null  and budget != '' ">budget=#{budget},</if>
+					<if test="brand != null  and brand != '' ">brand=#{brand},</if>
+					<if test="energy != null  and energy != '' ">energy=#{energy},</if>
+					<if test="type != null  and type != '' ">type=#{type},</if>
+					<if test="seat != null  and seat != '' ">seat=#{seat},</if>
+					<if test="structure != null  and structure != '' ">structure=#{structure},</if>
+					<if test="gearbox != null  and gearbox != '' ">gearbox=#{gearbox},</if>
+					<if test="otherRequirement != null  and otherRequirement != '' ">other_requirement=#{otherRequirement},</if>
+					<if test="status != null  and status != '' ">status=#{status},</if>
+					<if test="result != null  and result != '' ">result=#{result},</if>
+					<if test="modifyTime != null ">modify_time=#{modifyTime},</if>
 		</set>
 		WHERE id = #{id}
 	</update>

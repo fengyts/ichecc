@@ -14,7 +14,7 @@
       <div class="weui-cells">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input class="weui-input" type="text" placeholder="请输入预算金额（万元）" id="yusuan">
+            <input class="weui-input" type="text" placeholder="请输入预算金额（万元）" id="yusuan" v-model="selectedData.budget">
           </div>
         </div>
       </div>
@@ -38,7 +38,7 @@
       <div class="weui-cells">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input id="jibie" class="weui-input" type="text" placeholder="请选择车辆类型" @focus="selectOption('jibie', typeList.car)" readonly>
+            <input id="jibie" class="weui-input" type="text" placeholder="请选择车辆类型" @focus="selectOption('jibie', typeList.type)" readonly>
           </div>
         </div>
       </div>
@@ -54,7 +54,7 @@
       <div class="weui-cells">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input id="jiegou" class="weui-input" type="text" placeholder="请选择车型结构" @focus="selectOption('jiegou', typeList.carStructure)" readonly>
+            <input id="jiegou" class="weui-input" type="text" placeholder="请选择车型结构" @focus="selectOption('jiegou', typeList.structure)" readonly>
           </div>
         </div>
       </div>
@@ -70,7 +70,7 @@
       <div class="weui-cells weui-cells_form">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <textarea class="weui-textarea" placeholder="请输入具体的购车需求" rows="4"></textarea>
+            <textarea class="weui-textarea" placeholder="请输入具体的购车需求" rows="4" v-model="selectedData.otherRequirement"></textarea>
             <div class="weui-textarea-counter">
               <span>0</span>/100
             </div>
@@ -97,37 +97,48 @@ export default {
   data() {
     return {
       typeList: {
+        budget: { type: "budget", desc: "购车预算" },
         brand: { type: "brand", desc: "品牌类型" },
         energy: { type: "energy", desc: "能源类型" },
-        car: { type: "car", desc: "车辆类型" },
+        type: { type: "type", desc: "车辆类型" },
         seat: { type: "seat", desc: "座位数量" },
-        carStructure: { type: "carStructure", desc: "车型结构" },
+        structure: { type: "structure", desc: "车型结构" },
         gearbox: { type: "gearbox", desc: "变速箱类型" }
       },
-      resData: {}
-      // selectedData: {}
+      resData: {},
+      selectedData: {
+        budget: "",
+        brand: "",
+        energy: "",
+        type: "",
+        seat: "",
+        structure: "",
+        gearbox: "",
+        otherRequirement: ""
+      }
     };
   },
   created() {
-    this.$axios.get("/api/choice/choiceConfig").then(response => {
-      var result = response.data;
-      if (result.code === this.$error_code) {
+    this.$http.get("/api/choice/choiceConfig").then(response => {
+      var result = response;
+      if (result.code === this.$resp_code) {
         this.resData = result.data;
       }
     });
   },
   methods: {
-    selectOption(_id, _type) {
+    selectOption: function (_id, _type) {
       var _that = this;
       $("#" + _id).select({
         title: _type.desc,
         items: _that._getListData(_type.type),
-        onChange: function(res) {
-          _type.selected = res.titles;
+        onChange: function (res) {
+          // _type.selected = res.titles;
+          _that.selectedData[_type.type] = res.titles;
         }
       });
     },
-    _getListData(type) {
+    _getListData: function (type) {
       let arr = [];
       let temp = this.resData[type];
       for (var i = 0; i < temp.length; i++) {
@@ -137,6 +148,27 @@ export default {
         arr.push(item);
       }
       return arr;
+    },
+    checkSubmitData: function () {
+      let submitData = this.selectedData;
+      for (let key in submitData) {
+        if (key === 'otherRequirement') { continue; }
+        if (submitData[key] === "" || submitData[key] == undefined) {
+          return this.typeList[key].desc + "不能为空";
+        }
+      }
+      return "OK";
+    },
+    choiceSubmit: function () {
+      let _check = this.checkSubmitData();
+      if ("OK" != _check) {
+        $.toptip(_check, 'error');
+      }
+      this.$http.post("/api/choice/choiceSubmit", this.selectedData).then(res => {
+        if (res.code === this.$resp_code) {
+          $.toast("提交成功");
+        }
+      });
     }
   }
 };

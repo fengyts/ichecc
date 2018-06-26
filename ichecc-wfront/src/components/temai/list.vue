@@ -59,8 +59,8 @@ export default {
   created() {
     console.log("list:")
     console.log(this.$localStorage.getLocalStorage("icheccuser"));
-    this.$axios.get("/api/index/itemList").then(response => {
-      var result = response.data;
+    this.$http.get("/api/index/itemList").then(response => {
+      var result = response;
       if (result.code === this.$resp_code) {
         this.resData = result.data;
       }

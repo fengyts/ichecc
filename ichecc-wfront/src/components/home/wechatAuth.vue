@@ -36,11 +36,11 @@ export default {
 
     // code存在，获取code，并发送到后台获取用户信息
     if (_code) {
-      let params = new URLSearchParams();
-      params.append("code", this.$crypto.encryptAes(_code));
+      // let params = new URLSearchParams();
+      // params.append("code", this.$crypto.encryptAes(_code));
       let _that = this;
-      this.$axios.post("/api/wechat/authorize", params).then(res => {
-        let result = res.data;
+      this.$http.post("/api/wechat/authorize", {"code": _that.$crypto.encryptAes(_code)}).then(res => {
+        let result = res;
         if (result.code === _that.$resp_code) {
           let user = result.data;
           _that.$localStorage.setLocalStorage("icheccuser", user);

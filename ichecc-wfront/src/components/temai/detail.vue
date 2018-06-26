@@ -94,21 +94,23 @@ export default {
   },
   created() {
     let _that = this;
-    this.$axios.get("/api/topicItem/itemDetail/" + this.$route.params.tiId).then(response => {
-      let result = response.data;
-      if (this.$resp_code === result.code) {
-        this.resData = result.data;
-        this.$nextTick(() => {
-          this._initScroll();
-          this.countdown(result.data.countDownTime / 1000);
-        });
-      }
-    });
+    this.$http
+      .get("/api/topicItem/itemDetail/" + this.$route.params.tiId)
+      .then(response => {
+        let result = response;
+        if (this.$resp_code === result.code) {
+          this.resData = result.data;
+          this.$nextTick(() => {
+            this._initScroll();
+            this.countdown(result.data.countDownTime / 1000);
+          });
+        }
+      });
   },
   methods: {
     countdown(mss) {
       var _that = this;
-      var itv = setInterval(function () {
+      var itv = setInterval(function() {
         var ctr = _that.fmtTime(mss);
         document.getElementById("time-countdown-wrapper").innerHTML = ctr;
         if (!mss--) {

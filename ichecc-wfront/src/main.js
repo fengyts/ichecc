@@ -6,7 +6,7 @@ import router from './router'
 import $ from 'jquery'
 import weui from 'jquery-weui/dist/js/jquery-weui.min'
 import 'jquery-weui/dist/css/jquery-weui.min.css'
-import axios from 'axios'
+// import axios from 'axios'
 import wx from 'weixin-js-sdk'
 import filters from './common/filters/filter'
 import 'common/stylus/index'; // 全局自定义样式
@@ -20,9 +20,9 @@ window.$ = $;
 
 Vue.config.productionTip = false
 // axios.defaults.baseURL = process.env.BASE_API_URL
-axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? process.env.BASE_API_URL : ''
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-Vue.prototype.$axios = axios
+// axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? process.env.BASE_API_URL : ''
+// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+// Vue.prototype.$axios = axios
 Vue.prototype.$resp_code = "1"; // 接口错误代码: "1"-成功；"0"-失败
 Vue.prototype.$localStorage = localStorage;
 Vue.prototype.$crypto = crypto;

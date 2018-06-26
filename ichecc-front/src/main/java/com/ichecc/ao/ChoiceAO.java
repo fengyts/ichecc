@@ -50,9 +50,9 @@ public class ChoiceAO {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("品牌类型", "brand");
 		map.put("能源类型", "energy");
-		map.put("车辆类型", "car");
+		map.put("车辆类型", "type");
 		map.put("座位数量", "seat");
-		map.put("车型结构", "carStructure");
+		map.put("车型结构", "structure");
 		map.put("变速箱类型", "gearbox");
 		return (String) map.get(name);
 	}

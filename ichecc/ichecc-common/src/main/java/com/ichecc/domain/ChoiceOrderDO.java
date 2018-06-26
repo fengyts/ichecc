@@ -7,13 +7,12 @@ import java.util.Date;
 /**
  * 选车订单
  * 
- * @author fengyts Mon Jun 04 14:08:05 CST 2018
+ * @author fengyts Tue Jun 26 12:10:01 CST 2018
  */
 
 public class ChoiceOrderDO extends BaseDO {
 
-	/**  */
-	private static final long serialVersionUID = -4697380894105891198L;
+	private static final long serialVersionUID = 3623155716349769028L;
 
 	/** 主键 */
 	private Long id;
@@ -33,11 +32,14 @@ public class ChoiceOrderDO extends BaseDO {
 	/** 能源类型 */
 	private String energy;
 
-	/** 车型 */
+	/** 车辆类型 */
 	private String type;
 
 	/** 座位类型 */
 	private String seat;
+
+	/** 车型结构 */
+	private String structure;
 
 	/** 变速箱 */
 	private String gearbox;
@@ -112,7 +114,7 @@ public class ChoiceOrderDO extends BaseDO {
 	}
 
 	/**
-	 * 设置 车型
+	 * 设置 车辆类型
 	 * 
 	 * @param type
 	 */
@@ -127,6 +129,15 @@ public class ChoiceOrderDO extends BaseDO {
 	 */
 	public void setSeat(String seat) {
 		this.seat = seat;
+	}
+
+	/**
+	 * 设置 车型结构
+	 * 
+	 * @param structure
+	 */
+	public void setStructure(String structure) {
+		this.structure = structure;
 	}
 
 	/**
@@ -238,7 +249,7 @@ public class ChoiceOrderDO extends BaseDO {
 	}
 
 	/**
-	 * 获取 车型
+	 * 获取 车辆类型
 	 * 
 	 * @return type
 	 */
@@ -253,6 +264,15 @@ public class ChoiceOrderDO extends BaseDO {
 	 */
 	public String getSeat() {
 		return seat;
+	}
+
+	/**
+	 * 获取 车型结构
+	 * 
+	 * @return structure
+	 */
+	public String getStructure() {
+		return structure;
 	}
 
 	/**
