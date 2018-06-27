@@ -6,7 +6,7 @@ public class ResultData implements Serializable {
 
 	private static final long serialVersionUID = 4652614684172657081L;
 
-	public static final String SUCCESS = "1";
+	public static final String SUCCESS = ResultCode.Common.SUCCESS;
 	public static final String FAILURE = "0";
 
 	private String code = SUCCESS;
@@ -62,8 +62,16 @@ public class ResultData implements Serializable {
 		return new ResultData(FAILURE, message);
 	}
 
-	public static ResultData failure(String message, Object data) {
-		return new ResultData(FAILURE, message, data);
+	public static ResultData failureMsg(String code) {
+		return new ResultData(code, ResultCode.getDesc(code));
+	}
+
+	public static ResultData failure(String code, Object data) {
+		return new ResultData(code, ResultCode.getDesc(code), data);
+	}
+
+	public static ResultData failure(String code, String message, Object data) {
+		return new ResultData(code, ResultCode.getDesc(code), data);
 	}
 
 }

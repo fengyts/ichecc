@@ -48,7 +48,7 @@
 	<!-- XSS攻击过滤器 -->
 	<filter>  
         <filter-name>XSSEscape</filter-name>  
-        <filter-class>com.ichecc.interceptor.XSSFilter</filter-class>  
+        <filter-class>com.ichecc.filter.XSSFilter</filter-class>  
     </filter>  
     <filter-mapping>  
         <filter-name>XSSEscape</filter-name>  

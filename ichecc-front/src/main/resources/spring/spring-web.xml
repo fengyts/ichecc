@@ -130,7 +130,9 @@
 <!-- 	<mvc:resources mapping="/statics/**" location="/statics/" /> -->
 	
 	
-	
+	<mvc:interceptors>
+		<bean class="com.ichecc.interceptor.AuthorityInterceptor" />
+	</mvc:interceptors>
 
 
 </beans>

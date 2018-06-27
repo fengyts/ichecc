@@ -1,7 +1,7 @@
 package com.ichecc.dao;
 
 import com.ichecc.domain.SysUserDO;
-import com.ichecc.vo.SysUserVO;
+import com.ichecc.vo.sys.SysUserVO;
 
 import ng.bayue.service.common.GeneralDAO;
 

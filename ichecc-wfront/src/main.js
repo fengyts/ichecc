@@ -45,5 +45,5 @@ new Vue({
   template: '<App/>'
 })
 
-// router.push('/home/list');
-router.push('/wechatAuth');
+router.push('/home/list');
+// router.push('/wechatAuth');

@@ -24,8 +24,8 @@ import com.ichecc.service.SysUserService;
 import com.ichecc.util.Messages;
 import com.ichecc.util.ResultMessage;
 import com.ichecc.util.UserHandler;
-import com.ichecc.vo.SysUserDTO;
-import com.ichecc.vo.SysUserVO;
+import com.ichecc.vo.sys.SysUserDTO;
+import com.ichecc.vo.sys.SysUserVO;
 
 import ng.bayue.common.Page;
 import ng.bayue.util.SecurityUtil;

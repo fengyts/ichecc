@@ -1,4 +1,4 @@
-package com.ichecc.interceptor;
+package com.ichecc.filter;
 
 import java.io.IOException;
 import java.io.Serializable;

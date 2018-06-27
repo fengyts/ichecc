@@ -29,7 +29,7 @@ public class ChoiceController {
 	@RequestMapping("choiceSubmit")
 	@ResponseBody
 	public ResultData choiceSubmit(ChoiceSubmitDTO dto) {
-		return ResultData.success();
+		return choiceAO.choiceOrderSubmit(dto);
 	}
 
 }

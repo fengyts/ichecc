@@ -3,9 +3,11 @@ package com.ichecc.dao.mybatis;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
+
 import com.ichecc.dao.DepositRecordDAO;
 import com.ichecc.dao.base.MybatisBaseDAO;
 import com.ichecc.domain.DepositRecordDO;
+
 import ng.bayue.exception.CommonDAOException;
 
 @Component(value="depositRecordDAO")
@@ -61,5 +63,12 @@ public class MybatisDepositRecordDAO extends MybatisBaseDAO implements DepositRe
 	public List<DepositRecordDO> selectDynamicPageQuery(DepositRecordDO depositRecordDO) throws CommonDAOException {
 		return getSqlSession().selectList(getStatement("select_dynamic_page_query"), depositRecordDO);
 	}
+
+	@Override
+	public DepositRecordDO selectLatestDepositRecord(Long userId) {
+		return getSqlSession().selectOne(getStatement("select_latest_dprecord_byUserId"), userId);
+	}
+	
+	
 
 }

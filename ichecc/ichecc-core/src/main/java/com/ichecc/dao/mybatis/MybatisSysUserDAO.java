@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import com.ichecc.dao.SysUserDAO;
 import com.ichecc.dao.base.MybatisBaseDAO;
 import com.ichecc.domain.SysUserDO;
-import com.ichecc.vo.SysUserVO;
+import com.ichecc.vo.sys.SysUserVO;
 
 import ng.bayue.exception.CommonDAOException;
 

@@ -12,7 +12,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Component;
 
 import com.ichecc.domain.SysUserDO;
-import com.ichecc.vo.SysUserVO;
+import com.ichecc.vo.sys.SysUserVO;
 
 @Component
 public class UserHandler {

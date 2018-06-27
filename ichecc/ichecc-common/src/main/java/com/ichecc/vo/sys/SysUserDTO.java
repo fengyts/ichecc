@@ -1,4 +1,4 @@
-package com.ichecc.vo;
+package com.ichecc.vo.sys;
 
 import com.ichecc.domain.SysUserDO;
 

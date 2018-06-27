@@ -14,7 +14,7 @@ import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ichecc.ao.sys.SysUserAO;
-import com.ichecc.vo.SysUserVO;
+import com.ichecc.vo.sys.SysUserVO;
 
 public class SysAuthorizingRealm extends AuthorizingRealm {
 

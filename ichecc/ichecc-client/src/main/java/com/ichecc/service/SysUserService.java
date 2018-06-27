@@ -3,7 +3,7 @@ package com.ichecc.service;
 import java.util.List;
 
 import com.ichecc.domain.SysUserDO;
-import com.ichecc.vo.SysUserVO;
+import com.ichecc.vo.sys.SysUserVO;
 
 import ng.bayue.exception.CommonServiceException;
 import ng.bayue.service.common.GeneralService;

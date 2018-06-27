@@ -16,7 +16,7 @@ import com.ichecc.domain.SysUserDO;
 import com.ichecc.domain.SysUserRoleDO;
 import com.ichecc.util.Messages;
 import com.ichecc.util.ResultMessage;
-import com.ichecc.vo.SysUserDTO;
+import com.ichecc.vo.sys.SysUserDTO;
 
 import ng.bayue.common.Page;
 

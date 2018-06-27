@@ -17,7 +17,7 @@ import com.ichecc.dao.SysUserRoleDAO;
 import com.ichecc.domain.SysUserDO;
 import com.ichecc.domain.SysUserRoleDO;
 import com.ichecc.service.SysUserService;
-import com.ichecc.vo.SysUserVO;
+import com.ichecc.vo.sys.SysUserVO;
 
 import ng.bayue.common.Page;
 import ng.bayue.exception.CommonDAOException;

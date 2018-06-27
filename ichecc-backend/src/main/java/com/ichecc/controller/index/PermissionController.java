@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ichecc.domain.SysMenuDO;
 import com.ichecc.enums.SysMenuTypeEnum;
-import com.ichecc.vo.SysUserVO;
+import com.ichecc.vo.sys.SysUserVO;
 
 
 @Controller

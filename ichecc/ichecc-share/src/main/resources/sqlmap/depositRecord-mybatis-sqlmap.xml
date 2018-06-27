@@ -115,5 +115,15 @@
 	 	ORDER BY deposit_record.id DESC
 	 	Limit #{start},#{pageSize}
  	</select>
+ 	
+ 	<select id="MybatisDepositRecordDAO_select_latest_dprecord_byUserId" resultMap="DepositRecordDOResultMap" parameterType="long">
+ 		SELECT
+	     	<include refid="MybatisDepositRecordDAO_all_column_fields" />
+		 FROM
+		 	deposit_record dr
+		 WHERE dr.user_id = ${userId}	
+ 		 ORDER BY deposit_record.id DESC
+	 	 Limit 1
+ 	</select>
 
 </mapper>
