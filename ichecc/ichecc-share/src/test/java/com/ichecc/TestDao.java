@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.ichecc.dao.DepositRecordDAO;
 import com.ichecc.dao.IcheccUserDAO;
 import com.ichecc.dao.ItemAttributeDAO;
 import com.ichecc.dao.TopicItemDAO;
+import com.ichecc.domain.DepositRecordDO;
 import com.ichecc.domain.ItemAttributeDO;
 import com.ichecc.dto.ICheccUserDTO;
 import com.ichecc.front.dto.FrontTopicItemDTO;
@@ -23,13 +25,17 @@ public class TestDao {
 
 	@Autowired
 	private IcheccUserDAO userDao;
+	@Autowired
+	private DepositRecordDAO drDao;
 
 	@Test
 	public void test() throws Exception {
-		String openid = "oEUxH0sS0BGO3bNb_rIRv-5xs5Ts";
-		ICheccUserDTO dto = userDao.selectByOpenid(openid);
-		
-		System.out.println(dto.getIsCertification());
+//		String openid = "oEUxH0sS0BGO3bNb_rIRv-5xs5Ts";
+//		ICheccUserDTO dto = userDao.selectByOpenid(openid);
+//		
+//		System.out.println(dto.getIsCertification());
+		DepositRecordDO d = drDao.selectLatestDepositRecord(1L);
+		System.out.println(d);
 	}
 	
 

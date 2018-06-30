@@ -25,7 +25,11 @@ public class AuthorityInterceptor extends HandlerInterceptorAdapter {
 			if (null != method.getMethodAnnotation(Authority.class)
 					|| null != method.getMethod().getDeclaringClass()
 							.getAnnotation(Authority.class)) { // 需要权限验证
-				Long userId = Long.valueOf(request.getParameter("userId"));
+				Object o = request.getParameter("userId");
+				if(null == o){
+					return error(response); // 授权异常
+				}
+				Long userId = Long.valueOf((String) o);
 				if (null != userId && userId.longValue() > 0) {
 					return true;
 				}
@@ -41,7 +45,7 @@ public class AuthorityInterceptor extends HandlerInterceptorAdapter {
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().print(
 					JSONObject.toJSONString(ResultData
-							.failureMsg(ResultCode.Common.AUTHORIZE_FAILURE)));
+							.failureMsg(ResultCode.Common.USERINFO_EMPTY)));
 		} catch (Exception e) {
 			logger.error("返回响应结果时IO异常", e);
 		}

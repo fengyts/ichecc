@@ -1,19 +1,21 @@
 <!--  -->
 <template>
-  <div class="choiceRecord">
-      <router-link :to="{path:'/choiceDetail'}"> 
+  <div class="records-wrapper" v-if="resData != undefined">
+    <div class="choiceRecord" v-for="item in resData">
+      <router-link :to="{path: '/choiceDetail/' + item.orderId}">
         <div class="list">
-            <div class="href top">
-              <span class="time">2018-04-26 16:29:58</span>
-              <span class="status">处理中</span>
-            </div>
-            <div class="bottom">
-              <p class="request">
-                15-25万，合资品牌，SUV，5座，自动档，不考虑日本车，意向品牌大众、别克，空间大，后备箱大，全景天...
-              </p>
-            </div>
+          <div class="href top">
+            <span class="time">{{item.choiceOrderTime | formatDate('yyyy-MM-dd hh:mm:ss')}}</span>
+            <span class="status">{{item.orderStatusDesc}}</span>
+          </div>
+          <div class="bottom">
+            <p class="request">
+              {{item.choiceRequirement}}
+            </p>
+          </div>
         </div>
       </router-link>
+    </div>
 
     <div class="tips">
       <p>- 没有更多了 -</p>
@@ -25,8 +27,16 @@
 export default {
   data() {
     return {
-
+      resData: []
     }
+  },
+  created() {
+    this.$http.get("/api/choice/choiceOrderList").then(response => {
+      var result = response;
+      if (result.code === this.$resp_code) {
+        this.resData = result.data;
+      }
+    });
   }
 }
 </script>

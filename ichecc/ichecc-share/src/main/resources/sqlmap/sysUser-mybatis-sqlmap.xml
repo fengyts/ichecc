@@ -18,7 +18,7 @@
         <result column="modify_user_id" property="modifyUserId"/>
 	</resultMap>
 
-	<resultMap type="com.ichecc.vo.SysUserVO" id="SysUserVOResultMap" extends="SysUserDOResultMap">
+	<resultMap type="com.ichecc.vo.sys.SysUserVO" id="SysUserVOResultMap" extends="SysUserDOResultMap">
 <!-- 	通过继承来实现下面的映射：extends="SysUserDOResultMap"-->
 <!-- 
 		<id column="id" property="id" />

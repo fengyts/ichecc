@@ -90,11 +90,9 @@
 <script type="text/javascript">
 import Vue from "vue";
 export default {
-  props: {},
   data() {
     return {
       user: {},
-      avatar: "http://thirdwx.qlogo.cn/mmopen/vi_32/7LWpMIQnwK8CrkVZxOQUnm8AK5CaMOyGzogKjvDgvGgvQlOsqIpoeTmUyvyM1p5ebFxUlhCwG8ow0jMQ9SZa8Q/132"
     };
   },
   created() {
@@ -107,6 +105,13 @@ export default {
     _initUser (){
       let _user = this.$localStorage.getLocalStorage("icheccuser");
       this.user = _user;
+    },
+    qUid() {
+      let _user = JSON.parse(window.localStorage._icheccwf_)["icheccuser"];
+      if (_user && Object.keys(_user).length > 0) {
+        return _user.id;
+      }
+      return "";
     }
   }
 };

@@ -121,8 +121,8 @@
 	     	<include refid="MybatisDepositRecordDAO_all_column_fields" />
 		 FROM
 		 	deposit_record dr
-		 WHERE dr.user_id = ${userId}	
- 		 ORDER BY deposit_record.id DESC
+		 WHERE dr.user_id = #{userId}	
+ 		 ORDER BY dr.id DESC
 	 	 Limit 1
  	</select>
 

@@ -21,6 +21,8 @@ import com.ichecc.front.dto.ChoiceSubmitDTO;
 import com.ichecc.service.ChoiceConfigService;
 import com.ichecc.service.ChoiceOrderService;
 import com.ichecc.service.DepositRecordService;
+import com.ichecc.vo.ChoiceOrderBaseVO;
+import com.ichecc.vo.ChoiceOrderDetailVO;
 import com.ichecc.vo.VipInfoVO;
 
 @Service
@@ -78,8 +80,13 @@ public class ChoiceAO extends BaseAO {
 
 	public ResultData choiceOrderSubmit(ChoiceSubmitDTO dto) {
 		Long userId = dto.getUserId();
-		if (userId == null || userId.longValue() < 0) {
-			return ResultData.failureMsg(ResultCode.Common.AUTHORIZE_FAILURE);
+		// if (userId == null || userId.longValue() < 0) {
+		// return ResultData.failureMsg(ResultCode.Common.AUTHORIZE_FAILURE);
+		// }
+
+		// 校验参数
+		if (!dto.validate()) {
+			return ResultData.failureMsg(ResultCode.Common.PARAMS_ERROR);
 		}
 		// 校验vip
 		VipInfoVO vipVO = depositRecordService.getVipInfo(userId);
@@ -103,6 +110,19 @@ public class ChoiceAO extends BaseAO {
 			return ResultData.failureMsg(ResultCode.Common.ERROR);
 		}
 		return ResultData.success();
+	}
+
+	public ResultData choiceOrderList(Long userId) {
+		List<ChoiceOrderBaseVO> list = choiceOrderService.selectOrderList(userId);
+		return ResultData.success(list);
+	}
+
+	public ResultData choiceOrderDetail(Long orderId) {
+		if (null == orderId || orderId.longValue() < 0) {
+			return ResultData.failureMsg(ResultCode.Common.PARAMS_ERROR);
+		}
+		ChoiceOrderDetailVO vo = choiceOrderService.choiceOrderDetail(orderId);
+		return ResultData.success(vo);
 	}
 
 }

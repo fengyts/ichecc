@@ -12,7 +12,7 @@ public enum ChoiceOrderStatusEnum {
 		this.desc = desc;
 	}
 
-	public String getDescByCOde(String code) {
+	public static String getDescByCode(String code) {
 		if (null == code) {
 			return null;
 		}

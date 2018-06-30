@@ -7,7 +7,8 @@
       <div class="xctm_top">
         <p class="xctm_top_title">本期特卖</p>
         <!-- <p class="xctm_top_time">期号 : H180602&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时间 : 4.23 - 4.29</p> -->
-        <p class="xctm_top_time" v-show="resData.periodNo!=''">期号 : {{resData.periodNo}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 时间 : {{resData.startTime | formatDate}} - {{resData.endTime | formatDate}}</p>
+        <p class="xctm_top_time" v-show="resData.periodNo!=''">期号 : {{resData.periodNo}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+          时间 : {{resData.startTime | formatDate('M.dd')}} - {{resData.endTime | formatDate('M.dd')}}</p>
       </div>
 
       <!--列表区域-->

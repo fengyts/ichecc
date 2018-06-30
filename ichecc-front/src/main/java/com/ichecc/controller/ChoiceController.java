@@ -1,13 +1,12 @@
 package com.ichecc.controller;
 
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ichecc.annotation.Authority;
 import com.ichecc.ao.ChoiceAO;
 import com.ichecc.common.Constants;
 import com.ichecc.common.ResultData;
@@ -28,8 +27,23 @@ public class ChoiceController {
 
 	@RequestMapping("choiceSubmit")
 	@ResponseBody
+	@Authority
 	public ResultData choiceSubmit(ChoiceSubmitDTO dto) {
 		return choiceAO.choiceOrderSubmit(dto);
+	}
+	
+	@RequestMapping("choiceOrderList")
+	@ResponseBody
+	@Authority
+	public ResultData choiceOrderList(Long userId){
+		return choiceAO.choiceOrderList(userId);
+	}
+	
+	@RequestMapping("choiceOrderDetail")
+	@ResponseBody
+	@Authority
+	public ResultData choiceOrderDetail(Long orderId){
+		return choiceAO.choiceOrderDetail(orderId);
 	}
 
 }

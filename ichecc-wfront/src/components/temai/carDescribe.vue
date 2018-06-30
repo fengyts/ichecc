@@ -30,18 +30,16 @@ export default {
     };
   },
   created() {
-    this.$axios
-      .get("/api/topicItem/itemDesc/" + this.$route.params.itemId)
-      .then(response => {
-        let result = response.data;
-        if (this.$resp_code === result.code) {
-          this.description = result.data;
-          this.$nextTick(() => {
-            document.getElementById("description").innerHTML = result.data;
-            $("img").css("width", "100%");
-          });
-        }
-      });
+    this.$http.get("/api/topicItem/itemDesc/" + this.$route.params.itemId).then(response => {
+      let result = response;
+      if (this.$resp_code === result.code) {
+        this.description = result.data;
+        this.$nextTick(() => {
+          document.getElementById("description").innerHTML = result.data;
+          $("img").css("width", "100%");
+        });
+      }
+    });
   }
 };
 </script>

@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import $ from 'jquery'
+// import $ from 'jquery'
 import weui from 'jquery-weui/dist/js/jquery-weui.min'
 import 'jquery-weui/dist/css/jquery-weui.min.css'
 // import axios from 'axios'
@@ -15,7 +15,7 @@ import localStorage from './store/localStorage' // window localStorage
 import crypto from './common/js/crypto'
 import http from './common/js/http'
 
-window.JQuery = $;
+window.jQuery = $;
 window.$ = $;
 
 Vue.config.productionTip = false
@@ -45,5 +45,5 @@ new Vue({
   template: '<App/>'
 })
 
-router.push('/home/list');
-// router.push('/wechatAuth');
+// router.push('/home/list');
+router.push('/wechatAuth');

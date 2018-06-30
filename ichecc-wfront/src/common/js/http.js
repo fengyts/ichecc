@@ -5,17 +5,18 @@ import axios from 'axios'
 axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? process.env.BASE_API_URL : ''
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'; // 此处必须制定charset否则中文会乱码
 
-axios.interceptors.request.use(
-  config => {
-    // if (store.state.token) { // 判断是否存在token，如果存在的话，则每个http header都加上token
-    // config.headers.Authorization = "";
-    // }
-    config.headers.Authorization = "testAuth12345678"; // java后台获取：HttpServletRequest req: req.getHeader("Authorization");
-    return config;
-  },
-  err => {
-    return Promise.reject(err);
-  });
+// axios.interceptors.request.use(
+//   config => {
+//     // if (store.state.token) { // 判断是否存在token，如果存在的话，则每个http header都加上token
+//     // config.headers.Authorization = "";
+//     // }
+//     config.headers.Authorization = "testAuth12345678"; // java后台获取：HttpServletRequest req: req.getHeader("Authorization");
+//     return config;
+//   },
+//   err => {
+//     return Promise.reject(err);
+//   }
+// );
 
 var getUserInfo = function () {
   let _user = JSON.parse(window.localStorage._icheccwf_)["icheccuser"];
@@ -33,7 +34,11 @@ var httpRequestUtil = {
     for (let key in data) {
       params.append(key, data[key]);
     } */
-    data.userId = getUserInfo();
+    // 是否是登陆请求
+    let authSymbol = data.authSymbol;
+    if(!authSymbol){
+      data.userId = getUserInfo();
+    }
     let params = qs.stringify(data);
     return new Promise((resolve, reject) => {
       axios.post(url, params).then(response => {
@@ -46,6 +51,19 @@ var httpRequestUtil = {
     })
   },
   get: function (url, data) {
+    if(data) {
+      let params = data.params;
+      if(params){
+        let userId = params.userId;
+        if(!userId){
+          params.userId = getUserInfo();
+        }
+      } else {
+        params = {'userId': getUserInfo()}
+      }
+    } else {
+      data = {'params':  {'userId': getUserInfo()}}
+    }
     return new Promise((resolve, reject) => {
       axios.get(url, data).then(response => {
         resolve(response.data);

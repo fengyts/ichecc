@@ -39,7 +39,12 @@ export default {
       // let params = new URLSearchParams();
       // params.append("code", this.$crypto.encryptAes(_code));
       let _that = this;
-      this.$http.post("/api/wechat/authorize", {"code": _that.$crypto.encryptAes(_code)}).then(res => {
+      //authSymbol: 登陆标识, 仅用于登陆发送ajax请求判断是否携带user信息用
+      let data = {
+        "code": _that.$crypto.encryptAes(_code),
+        "authSymbol" : 1 
+      };
+      this.$http.post("/api/wechat/authorize", data).then(res => {
         let result = res;
         if (result.code === _that.$resp_code) {
           let user = result.data;

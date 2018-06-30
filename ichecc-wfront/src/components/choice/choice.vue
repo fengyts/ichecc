@@ -129,7 +129,7 @@ export default {
   methods: {
     selectOption: function (_id, _type) {
       var _that = this;
-      $("#" + _id).select({
+      jQuery("#" + _id).select({
         title: _type.desc,
         items: _that._getListData(_type.type),
         onChange: function (res) {
@@ -163,10 +163,22 @@ export default {
       let _check = this.checkSubmitData();
       if ("OK" != _check) {
         $.toptip(_check, 'error');
+        return;
       }
+      let _that = this;
       this.$http.post("/api/choice/choiceSubmit", this.selectedData).then(res => {
+        if (res.code === '200001') {
+          $.toast("只有vip会员才有权限", 1500);
+          this.$router.push("/vipAdd");
+          return;
+        }
         if (res.code === this.$resp_code) {
-          $.toast("提交成功");
+          $.toast("提交成功", 1000, function(){
+            _that.$router.push("/choiceRecord");
+          });
+        } else {
+          $.toast(res.message, "text");
+          this.$router.go(0);
         }
       });
     }

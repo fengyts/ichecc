@@ -25,7 +25,7 @@ public class ChoiceSubmitDTO extends AbstractDTO {
 	private String otherRequirement;
 
 	@Override
-	protected boolean validate() {
+	public boolean validate() {
 		if (null == userId || userId.longValue() < 0) {
 			return false;
 		}

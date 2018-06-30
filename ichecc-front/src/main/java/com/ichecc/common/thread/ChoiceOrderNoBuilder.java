@@ -37,7 +37,7 @@ public class ChoiceOrderNoBuilder {
 			// 最终生成的编号
 			String finalOrderNo = "";
 			synchronized (lockObj) {
-				long nowLong = Long.parseLong(DateUtils.formatDate(new Date(), "yyyyMMddHHmmss"));
+				long nowLong = Long.parseLong(DateUtils.formatDate(new Date(), "yyMMddHHmmss"));
 				// 计数器到最大值归1，目前1秒处理峰值9999个
 				if (orderNoCount >= maxPerMSECSize) {
 					orderNoCount = 1L;

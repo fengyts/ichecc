@@ -149,7 +149,7 @@ public class DepositRecordServiceImpl implements DepositRecordService {
 		Date endTime = dr.getEndTime();
 		vo.setEndTime(endTime);
 		Date now = new Date();
-		boolean isVip = now.after(endTime);
+		boolean isVip = now.before(endTime); // 是vip
 		if (isVip) {
 			int days = DateUtils.getDistanceOfTwoDate(new Date(), endTime).intValue();
 			vo.setExpiryDate(days);
@@ -157,5 +157,6 @@ public class DepositRecordServiceImpl implements DepositRecordService {
 		vo.setIsVip(isVip);
 		return vo;
 	}
+
 
 }

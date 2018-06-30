@@ -1,9 +1,9 @@
 import {fmtDate} from '../js/date';
 
 const filters = {
-  formatDate: function (startTime) {
-    var date = new Date(startTime);
-    return fmtDate(date, "M.dd");
+  formatDate: function (datetime, fmt) {
+    var date = new Date(datetime);
+    return fmtDate(date, fmt); // M.dd
   },
   formatMoney: function (money) {
     var fmt = money / 10000;
