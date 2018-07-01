@@ -1,15 +1,19 @@
 package com.ichecc.dao.mybatis;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import ng.bayue.exception.CommonDAOException;
 
 import org.springframework.stereotype.Component;
+
 import com.ichecc.dao.TopicItemDAO;
 import com.ichecc.dao.base.MybatisBaseDAO;
 import com.ichecc.domain.TopicItemDO;
 import com.ichecc.dto.TopicItemDetailDTO;
 import com.ichecc.front.dto.FrontTopicItemDTO;
-
-import ng.bayue.exception.CommonDAOException;
+import com.ichecc.vo.HiggleJoinVO;
 
 @Component(value="topicItemDAO")
 public class MybatisTopicItemDAO extends MybatisBaseDAO implements TopicItemDAO {
@@ -78,6 +82,14 @@ public class MybatisTopicItemDAO extends MybatisBaseDAO implements TopicItemDAO 
 	@Override
 	public TopicItemDetailDTO topicItemDetail(Long tiId) {
 		return getSqlSession().selectOne(getStatement("select_detail_by_tiId"), tiId);
+	}
+
+	@Override
+	public HiggleJoinVO participationHiggle(Long userId, Long tiId) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("userId", userId);
+		params.put("tiId", tiId);
+		return getSqlSession().selectOne(getStatement("participation_higgle"), params);
 	}
 	
 	

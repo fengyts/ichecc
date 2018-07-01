@@ -5,6 +5,7 @@ import java.util.List;
 import com.ichecc.domain.TopicItemDO;
 import com.ichecc.dto.TopicItemDetailDTO;
 import com.ichecc.front.dto.FrontTopicItemDTO;
+import com.ichecc.vo.HiggleJoinVO;
 
 import ng.bayue.service.common.GeneralService;
 
@@ -29,5 +30,16 @@ public interface TopicItemService extends GeneralService<TopicItemDO, TopicItemD
 	 * @return
 	 */
 	TopicItemDetailDTO topicItemDetail(Long tiId);
+	
+	/**
+	 * <pre>
+	 * 参与砍价详情数据
+	 * </pre>
+	 *
+	 * @param userId
+	 * @param tiId
+	 * @return
+	 */
+	HiggleJoinVO participationHiggle(Long userId, Long tiId);
 
 }

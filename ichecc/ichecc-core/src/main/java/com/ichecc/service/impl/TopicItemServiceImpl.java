@@ -13,6 +13,7 @@ import com.ichecc.domain.TopicItemDO;
 import com.ichecc.dto.TopicItemDetailDTO;
 import com.ichecc.front.dto.FrontTopicItemDTO;
 import com.ichecc.service.TopicItemService;
+import com.ichecc.vo.HiggleJoinVO;
 
 import ng.bayue.common.Page;
 import ng.bayue.exception.CommonDAOException;
@@ -144,5 +145,15 @@ public class TopicItemServiceImpl implements TopicItemService {
 		}
 		return topicItemDAO.topicItemDetail(tiId);
 	}
+
+	@Override
+	public HiggleJoinVO participationHiggle(Long userId, Long tiId) {
+		if(null == userId || null == tiId){
+			return null;
+		}
+		return null;
+	}
+	
+	
 
 }

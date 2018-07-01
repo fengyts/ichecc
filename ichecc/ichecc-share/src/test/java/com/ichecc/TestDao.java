@@ -16,8 +16,10 @@ import com.ichecc.dao.ItemAttributeDAO;
 import com.ichecc.dao.TopicItemDAO;
 import com.ichecc.domain.DepositRecordDO;
 import com.ichecc.domain.ItemAttributeDO;
+import com.ichecc.domain.TopicItemDO;
 import com.ichecc.dto.ICheccUserDTO;
 import com.ichecc.front.dto.FrontTopicItemDTO;
+import com.ichecc.vo.HiggleJoinVO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath*:spring/spring-context-checcshare.xml" })
@@ -27,6 +29,8 @@ public class TestDao {
 	private IcheccUserDAO userDao;
 	@Autowired
 	private DepositRecordDAO drDao;
+	@Autowired
+	private TopicItemDAO tiDao;
 
 	@Test
 	public void test() throws Exception {
@@ -34,8 +38,11 @@ public class TestDao {
 //		ICheccUserDTO dto = userDao.selectByOpenid(openid);
 //		
 //		System.out.println(dto.getIsCertification());
-		DepositRecordDO d = drDao.selectLatestDepositRecord(1L);
-		System.out.println(d);
+//		DepositRecordDO d = drDao.selectLatestDepositRecord(1L);
+//		System.out.println(d);
+		HiggleJoinVO higgle = tiDao.participationHiggle(1L, 1L);
+		System.out.println(higgle);
+		
 	}
 	
 

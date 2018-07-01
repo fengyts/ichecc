@@ -14,6 +14,7 @@
         <result column="special_price" property="specialPrice"/>
         <result column="bargain_max_times" property="bargainMaxTimes"/>
         <result column="residue_times" property="residueTimes"/>
+        <result column="participation_num" property="participationNum"/>
         <result column="sort" property="sort"/>
         <result column="status" property="status"/>
         <result column="attributes" property="attributes"/>
@@ -24,7 +25,7 @@
 	</resultMap>
 
 	<sql id="MybatisTopicItemDAO_all_column_fields">
-	      id,topic_id,item_id,item_title,sub_title,market_price,guide_price,special_price,bargain_max_times,residue_times,sort,status,attributes,create_user_id,create_time,modify_user_id,modify_time
+	      id,topic_id,item_id,item_title,sub_title,market_price,guide_price,special_price,bargain_max_times,residue_times,participation_num,sort,status,attributes,create_user_id,create_time,modify_user_id,modify_time
  	</sql>
 	<!-- 只有varchar char text类型 做 !='' 判断，生成代码时,其他类型时只做!=null 决断 0或fasle与空''是相同的，在mybatis中的动态语句中 -->
 	<sql id="MybatisTopicItemDAO_dynamic_where_fields"><!-- xml转义字符需要 <![CDATA[   ]]> 标签-->
@@ -38,6 +39,7 @@
 			<if test="specialPrice != null "> AND special_price=#{specialPrice} </if>
 			<if test="bargainMaxTimes != null "> AND bargain_max_times=#{bargainMaxTimes} </if>
 			<if test="residueTimes != null "> AND residue_times=#{residueTimes} </if>
+			<if test="participationNum != null "> AND participation_num=#{participationNum} </if>
 			<if test="sort != null "> AND sort=#{sort} </if>
 			<if test="status != null "> AND status=#{status} </if>
 			<if test="attributes != null  and attributes != '' "> AND attributes=#{attributes} </if>
@@ -62,41 +64,43 @@
             SELECT LAST_INSERT_ID() AS id
         </selectKey>
         INSERT INTO topic_item(
-			id,
-			topic_id,
-			item_id,
-			item_title,
-			sub_title,
-			market_price,
-			guide_price,
-			special_price,
-			bargain_max_times,
-			residue_times,
-			sort,
-			status,
-			attributes,
-			create_user_id,
-			create_time,
-			modify_user_id,
-			modify_time
+				id,
+				topic_id,
+				item_id,
+				item_title,
+				sub_title,
+				market_price,
+				guide_price,
+				special_price,
+				bargain_max_times,
+				residue_times,
+				participation_num,
+				sort,
+				status,
+				attributes,
+				create_user_id,
+				create_time,
+				modify_user_id,
+				modify_time
 		)values(
-			#{id},
-			#{topicId},
-			#{itemId},
-			#{itemTitle},
-			#{subTitle},
-			#{marketPrice},
-			#{guidePrice},
-			#{specialPrice},
-			#{bargainMaxTimes},
-			#{residueTimes},
-			#{sort},
-			#{status},
-			#{attributes},
-			#{createUserId},
-			#{createTime},
-			#{modifyUserId},
-			#{modifyTime}
+				#{id},
+				#{topicId},
+				#{itemId},
+				#{itemTitle},
+				#{subTitle},
+				#{marketPrice},
+				#{guidePrice},
+				#{specialPrice},
+				#{bargainMaxTimes},
+				#{residueTimes},
+				#{participationNum},
+				#{sort},
+				#{status},
+				#{attributes},
+				#{createUserId},
+				#{createTime},
+				#{modifyUserId},
+				#{modifyTime}
 		)
     </insert>
 	
@@ -113,6 +117,7 @@
 			special_price = #{specialPrice},
 			bargain_max_times = #{bargainMaxTimes},
 			residue_times = #{residueTimes},
+			participation_num = #{participationNum},
 			sort = #{sort},
 			status = #{status},
 			attributes = #{attributes},

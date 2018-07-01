@@ -61,7 +61,7 @@ css=[
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-md-2 control-label">商品排序值(默认为0)</label>
+		<label class="col-md-2 control-label">商品排序值</label>
 		<div class="col-md-4">
 			<input type="text" class="form-control" id="sort" name="sort" value="${topicItemDO.sort!0}" />
 		</div>

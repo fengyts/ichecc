@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ichecc.domain.TopicItemMapper">
+
+	<!-- 参与砍价详情页数据获取sql 开始 -->
+	<resultMap type="com.ichecc.vo.HiggleJoinVO" id="ParticipationHiggleResultMap">
+		<id column="tiId" property="tiId" />
+		<result column="end_time" property="endTime" />
+		<result column="status" property="status" />
+		<result column="picture" property="picture" />
+		<result column="item_title" property="itemTitle" />
+		<result column="sub_title" property="subTitle" />
+		<result column="market_price" property="marketPrice" />
+		<result column="guide_price" property="guidePrice" />
+		<result column="special_price" property="specialPrice" />
+		<result column="bargain_max_times" property="bargainMaxTimes" />
+		<result column="residue_times" property="residueTimes" />
+		<result column="headimgurl" property="headimgurl" />
+		<result column="nickname" property="nickname" />
+		<association property="recordVO" javaType="com.ichecc.vo.HiggleRecordVO" column="{tiId=tiId,userId=userId}" select="select_higgle_record" />
+	</resultMap>
+	<resultMap type="com.ichecc.vo.HiggleRecordVO" id="HiggleRecordResultMap">
+		<result column="countSelf" property="bargainCountSelf" />
+		<result column="countOther" property="bargainCountOther" />
+		<collection property="records" ofType="com.ichecc.vo.HiggleListVO" column="{tiId=tiId,userId=userId}" select="select_bargain_records">
+				<!--  使用select的时候,result 列映射到属性将无效    -->
+<!-- 			<result column="headimgurl" property="headimgurl"/> -->
+<!-- 			<result column="nickname" property="nickname"/> -->
+<!-- 			<result column="bargain_amount" property="bargainAmount"/> -->
+<!-- 			<result column="bargain_type" property="bargainType"/> -->
+<!-- 			<result column="create_time" property="bargainTime"/> -->
+		</collection>
+	</resultMap>
+
+	<select id="MybatisTopicItemDAO_participation_higgle" parameterType="map" resultMap="ParticipationHiggleResultMap">
+		SELECT 
+			ti.id tiId, ti.item_title, ti.sub_title, ti.market_price, ti.guide_price, ti.special_price,
+			ti.bargain_max_times, ti.residue_times,
+			t.end_time,
+			wu.nickname, wu.headimgurl, iu.id userId
+		FROM topic_item ti
+		LEFT JOIN topic t ON t.id = ti.topic_id
+		LEFT JOIN item_picture ipic ON ipic.item_id = ti.item_id AND ipic.`type` = '01' AND ipic.`status` = 1 
+		LEFT JOIN ichecc_user iu ON iu.id = #{userId}
+		LEFT JOIN wechat_user wu ON wu.openid = iu.openid
+		WHERE 
+			ti.id = #{tiId}
+	</select>
+	
+	<select id="select_higgle_record" parameterType="map" resultMap="HiggleRecordResultMap">
+		SELECT COUNT(c1) countSelf, COUNT(c2) countOther, #{tiId} tiId, #{userId} userId
+		FROM
+		(
+			SELECT 
+				CASE WHEN br.bargain_type = '01' THEN 'c1' END c1, 
+				CASE WHEN br.bargain_type = '02' THEN 'c2' END c2,
+				br.bargain_type bt
+			FROM 
+				bargain_record br
+			WHERE 
+				br.topic_item_id = #{tiId} and br.user_id = #{userId}
+		) t
+	</select>
+	
+	<select id="select_bargain_records" parameterType="map" resultType="com.ichecc.vo.HiggleListVO">
+		SELECT
+			br.topic_item_id tiId, br.user_id userId, br.bargain_amount bargainAmount, 
+			br.bargain_type bargainType, br.wechat_user_id wechatUserId, br.create_time bargainTime,
+			wu.nickname, wu.headimgurl
+		FROM bargain_record br
+		LEFT JOIN ichecc_user iu ON iu.id = br.user_id
+		LEFT JOIN wechat_user wu ON wu.openid = iu.openid
+		WHERE 
+			br.topic_item_id = #{tiId} and br.user_id = #{userId}
+	</select>
+	
+	<!-- 参与砍价详情页数据获取sql 结束-->
+
+</mapper>

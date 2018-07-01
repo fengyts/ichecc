@@ -7,13 +7,12 @@ import java.util.Date;
 /**
  * 专题商品
  * 
- * @author fengyts Mon Jun 04 14:08:04 CST 2018
+ * @author fengyts Sun Jul 01 09:46:46 CST 2018
  */
 
 public class TopicItemDO extends BaseDO {
 
-	/**  */
-	private static final long serialVersionUID = -7628768386474916535L;
+	private static final long serialVersionUID = -5891536714101206307L;
 
 	/** 主键 */
 	private Long id;
@@ -44,6 +43,9 @@ public class TopicItemDO extends BaseDO {
 
 	/** 砍价剩余次数 */
 	private Integer residueTimes;
+
+	/** 默认已参与人数 */
+	private Integer participationNum;
 
 	/** 专题商品在专题排序值 */
 	private Integer sort;
@@ -154,6 +156,15 @@ public class TopicItemDO extends BaseDO {
 	 */
 	public void setResidueTimes(Integer residueTimes) {
 		this.residueTimes = residueTimes;
+	}
+
+	/**
+	 * 设置 默认已参与人数
+	 * 
+	 * @param participationNum
+	 */
+	public void setParticipationNum(Integer participationNum) {
+		this.participationNum = participationNum;
 	}
 
 	/**
@@ -307,6 +318,15 @@ public class TopicItemDO extends BaseDO {
 	 */
 	public Integer getResidueTimes() {
 		return residueTimes;
+	}
+
+	/**
+	 * 获取 默认已参与人数
+	 * 
+	 * @return participationNum
+	 */
+	public Integer getParticipationNum() {
+		return participationNum;
 	}
 
 	/**

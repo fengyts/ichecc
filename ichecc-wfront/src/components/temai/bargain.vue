@@ -111,7 +111,6 @@
           </div>
         </div>
 
-        
         <div class="kanjia_bottom_list_content">
           <div class="kanjia_bottom_list_userlogo">
             <img src="../../assets/images/img/car_01.jpg" class="logo" alt="">
@@ -125,7 +124,6 @@
           </div>
         </div>
 
-        
         <div class="kanjia_bottom_list_content">
           <div class="kanjia_bottom_list_userlogo">
             <img src="../../assets/images/img/car_01.jpg" class="logo" alt="">
@@ -139,8 +137,6 @@
           </div>
         </div>
 
-
-        
         <div class="kanjia_bottom_list_content">
           <div class="kanjia_bottom_list_userlogo">
             <img src="../../assets/images/img/car_01.jpg" class="logo" alt="">
@@ -154,8 +150,6 @@
           </div>
         </div>
 
-
-        
         <div class="kanjia_bottom_list_content">
           <div class="kanjia_bottom_list_userlogo">
             <img src="../../assets/images/img/car_01.jpg" class="logo" alt="">
@@ -170,7 +164,7 @@
         </div>
 
       </div>
-         
+
       <div class="tips">
         <p>- 没有更多了 - </p>
       </div>
@@ -185,7 +179,8 @@ export default {
 
     }
   },
-  components: {
+  created() {
+    // this.$http.get("")
   },
   methods: {
     bargain() {
@@ -207,9 +202,9 @@ export default {
       $(document).on("click", "#guize", function () {
         $.alert({
           title: '砍价规则说明',
-          text: '1、在限砍次数内以及时间结束之前，最先将价格砍至特卖价的那位用户为砍价成功，此时砍价宣布结束，其余用户均砍价失败；'+
-          '2、每次砍价，能砍掉的金额均为随机，能否砍价成功，全看用户的运气；'+'3、用户可以自己砍价，或者邀请好友帮忙砍价，在规定时间内，砍价次数越多，砍价成功的概率越高；'+
-          '4、砍价记录可在个人中心里查看，如果砍价成功，我们会尽快安排你到店购车。',
+          text: '1、在限砍次数内以及时间结束之前，最先将价格砍至特卖价的那位用户为砍价成功，此时砍价宣布结束，其余用户均砍价失败；' +
+            '2、每次砍价，能砍掉的金额均为随机，能否砍价成功，全看用户的运气；' + '3、用户可以自己砍价，或者邀请好友帮忙砍价，在规定时间内，砍价次数越多，砍价成功的概率越高；' +
+            '4、砍价记录可在个人中心里查看，如果砍价成功，我们会尽快安排你到店购车。',
           onOK: function () {
             //点击确认
           }

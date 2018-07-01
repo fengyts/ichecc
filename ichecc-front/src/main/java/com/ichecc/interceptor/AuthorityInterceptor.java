@@ -13,6 +13,14 @@ import com.ichecc.annotation.Authority;
 import com.ichecc.common.ResultCode;
 import com.ichecc.common.ResultData;
 
+/**
+ * <pre>
+ * 需要授权拦截器, 使用了@Authority注解的Controller都需要经过此拦截器验证
+ * </pre>
+ *
+ * @author fengyts
+ * @version $Id: AuthorityInterceptor.java, v 0.1 2018年7月1日 上午12:07:44 fengyts Exp $
+ */
 public class AuthorityInterceptor extends HandlerInterceptorAdapter {
 
 	private static final Logger logger = LoggerFactory.getLogger(AuthorityInterceptor.class);

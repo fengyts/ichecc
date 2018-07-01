@@ -67,8 +67,9 @@
 
 	<!-- mybatis 创建SqlSessionFactory，同时指定数据源 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="configLocation" value="classpath:mybatis-sqlmap-config.xml" />
+<!-- 		<property name="configLocation" value="classpath:mybatis-sqlmap-config.xml" /> -->
 		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath*:sqlmap/**/*.xml" />
 	</bean>
 
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate"

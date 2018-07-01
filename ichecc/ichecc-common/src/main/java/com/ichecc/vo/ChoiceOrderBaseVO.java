@@ -2,6 +2,14 @@ package com.ichecc.vo;
 
 import java.util.Date;
 
+/**
+ * <pre>
+ * 选车记录前端列表页vo
+ * </pre>
+ *
+ * @author fengyts
+ * @version $Id: ChoiceOrderBaseVO.java, v 0.1 2018年7月1日 上午12:13:09 fengyts Exp $
+ */
 public class ChoiceOrderBaseVO extends BaseVO {
 
 	private static final long serialVersionUID = -7771931934584670848L;

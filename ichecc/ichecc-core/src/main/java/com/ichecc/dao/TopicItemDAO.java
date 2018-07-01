@@ -5,6 +5,7 @@ import java.util.List;
 import com.ichecc.domain.TopicItemDO;
 import com.ichecc.dto.TopicItemDetailDTO;
 import com.ichecc.front.dto.FrontTopicItemDTO;
+import com.ichecc.vo.HiggleJoinVO;
 
 import ng.bayue.service.common.GeneralDAO;
 
@@ -39,5 +40,7 @@ public interface TopicItemDAO extends GeneralDAO<TopicItemDO> {
 	 * @return
 	 */
 	TopicItemDetailDTO topicItemDetail(Long tiId);
+	
+	HiggleJoinVO participationHiggle(Long userId, Long tiId);
 
 }
