@@ -32,4 +32,11 @@ public interface IcheccConstantsService extends GeneralService<IcheccConstantsDO
 	 */
 	int deleteByPrimaryKey(String primaryKey);
 	
+	/**
+	 * 根据key值获取value
+	 * @param key
+	 * @return
+	 */
+	String getValueByKey(String key);
+	
 }

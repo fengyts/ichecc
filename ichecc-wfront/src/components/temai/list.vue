@@ -67,10 +67,6 @@ export default {
       }
     });
   },
-  methods: {},
-  components: {
-    detail
-  },
   destroyed() {
     //全部清除方法
     let that = this;

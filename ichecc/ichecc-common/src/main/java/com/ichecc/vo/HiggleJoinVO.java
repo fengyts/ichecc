@@ -51,6 +51,9 @@ public class HiggleJoinVO extends BaseVO {
 
 	/** 砍价记录 */
 	private HiggleRecordVO recordVO;
+	
+	/** 倒计时时间 */
+	private Long countDownTime;
 
 	public Long getTiId() {
 		return tiId;
@@ -187,5 +190,14 @@ public class HiggleJoinVO extends BaseVO {
 	public void setRecordVO(HiggleRecordVO recordVO) {
 		this.recordVO = recordVO;
 	}
+
+	public Long getCountDownTime() {
+		return countDownTime;
+	}
+
+	public void setCountDownTime(Long countDownTime) {
+		this.countDownTime = countDownTime;
+	}
+	
 
 }

@@ -1,7 +1,7 @@
 <!--  -->
 <template>
-  <div class="temai-detail-wrapper" ref="detailWrapper">
-    <div class="temai-detail" v-if="resData.detail != undefined">
+  <div class="temai-detail-wrapper" ref="detailWrapper" v-if="resData.detail != undefined">
+    <div class="temai-detail">
       <div class="tmxq_top">
         <!--车辆图片-->
         <div class="tmxq_img">
@@ -61,7 +61,7 @@
       <!-- query只能用path来引入，params只能用name来引入，
         接收参数都是类似的，分别是this.$route.query.name和this.$route.params.name
         注意接收参数的时候，已经是$route而不是$router -->
-      <router-link :to="{name:'carDescribe', params:{itemId : resData.detail.itemId}}">
+      <router-link :to="{name:'carDescribe', params:{'itemId': resData.detail.itemId}}">
         <div class="tmxq_jieshao">
           <p class="jieshao">查看车型介绍</p>
         </div>
@@ -75,7 +75,7 @@
 
     <!--立即参与按钮-->
     <div class="canyu">
-      <router-link :to="{path:'/bargain'}">
+      <router-link :to="{path:'/bargain/' + resData.detail.tiId}">
         <button class="button_canyu">立即参与</button>
       </router-link>
     </div>
@@ -94,23 +94,21 @@ export default {
   },
   created() {
     let _that = this;
-    this.$http
-      .get("/api/topicItem/itemDetail/" + this.$route.params.tiId)
-      .then(response => {
-        let result = response;
-        if (this.$resp_code === result.code) {
-          this.resData = result.data;
-          this.$nextTick(() => {
-            this._initScroll();
-            this.countdown(result.data.countDownTime / 1000);
-          });
-        }
-      });
+    this.$http.get("/api/topicItem/itemDetail/" + this.$route.params.tiId).then(response => {
+      let result = response;
+      if (this.$resp_code === result.code) {
+        this.resData = result.data;
+        this.$nextTick(() => {
+          this._initScroll();
+          this.countdown(result.data.countDownTime / 1000);
+        });
+      }
+    });
   },
   methods: {
     countdown(mss) {
       var _that = this;
-      var itv = setInterval(function() {
+      var itv = setInterval(function () {
         var ctr = _that.fmtTime(mss);
         document.getElementById("time-countdown-wrapper").innerHTML = ctr;
         if (!mss--) {

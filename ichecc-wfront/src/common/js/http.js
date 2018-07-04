@@ -5,12 +5,14 @@ import axios from 'axios'
 axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? process.env.BASE_API_URL : ''
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'; // 此处必须制定charset否则中文会乱码
 
+// 使用拦截器后权限验证会出错
 // axios.interceptors.request.use(
 //   config => {
 //     // if (store.state.token) { // 判断是否存在token，如果存在的话，则每个http header都加上token
 //     // config.headers.Authorization = "";
 //     // }
-//     config.headers.Authorization = "testAuth12345678"; // java后台获取：HttpServletRequest req: req.getHeader("Authorization");
+//     // config.headers.Authorization = "testAuth12345678"; // java后台获取：HttpServletRequest req: req.getHeader("Authorization");
+//     config.headers.userId = getUserInfo();
 //     return config;
 //   },
 //   err => {
@@ -20,9 +22,6 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 
 var getUserInfo = function () {
   let _user = JSON.parse(window.localStorage._icheccwf_)["icheccuser"];
-  // if(_user){
-  //   return _user.id;
-  // }
   return _user ? _user.id : "";
 }
 
@@ -51,21 +50,17 @@ var httpRequestUtil = {
     })
   },
   get: function (url, data) {
-    if(data) {
-      let params = data.params;
-      if(params){
-        let userId = params.userId;
-        if(!userId){
-          params.userId = getUserInfo();
-        }
-      } else {
-        params = {'userId': getUserInfo()}
-      }
+    let _data = {};
+    if(data){
+      let params = data;
+      params.userId = getUserInfo();
+      _data.params = data;
     } else {
-      data = {'params':  {'userId': getUserInfo()}}
+      _data = {'params': {'userId': getUserInfo()}};
     }
+    
     return new Promise((resolve, reject) => {
-      axios.get(url, data).then(response => {
+      axios.get(url, _data).then(response => {
         resolve(response.data);
       }, err => {
         reject(err);

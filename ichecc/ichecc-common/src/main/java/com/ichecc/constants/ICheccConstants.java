@@ -20,5 +20,8 @@ public interface ICheccConstants {
 	/** VIP会员注意事项  */
 	String VIP_NOTICE = "vip_notice";
 	
+	/** 砍价规则说明 */
+	String BARGAIN_RULES = "bargain_rules";
+	
 
 }

@@ -37,7 +37,7 @@
 		SELECT 
 			ti.id tiId, ti.item_title, ti.sub_title, ti.market_price, ti.guide_price, ti.special_price,
 			ti.bargain_max_times, ti.residue_times,
-			t.end_time,
+			t.end_time, ipic.picture,
 			wu.nickname, wu.headimgurl, iu.id userId
 		FROM topic_item ti
 		LEFT JOIN topic t ON t.id = ti.topic_id

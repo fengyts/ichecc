@@ -8,10 +8,12 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ichecc.constants.ICheccConstants;
 import com.ichecc.dao.TopicItemDAO;
 import com.ichecc.domain.TopicItemDO;
 import com.ichecc.dto.TopicItemDetailDTO;
 import com.ichecc.front.dto.FrontTopicItemDTO;
+import com.ichecc.service.IcheccConstantsService;
 import com.ichecc.service.TopicItemService;
 import com.ichecc.vo.HiggleJoinVO;
 
@@ -26,7 +28,9 @@ public class TopicItemServiceImpl implements TopicItemService {
 
 	@Autowired
 	private TopicItemDAO topicItemDAO;
-
+	@Autowired
+	private IcheccConstantsService constantsService;
+	
 	@Override
 	public Long insert(TopicItemDO topicItemDO) throws CommonServiceException {
 		try {
@@ -151,7 +155,9 @@ public class TopicItemServiceImpl implements TopicItemService {
 		if(null == userId || null == tiId){
 			return null;
 		}
-		return null;
+		HiggleJoinVO vo = topicItemDAO.participationHiggle(userId, tiId);
+		vo.setBargainRules(constantsService.getValueByKey(ICheccConstants.BARGAIN_RULES));
+		return vo;
 	}
 	
 	

@@ -33,6 +33,7 @@ public class AuthorityInterceptor extends HandlerInterceptorAdapter {
 			if (null != method.getMethodAnnotation(Authority.class)
 					|| null != method.getMethod().getDeclaringClass()
 							.getAnnotation(Authority.class)) { // 需要权限验证
+				Object o1 = request.getHeader("userId");
 				Object o = request.getParameter("userId");
 				if(null == o){
 					return error(response); // 授权异常

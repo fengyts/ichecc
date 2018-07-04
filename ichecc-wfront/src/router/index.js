@@ -67,7 +67,7 @@ const router = new Router({
     }, 
     {path: '/detail/:tiId', component: temaiDetail}, 
     {path: '/carDescribe', name: 'carDescribe', component: carDescribe},
-    {path: '/bargain', component: bargain, meta: {requireAuth: true}},
+    {path: '/bargain/:tiId', component: bargain, meta: {requireAuth: true}},
     {path: '/helpBargain', component: helpBargain},
 
     {path: '/vipAdd', component: vipAdd}, 

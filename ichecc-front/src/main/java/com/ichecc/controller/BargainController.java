@@ -7,11 +7,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ichecc.annotation.Authority;
 import com.ichecc.ao.BargainAO;
+import com.ichecc.common.Constants;
 import com.ichecc.common.ResultData;
 import com.ichecc.vo.HiggleJoinVO;
 
 @Controller
-@RequestMapping("/bargain/")
+@RequestMapping(Constants.API_BASE_PATH + "/bargain/")
 public class BargainController {
 	
 	@Autowired

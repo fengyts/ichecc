@@ -12,6 +12,7 @@ import com.ichecc.domain.IcheccConstantsDO;
 import com.ichecc.service.IcheccConstantsService;
 import ng.bayue.exception.CommonDAOException;
 import ng.bayue.exception.CommonServiceException;
+import ng.bayue.util.StringUtils;
 import ng.bayue.common.Page;
 
 @Service(value="icheccConstantsService")
@@ -146,6 +147,21 @@ public class IcheccConstantsServiceImpl  implements IcheccConstantsService{
 		}
 		return new Page<IcheccConstantsDO>();
 	}
+
+
+	@Override
+	public String getValueByKey(String key) {
+		if(StringUtils.isBlank(key)){
+			return null;
+		}
+		try {
+			return icheccConstantsDAO.selectByPrimaryKey(key).getValue();
+		} catch (CommonDAOException e) {
+			logger.error(e);
+            throw new CommonServiceException(e);
+		}
+	}
+	
 	
 	
 }

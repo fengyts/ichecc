@@ -46,6 +46,8 @@ export default {
       };
       this.$http.post("/api/wechat/authorize", data).then(res => {
         let result = res;
+        // console.log(result);
+        // return;
         if (result.code === _that.$resp_code) {
           let user = result.data;
           _that.$localStorage.setLocalStorage("icheccuser", user);
@@ -64,8 +66,8 @@ export default {
   },
   methods: {
     wechatAuth() {
-      // var _authUrl = this.getAuthUrl();
-      var _authUrl = this.getAuthUrl("test");
+      var isTest = process.env === 'production' ? "1" : "0"; // 1:线上；0-开发/测试环境
+      var _authUrl = this.getAuthUrl(isTest);
       location.href = _authUrl;
     },
     getAuthUrl(_envType) {
@@ -79,12 +81,13 @@ export default {
         state = "/";
       }
 
-      //测试环境
-      if (_envType === "test") {
+      //开发/测试环境
+      if (_envType === "0") {
         appid = "wx11b8b11348ff6db3";
         // redirect_uri = encodeURIComponent("http://47.94.199.26/ichecc-front/");
         // redirect_uri = encodeURIComponent("http://192.168.9.108:8080");
-        redirect_uri = encodeURIComponent("http://192.168.0.107:8080");
+        // redirect_uri = encodeURIComponent("http://192.168.0.107:8080");
+        redirect_uri = encodeURIComponent(process.env.BASE_WEB_URL);
       }
       let _authUrl =
         `https://open.weixin.qq.com/connect/oauth2/authorize?` +
@@ -110,8 +113,7 @@ export default {
       }
       return rdParam;
     }
-  },
-  components: {}
+  }
 };
 </script>
 

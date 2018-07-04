@@ -1,53 +1,57 @@
 <!--  -->
 <template>
-  <span id="time-countdown-wrapper">{{fmtTime(surplusTime/1000)}}</span>
+  <span :id="generateId()"></span>
 </template>
 
 <script type="text/javascript">
 export default {
   props: {
+    itemId: {
+      type: Number,
+      default: 10
+    },
     // 毫秒数
     surplusTime: {
-      type: Number
-      // default: 60*1000
+      type: Number,
+      default: 60
     },
   },
   data() {
     return {
-      _mss: 0, // 毫秒数
-      // _timeFlag: false,
+      _mss: this.surplusTime, // 毫秒数
+      _timeFlag: false,
       ctr: "00天00时00分00秒",
-      timer: [],
-      interval: ""
+      timer: []
     };
   },
   created() {
-    this._mss = this.surplusTime / 1000;
-    console.log(this.surplusTime);
-    this.$nextTick(() => {
-      if (this.surplusTime > 0) {
-        var _mss = this._mss;
-        console.log(_mss);
-        this.countdown(_mss);
-      } else {
-        document.getElementById("time-countdown-wrapper").innerHTML = "00天00时00分00秒";
+    this.$http.get("/api/topicItem/countdownTime").then(response => {
+      var result = response.data;
+      if (result.code === this.$error_code) {
+        this._mss = result.data / 1000;
+        this.$nextTick(() => {
+          this.countdown(this._mss); //结束时间到开始时间的时间差，单位秒
+        });
       }
     });
   },
   methods: {
+    generateId() {
+      return "time-countdown-wrapper_" + this.itemId;
+    },
     countdown(mss) {
       var _that = this;
-      var itv = setInterval(function () {
+      let interval = setInterval(function() {
         var ctr = _that.fmtTime(mss);
-        document.getElementById("time-countdown-wrapper").innerHTML = ctr;
+        this.ctr = ctr;
+        document.getElementById(_that.generateId()).innerHTML = ctr;
         if (!mss--) {
-          clearInterval(itv);
+          clearInterval(interval);
         }
       }, 1000);
-      this.interval = itv;
+      this.timer.push(interval);
     },
-    // fmt: 1-时分秒格式,eg:01天10时11分31秒，默认格式，可缺省；0-冒号格式：10:11:31
-    fmtTime(mss, fmt) {
+    fmtTime(mss) {
       var ss = 1,
         mi = ss * 60,
         hh = mi * 60,
@@ -81,11 +85,10 @@ export default {
   },
   destroyed() {
     //全部清除方法
-    // let that = this;
-    // for (let i in this.timer) {
-    //   clearInterval(that.timer[i]);
-    // }
-    clearInterval(this.interval);
+    let that = this;
+    for (let i in this.timer) {
+      clearInterval(that.timer[i]);
+    }
   }
 };
 </script>
