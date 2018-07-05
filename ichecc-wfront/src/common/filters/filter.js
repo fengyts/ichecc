@@ -2,8 +2,11 @@ import {fmtDate} from '../js/date';
 
 const filters = {
   formatDate: function (datetime, fmt) {
-    var date = new Date(datetime);
-    return fmtDate(date, fmt); // M.dd
+    if(datetime) {
+      var date = new Date(datetime);
+      return fmtDate(date, fmt); // M.dd
+    }
+    return '';
   },
   /**
    * type: 1-万元(默认为万元,若为万元，此参数可不传)；0-元

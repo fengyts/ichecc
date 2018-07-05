@@ -19,8 +19,17 @@ public class HiggleJoinVO extends BaseVO {
 	private Long tiId;
 	/** 专题结束时间 */
 	private Date endTime;
-	/** 专题状态，根据专题时间来判断 */
+	/** 专题状态 */
 	private String status;
+	/**
+	 * 专题商品砍价进度，"01"-正在砍价中；"02"-已有人砍价成功；"03"-无人砍价成功，时间到期，已结束状态,参考
+	 * <link>TopicItemProgressEnum</link> 规则： 首先根据专题商品是否砍价成功来判断： 1.若成功则为结束状态，
+	 * 2.没人砍价成功则根据专题的结束时间来判断
+	 */
+	private String progress;
+
+	/** 专题商品是否有人砍价成功 */
+	private Boolean isSuccess;
 
 	private String picture;
 	/** 商品名称 */
@@ -30,6 +39,8 @@ public class HiggleJoinVO extends BaseVO {
 	private Double marketPrice;
 	private Double guidePrice;
 	private Double specialPrice;
+	/** 允许砍价金额 */
+	private Double bargainAmount;
 
 	/** 砍价最大次数 */
 	private Integer bargainMaxTimes;
@@ -51,7 +62,7 @@ public class HiggleJoinVO extends BaseVO {
 
 	/** 砍价记录 */
 	private HiggleRecordVO recordVO;
-	
+
 	/** 倒计时时间 */
 	private Long countDownTime;
 
@@ -77,6 +88,22 @@ public class HiggleJoinVO extends BaseVO {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getProgress() {
+		return progress;
+	}
+
+	public void setProgress(String progress) {
+		this.progress = progress;
+	}
+
+	public Boolean getIsSuccess() {
+		return isSuccess;
+	}
+
+	public void setIsSuccess(Boolean isSuccess) {
+		this.isSuccess = isSuccess;
 	}
 
 	public String getPicture() {
@@ -125,6 +152,14 @@ public class HiggleJoinVO extends BaseVO {
 
 	public void setSpecialPrice(Double specialPrice) {
 		this.specialPrice = specialPrice;
+	}
+
+	public Double getBargainAmount() {
+		return bargainAmount;
+	}
+
+	public void setBargainAmount(Double bargainAmount) {
+		this.bargainAmount = bargainAmount;
 	}
 
 	public Integer getBargainMaxTimes() {
@@ -198,6 +233,5 @@ public class HiggleJoinVO extends BaseVO {
 	public void setCountDownTime(Long countDownTime) {
 		this.countDownTime = countDownTime;
 	}
-	
 
 }

@@ -1,17 +1,23 @@
 package com.ichecc.service.impl;
 
+import java.math.BigDecimal;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ichecc.constants.ICheccConstants;
+import com.ichecc.dao.BargainRecordDAO;
 import com.ichecc.dao.TopicItemDAO;
+import com.ichecc.domain.BargainRecordDO;
 import com.ichecc.domain.TopicItemDO;
 import com.ichecc.dto.TopicItemDetailDTO;
+import com.ichecc.enums.TopicItemProgressEnum;
 import com.ichecc.front.dto.FrontTopicItemDTO;
 import com.ichecc.service.IcheccConstantsService;
 import com.ichecc.service.TopicItemService;
@@ -30,7 +36,9 @@ public class TopicItemServiceImpl implements TopicItemService {
 	private TopicItemDAO topicItemDAO;
 	@Autowired
 	private IcheccConstantsService constantsService;
-	
+	@Autowired
+	private BargainRecordDAO bargainRecordDAO;
+
 	@Override
 	public Long insert(TopicItemDO topicItemDO) throws CommonServiceException {
 		try {
@@ -144,7 +152,7 @@ public class TopicItemServiceImpl implements TopicItemService {
 
 	@Override
 	public TopicItemDetailDTO topicItemDetail(Long tiId) {
-		if(null == tiId || tiId < 0){
+		if (null == tiId || tiId < 0) {
 			return null;
 		}
 		return topicItemDAO.topicItemDetail(tiId);
@@ -152,14 +160,53 @@ public class TopicItemServiceImpl implements TopicItemService {
 
 	@Override
 	public HiggleJoinVO participationHiggle(Long userId, Long tiId) {
-		if(null == userId || null == tiId){
-			return null;
+		try {
+			if (null == userId || null == tiId) {
+				return null;
+			}
+			HiggleJoinVO vo = topicItemDAO.participationHiggle(userId, tiId);
+			vo.setBargainRules(constantsService.getValueByKey(ICheccConstants.BARGAIN_RULES));
+
+			BargainRecordDO brDO = new BargainRecordDO();
+			brDO.setTopicItemId(tiId);
+			brDO.setUserId(userId);
+			List<BargainRecordDO> brList = bargainRecordDAO.selectDynamic(brDO);
+			Integer hasBargainTimes = 0;
+			Double alreadyBargainAmt = 0d;
+			if(CollectionUtils.isNotEmpty(brList)){
+				hasBargainTimes = brList.size();
+				for(BargainRecordDO r : brList){
+					alreadyBargainAmt += r.getBargainAmount();
+				}
+			}
+			vo.setAlreadyBargainAmt(new BigDecimal(alreadyBargainAmt));
+			vo.setShortBargainAmt(new BigDecimal(vo.getBargainAmount() - alreadyBargainAmt));
+			vo.setResidueTimes(vo.getBargainMaxTimes() - hasBargainTimes);
+
+			long countDownTime = 0;
+			String progress = TopicItemProgressEnum.End.code;
+			Date now = new Date();
+			if (null != vo) {
+				if (vo.getIsSuccess()) { // 已经有人砍价成功
+					progress = TopicItemProgressEnum.Bargain_Success.code;
+				} else {
+					if (vo.getEndTime().after(now)) { // 未砍价成功, 未到期
+						progress = TopicItemProgressEnum.InProgress.code;
+						countDownTime = vo.getEndTime().getTime() - now.getTime();
+					} else { // 时间已到期, 已结束
+						progress = TopicItemProgressEnum.End.code;
+					}
+				}
+			}
+			vo.setProgress(progress);
+			vo.setCountDownTime(countDownTime);
+
+			return vo;
+
+		} catch (CommonDAOException e) {
+			logger.error(e);
+			throw new CommonServiceException(e);
 		}
-		HiggleJoinVO vo = topicItemDAO.participationHiggle(userId, tiId);
-		vo.setBargainRules(constantsService.getValueByKey(ICheccConstants.BARGAIN_RULES));
-		return vo;
 	}
-	
-	
 
 }

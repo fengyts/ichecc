@@ -10,6 +10,4 @@ import com.ichecc.domain.BargainRecordDO;
  */
 public interface BargainRecordService extends GeneralService<BargainRecordDO, BargainRecordDO> {
 	
-	
-	
 }

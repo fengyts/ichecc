@@ -7,28 +7,21 @@ import java.util.Date;
 /**
  * 常量
  * 
- * @author fengyts Wed May 09 09:29:18 CST 2018
+ * @author fengyts Thu Jul 05 13:39:38 CST 2018
  */
 
 public class IcheccConstantsDO extends BaseDO {
 
-	/**  */
-	private static final long serialVersionUID = 213717979762279624L;
+	private static final long serialVersionUID = -1127925339688653875L;
 
 	/** 主键 */
-	private String key;
+	private String constKey;
 
 	/** 常量值 */
-	private String value;
+	private String constValue;
 
 	/** 常量说明 */
-	private String desc;
-
-	/** 添加人 */
-	private Long createUserId;
-
-	/** 添加时间 */
-	private Date createTime;
+	private String description;
 
 	/** 修改人 */
 	private Long modifyUserId;
@@ -39,46 +32,28 @@ public class IcheccConstantsDO extends BaseDO {
 	/**
 	 * 设置 主键
 	 * 
-	 * @param key
+	 * @param constKey
 	 */
-	public void setKey(String key) {
-		this.key = key;
+	public void setConstKey(String constKey) {
+		this.constKey = constKey;
 	}
 
 	/**
 	 * 设置 常量值
 	 * 
-	 * @param value
+	 * @param constValue
 	 */
-	public void setValue(String value) {
-		this.value = value;
+	public void setConstValue(String constValue) {
+		this.constValue = constValue;
 	}
 
 	/**
 	 * 设置 常量说明
 	 * 
-	 * @param desc
+	 * @param description
 	 */
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
-
-	/**
-	 * 设置 添加人
-	 * 
-	 * @param createUserId
-	 */
-	public void setCreateUserId(Long createUserId) {
-		this.createUserId = createUserId;
-	}
-
-	/**
-	 * 设置 添加时间
-	 * 
-	 * @param createTime
-	 */
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	/**
@@ -102,46 +77,28 @@ public class IcheccConstantsDO extends BaseDO {
 	/**
 	 * 获取 主键
 	 * 
-	 * @return key
+	 * @return constKey
 	 */
-	public String getKey() {
-		return key;
+	public String getConstKey() {
+		return constKey;
 	}
 
 	/**
 	 * 获取 常量值
 	 * 
-	 * @return value
+	 * @return constValue
 	 */
-	public String getValue() {
-		return value;
+	public String getConstValue() {
+		return constValue;
 	}
 
 	/**
 	 * 获取 常量说明
 	 * 
-	 * @return desc
+	 * @return description
 	 */
-	public String getDesc() {
-		return desc;
-	}
-
-	/**
-	 * 获取 添加人
-	 * 
-	 * @return createUserId
-	 */
-	public Long getCreateUserId() {
-		return createUserId;
-	}
-
-	/**
-	 * 获取 添加时间
-	 * 
-	 * @return createTime
-	 */
-	public Date getCreateTime() {
-		return createTime;
+	public String getDescription() {
+		return description;
 	}
 
 	/**

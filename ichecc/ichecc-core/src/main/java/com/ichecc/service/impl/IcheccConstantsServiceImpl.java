@@ -155,7 +155,7 @@ public class IcheccConstantsServiceImpl  implements IcheccConstantsService{
 			return null;
 		}
 		try {
-			return icheccConstantsDAO.selectByPrimaryKey(key).getValue();
+			return icheccConstantsDAO.selectByPrimaryKey(key).getConstValue();
 		} catch (CommonDAOException e) {
 			logger.error(e);
             throw new CommonServiceException(e);

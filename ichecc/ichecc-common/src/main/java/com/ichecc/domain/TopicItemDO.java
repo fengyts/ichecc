@@ -7,12 +7,12 @@ import java.util.Date;
 /**
  * 专题商品
  * 
- * @author fengyts Sun Jul 01 09:46:46 CST 2018
+ * @author fengyts Thu Jul 05 10:34:39 CST 2018
  */
 
 public class TopicItemDO extends BaseDO {
 
-	private static final long serialVersionUID = -5891536714101206307L;
+	private static final long serialVersionUID = 1793379954188082277L;
 
 	/** 主键 */
 	private Long id;
@@ -38,11 +38,11 @@ public class TopicItemDO extends BaseDO {
 	/** 特卖价 */
 	private Double specialPrice;
 
+	/** 允许砍价金额，该值<=指导价减去特卖价 */
+	private Double bargainAmount;
+
 	/** 砍价最大次数 */
 	private Integer bargainMaxTimes;
-
-	/** 砍价剩余次数 */
-	private Integer residueTimes;
 
 	/** 默认已参与人数 */
 	private Integer participationNum;
@@ -55,6 +55,9 @@ public class TopicItemDO extends BaseDO {
 
 	/** 特卖描述,关联商品属性表id,多个属性用逗号分隔 */
 	private String attributes;
+
+	/** 是否有人砍价成功：1-是；0-否 */
+	private Boolean isSuccess;
 
 	/** 创建人 */
 	private Long createUserId;
@@ -141,21 +144,21 @@ public class TopicItemDO extends BaseDO {
 	}
 
 	/**
+	 * 设置 允许砍价金额，该值<=指导价减去特卖价
+	 * 
+	 * @param bargainAmount
+	 */
+	public void setBargainAmount(Double bargainAmount) {
+		this.bargainAmount = bargainAmount;
+	}
+
+	/**
 	 * 设置 砍价最大次数
 	 * 
 	 * @param bargainMaxTimes
 	 */
 	public void setBargainMaxTimes(Integer bargainMaxTimes) {
 		this.bargainMaxTimes = bargainMaxTimes;
-	}
-
-	/**
-	 * 设置 砍价剩余次数
-	 * 
-	 * @param residueTimes
-	 */
-	public void setResidueTimes(Integer residueTimes) {
-		this.residueTimes = residueTimes;
 	}
 
 	/**
@@ -192,6 +195,15 @@ public class TopicItemDO extends BaseDO {
 	 */
 	public void setAttributes(String attributes) {
 		this.attributes = attributes;
+	}
+
+	/**
+	 * 设置 是否有人砍价成功：1-是；0-否
+	 * 
+	 * @param isSuccess
+	 */
+	public void setIsSuccess(Boolean isSuccess) {
+		this.isSuccess = isSuccess;
 	}
 
 	/**
@@ -303,21 +315,21 @@ public class TopicItemDO extends BaseDO {
 	}
 
 	/**
+	 * 获取 允许砍价金额，该值<=指导价减去特卖价
+	 * 
+	 * @return bargainAmount
+	 */
+	public Double getBargainAmount() {
+		return bargainAmount;
+	}
+
+	/**
 	 * 获取 砍价最大次数
 	 * 
 	 * @return bargainMaxTimes
 	 */
 	public Integer getBargainMaxTimes() {
 		return bargainMaxTimes;
-	}
-
-	/**
-	 * 获取 砍价剩余次数
-	 * 
-	 * @return residueTimes
-	 */
-	public Integer getResidueTimes() {
-		return residueTimes;
 	}
 
 	/**
@@ -354,6 +366,15 @@ public class TopicItemDO extends BaseDO {
 	 */
 	public String getAttributes() {
 		return attributes;
+	}
+
+	/**
+	 * 获取 是否有人砍价成功：1-是；0-否
+	 * 
+	 * @return isSuccess
+	 */
+	public Boolean getIsSuccess() {
+		return isSuccess;
 	}
 
 	/**

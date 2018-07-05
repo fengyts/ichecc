@@ -20,7 +20,7 @@ public class MybatisIcheccConstantsDAO extends MybatisBaseDAO implements IcheccC
 	public Long insert(IcheccConstantsDO icheccConstantsDO) throws CommonDAOException {
 		int i = getSqlSession().insert(getStatement("insert"), icheccConstantsDO);
 		if (i > 0) {
-			return Long.valueOf(icheccConstantsDO.getKey());
+			return Long.valueOf(icheccConstantsDO.getConstKey());
 		}
 		return 0L;
 	}

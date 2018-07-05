@@ -8,14 +8,15 @@
 		<id column="tiId" property="tiId" />
 		<result column="end_time" property="endTime" />
 		<result column="status" property="status" />
+		<result column="is_success" property="isSuccess" />
 		<result column="picture" property="picture" />
 		<result column="item_title" property="itemTitle" />
 		<result column="sub_title" property="subTitle" />
 		<result column="market_price" property="marketPrice" />
 		<result column="guide_price" property="guidePrice" />
 		<result column="special_price" property="specialPrice" />
+		<result column="bargain_amount" property="bargainAmount" />
 		<result column="bargain_max_times" property="bargainMaxTimes" />
-		<result column="residue_times" property="residueTimes" />
 		<result column="headimgurl" property="headimgurl" />
 		<result column="nickname" property="nickname" />
 		<association property="recordVO" javaType="com.ichecc.vo.HiggleRecordVO" column="{tiId=tiId,userId=userId}" select="select_higgle_record" />
@@ -36,7 +37,7 @@
 	<select id="MybatisTopicItemDAO_participation_higgle" parameterType="map" resultMap="ParticipationHiggleResultMap">
 		SELECT 
 			ti.id tiId, ti.item_title, ti.sub_title, ti.market_price, ti.guide_price, ti.special_price,
-			ti.bargain_max_times, ti.residue_times,
+			ti.bargain_max_times, ti.is_success, ti.bargain_amount,
 			t.end_time, ipic.picture,
 			wu.nickname, wu.headimgurl, iu.id userId
 		FROM topic_item ti

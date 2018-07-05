@@ -12,12 +12,13 @@
         <result column="market_price" property="marketPrice"/>
         <result column="guide_price" property="guidePrice"/>
         <result column="special_price" property="specialPrice"/>
+        <result column="bargain_amount" property="bargainAmount"/>
         <result column="bargain_max_times" property="bargainMaxTimes"/>
-        <result column="residue_times" property="residueTimes"/>
         <result column="participation_num" property="participationNum"/>
         <result column="sort" property="sort"/>
         <result column="status" property="status"/>
         <result column="attributes" property="attributes"/>
+        <result column="is_success" property="isSuccess"/>
         <result column="create_user_id" property="createUserId"/>
         <result column="create_time" property="createTime"/>
         <result column="modify_user_id" property="modifyUserId"/>
@@ -25,7 +26,7 @@
 	</resultMap>
 
 	<sql id="MybatisTopicItemDAO_all_column_fields">
-	      id,topic_id,item_id,item_title,sub_title,market_price,guide_price,special_price,bargain_max_times,residue_times,participation_num,sort,status,attributes,create_user_id,create_time,modify_user_id,modify_time
+	      id,topic_id,item_id,item_title,sub_title,market_price,guide_price,special_price,bargain_amount,bargain_max_times,participation_num,sort,status,attributes,is_success,create_user_id,create_time,modify_user_id,modify_time
  	</sql>
 	<!-- 只有varchar char text类型 做 !='' 判断，生成代码时,其他类型时只做!=null 决断 0或fasle与空''是相同的，在mybatis中的动态语句中 -->
 	<sql id="MybatisTopicItemDAO_dynamic_where_fields"><!-- xml转义字符需要 <![CDATA[   ]]> 标签-->
@@ -37,12 +38,13 @@
 			<if test="marketPrice != null "> AND market_price=#{marketPrice} </if>
 			<if test="guidePrice != null "> AND guide_price=#{guidePrice} </if>
 			<if test="specialPrice != null "> AND special_price=#{specialPrice} </if>
+			<if test="bargainAmount != null "> AND bargain_amount=#{bargainAmount} </if>
 			<if test="bargainMaxTimes != null "> AND bargain_max_times=#{bargainMaxTimes} </if>
-			<if test="residueTimes != null "> AND residue_times=#{residueTimes} </if>
 			<if test="participationNum != null "> AND participation_num=#{participationNum} </if>
 			<if test="sort != null "> AND sort=#{sort} </if>
 			<if test="status != null "> AND status=#{status} </if>
 			<if test="attributes != null  and attributes != '' "> AND attributes=#{attributes} </if>
+			<if test="isSuccess != null "> AND is_success=#{isSuccess} </if>
 			<if test="createUserId != null "> AND create_user_id=#{createUserId} </if>
 			<if test="modifyUserId != null "> AND modify_user_id=#{modifyUserId} </if>
 		</where>
@@ -72,12 +74,13 @@
 				market_price,
 				guide_price,
 				special_price,
+				bargain_amount,
 				bargain_max_times,
-				residue_times,
 				participation_num,
 				sort,
 				status,
 				attributes,
+				is_success,
 				create_user_id,
 				create_time,
 				modify_user_id,
@@ -91,12 +94,13 @@
 				#{marketPrice},
 				#{guidePrice},
 				#{specialPrice},
+				#{bargainAmount},
 				#{bargainMaxTimes},
-				#{residueTimes},
 				#{participationNum},
 				#{sort},
 				#{status},
 				#{attributes},
+				#{isSuccess},
 				#{createUserId},
 				#{createTime},
 				#{modifyUserId},
@@ -115,12 +119,13 @@
 			market_price = #{marketPrice},
 			guide_price = #{guidePrice},
 			special_price = #{specialPrice},
+			bargain_amount = #{bargainAmount},
 			bargain_max_times = #{bargainMaxTimes},
-			residue_times = #{residueTimes},
 			participation_num = #{participationNum},
 			sort = #{sort},
 			status = #{status},
 			attributes = #{attributes},
+			is_success = #{isSuccess},
 			create_user_id = #{createUserId},
 			modify_user_id = #{modifyUserId},
 			modify_time = #{modifyTime}
@@ -131,8 +136,7 @@
 	<delete id="MybatisTopicItemDAO_deleteById" parameterType="long">
 		DELETE FROM topic_item WHERE id = #{id}
 	</delete>
-	
-	
+
  	<select id="MybatisTopicItemDAO_select_dynamic" resultMap="TopicItemDOResultMap" parameterType="com.ichecc.domain.TopicItemDO">
 	     SELECT
 	     	<include refid="MybatisTopicItemDAO_all_column_fields" />

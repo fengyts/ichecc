@@ -115,14 +115,14 @@ public class TopicItemAO {
 
 		Date date = new Date();
 		Long userId = UserHandler.getUser().getId();
-
+		
+		topicItemDO.setIsSuccess(false);
 		topicItemDO.setCreateTime(date);
 		topicItemDO.setCreateUserId(userId);
 		topicItemDO.setModifyTime(date);
 		topicItemDO.setModifyUserId(userId);
 		
 		// 默认初始剩余次数为最大砍价次数
-		topicItemDO.setResidueTimes(topicItemDO.getBargainMaxTimes());
 		if(StringUtils.isBlank(topicItemDO.getAttributes())){
 			topicItemDO.setAttributes("");
 		}
