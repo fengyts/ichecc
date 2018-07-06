@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ichecc.domain.VipUserInfoMapper">
+
+	<resultMap type="com.ichecc.domain.VipUserInfoDO" id="VipUserInfoDOResultMap">
+		<id column="user_id" property="userId" />
+        <result column="vip_card_no" property="vipCardNo"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="is_new" property="isNew"/>
+	</resultMap>
+
+	<sql id="MybatisVipUserInfoDAO_all_column_fields">
+	      user_id,vip_card_no,start_time,end_time,is_new
+ 	</sql>
+	<!-- 只有varchar char text类型 做 !='' 判断，生成代码时,其他类型时只做!=null 决断 0或fasle与空''是相同的，在mybatis中的动态语句中 -->
+	<sql id="MybatisVipUserInfoDAO_dynamic_where_fields"><!-- xml转义字符需要 <![CDATA[   ]]> 标签-->
+		<where>
+			<if test="vipCardNo != null  and vipCardNo != '' "> AND vip_card_no=#{vipCardNo} </if>
+			<if test="isNew != null "> AND is_new=#{isNew} </if>
+		</where>
+ 	</sql>
+	
+	<select id="MybatisVipUserInfoDAO_selectById" parameterType="long" resultMap="VipUserInfoDOResultMap">
+		SELECT
+			<include refid="MybatisVipUserInfoDAO_all_column_fields" />
+		FROM
+			vip_user_info
+		WHERE
+			 user_id = #{userId}
+	</select>
+	
+	
+	
+    <insert id="MybatisVipUserInfoDAO_insert" parameterType="com.ichecc.domain.VipUserInfoDO" useGeneratedKeys="true">
+        <selectKey resultType="long" keyProperty="userId" order="AFTER">
+            SELECT LAST_INSERT_ID() AS user_id
+        </selectKey>
+        INSERT INTO vip_user_info(
+			user_id,
+			vip_card_no,
+			start_time,
+			end_time,
+			is_new
+		)values(
+			#{userId},
+			#{vipCardNo},
+			#{startTime},
+			#{endTime},
+			#{isNew}
+		)
+    </insert>
+	
+
+	<update id="MybatisVipUserInfoDAO_updateById" parameterType="com.ichecc.domain.VipUserInfoDO">
+		UPDATE vip_user_info
+		SET
+			vip_card_no = #{vipCardNo},
+			start_time = #{startTime},
+			end_time = #{endTime},
+			is_new = #{isNew}
+		WHERE
+			user_id = #{userId}
+	</update>
+
+	<delete id="MybatisVipUserInfoDAO_deleteById" parameterType="long">
+		DELETE FROM vip_user_info WHERE user_id = #{userId}
+	</delete>
+	
+	
+	<update id="MybatisVipUserInfoDAO_update_dynamic" parameterType="com.ichecc.domain.VipUserInfoDO">
+		UPDATE vip_user_info
+		<set>
+			<if test="vipCardNo != null  and vipCardNo != '' ">vip_card_no=#{vipCardNo},</if>
+			<if test="startTime != null ">start_time=#{startTime},</if>
+			<if test="endTime != null ">end_time=#{endTime},</if>
+			<if test="isNew != null ">is_new=#{isNew},</if>
+		</set>
+		WHERE user_id = #{userId}
+	</update>
+
+ 	<select id="MybatisVipUserInfoDAO_select_dynamic" resultMap="VipUserInfoDOResultMap" parameterType="com.ichecc.domain.VipUserInfoDO">
+	     SELECT
+	     	<include refid="MybatisVipUserInfoDAO_all_column_fields" />
+		 FROM
+		 	vip_user_info
+			<include refid="MybatisVipUserInfoDAO_dynamic_where_fields" />
+ 	</select>
+
+ 	<select id="MybatisVipUserInfoDAO_select_dynamic_count" resultType="long" parameterType="com.ichecc.domain.VipUserInfoDO">
+	     SELECT
+	     	count(1)
+		 FROM
+		 	vip_user_info
+	 	<include refid="MybatisVipUserInfoDAO_dynamic_where_fields" />
+ 	</select>
+
+ 	<select id="MybatisVipUserInfoDAO_select_dynamic_page_query" resultMap="VipUserInfoDOResultMap" parameterType="com.ichecc.domain.VipUserInfoDO">
+	     SELECT
+	     	<include refid="MybatisVipUserInfoDAO_all_column_fields" />
+		 FROM
+		 	vip_user_info
+	 	<include refid="MybatisVipUserInfoDAO_dynamic_where_fields" />
+	 	ORDER BY vip_user_info.id DESC
+	 	Limit #{start},#{pageSize}
+ 	</select>
+
+</mapper>

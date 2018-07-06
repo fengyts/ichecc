@@ -1,5 +1,5 @@
 <template>
-  <div class="body" id="body" v-if="resData != undefined">
+  <div class="body" id="body" v-if="resData.tiId != undefined">
     <!--蒙版-->
     <div class="share" id="share" @click="shutdown">
       <div class="sharearrow">
@@ -172,7 +172,7 @@ export default {
     },
 
     countdown(mss) {
-      if(!mss){
+      if (!mss) {
         document.getElementById("time-countdown-wrapper").innerHTML = "00天00时00分00秒"
       }
       var _that = this;

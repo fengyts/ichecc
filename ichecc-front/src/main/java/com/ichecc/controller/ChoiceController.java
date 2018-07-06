@@ -32,6 +32,11 @@ public class ChoiceController {
 		return choiceAO.choiceOrderSubmit(dto);
 	}
 	
+	/**
+	 * 用户选车订单列表
+	 * @param userId
+	 * @return
+	 */
 	@RequestMapping("choiceOrderList")
 	@ResponseBody
 	@Authority
@@ -39,6 +44,11 @@ public class ChoiceController {
 		return choiceAO.choiceOrderList(userId);
 	}
 	
+	/**
+	 * 选车订单详情
+	 * @param orderId
+	 * @return
+	 */
 	@RequestMapping("choiceOrderDetail")
 	@ResponseBody
 	@Authority

@@ -36,18 +36,14 @@ export default {
 
     // code存在，获取code，并发送到后台获取用户信息
     if (_code) {
-      // let params = new URLSearchParams();
-      // params.append("code", this.$crypto.encryptAes(_code));
       let _that = this;
       //authSymbol: 登陆标识, 仅用于登陆发送ajax请求判断是否携带user信息用
       let data = {
         "code": _that.$crypto.encryptAes(_code),
-        "authSymbol" : 1 
+        "authSymbol": 1
       };
       this.$http.post("/api/wechat/authorize", data).then(res => {
         let result = res;
-        // console.log(result);
-        // return;
         if (result.code === _that.$resp_code) {
           let user = result.data;
           _that.$localStorage.setLocalStorage("icheccuser", user);
@@ -55,13 +51,11 @@ export default {
           window.location.href = "/#" + _that.rdPath;
           return;
         } else {
-          // 后台获取用户信息失败后重新发起授权
-          this.wechatAuth();
+          this.wechatAuth(); // 后台获取用户信息失败后重新发起授权
         }
       });
     } else {
-      // 调用微信授权接口获取code
-      this.wechatAuth();
+      this.wechatAuth(); // 调用微信授权接口获取code
     }
   },
   methods: {

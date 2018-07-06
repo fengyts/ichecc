@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ichecc.domain.VipDepositRecordMapper">
+
+	<resultMap type="com.ichecc.domain.VipDepositRecordDO" id="VipDepositRecordDOResultMap">
+		<id column="id" property="id" />
+        <result column="user_id" property="userId"/>
+        <result column="deposit_amount" property="depositAmount"/>
+        <result column="discount" property="discount"/>
+        <result column="create_time" property="createTime"/>
+        <result column="end_time" property="endTime"/>
+	</resultMap>
+
+	<sql id="MybatisVipDepositRecordDAO_all_column_fields">
+	      id,user_id,deposit_amount,discount,create_time,end_time
+ 	</sql>
+	<!-- 只有varchar char text类型 做 !='' 判断，生成代码时,其他类型时只做!=null 决断 0或fasle与空''是相同的，在mybatis中的动态语句中 -->
+	<sql id="MybatisVipDepositRecordDAO_dynamic_where_fields"><!-- xml转义字符需要 <![CDATA[   ]]> 标签-->
+		<where>
+			<if test="userId != null "> AND user_id=#{userId} </if>
+			<if test="depositAmount != null "> AND deposit_amount=#{depositAmount} </if>
+			<if test="discount != null "> AND discount=#{discount} </if>
+		</where>
+ 	</sql>
+	
+	<select id="MybatisVipDepositRecordDAO_selectById" parameterType="long" resultMap="VipDepositRecordDOResultMap">
+		SELECT
+			<include refid="MybatisVipDepositRecordDAO_all_column_fields" />
+		FROM
+			vip_deposit_record
+		WHERE
+			 id = #{id}
+	</select>
+	
+	
+	
+    <insert id="MybatisVipDepositRecordDAO_insert" parameterType="com.ichecc.domain.VipDepositRecordDO" useGeneratedKeys="true">
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        INSERT INTO vip_deposit_record(
+			id,
+			user_id,
+			deposit_amount,
+			discount,
+			create_time,
+			end_time
+		)values(
+			#{id},
+			#{userId},
+			#{depositAmount},
+			#{discount},
+			#{createTime},
+			#{endTime}
+		)
+    </insert>
+	
+
+	<update id="MybatisVipDepositRecordDAO_updateById" parameterType="com.ichecc.domain.VipDepositRecordDO">
+		UPDATE vip_deposit_record
+		SET
+			user_id = #{userId},
+			deposit_amount = #{depositAmount},
+			discount = #{discount},
+			end_time = #{endTime}
+		WHERE
+			id = #{id}
+	</update>
+
+	<delete id="MybatisVipDepositRecordDAO_deleteById" parameterType="long">
+		DELETE FROM vip_deposit_record WHERE id = #{id}
+	</delete>
+	
+	
+	<update id="MybatisVipDepositRecordDAO_update_dynamic" parameterType="com.ichecc.domain.VipDepositRecordDO">
+		UPDATE vip_deposit_record
+		<set>
+			<if test="userId != null ">user_id=#{userId},</if>
+			<if test="depositAmount != null ">deposit_amount=#{depositAmount},</if>
+			<if test="discount != null ">discount=#{discount},</if>
+			<if test="endTime != null ">end_time=#{endTime},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
+ 	<select id="MybatisVipDepositRecordDAO_select_dynamic" resultMap="VipDepositRecordDOResultMap" parameterType="com.ichecc.domain.VipDepositRecordDO">
+	     SELECT
+	     	<include refid="MybatisVipDepositRecordDAO_all_column_fields" />
+		 FROM
+		 	vip_deposit_record
+			<include refid="MybatisVipDepositRecordDAO_dynamic_where_fields" />
+ 	</select>
+
+ 	<select id="MybatisVipDepositRecordDAO_select_dynamic_count" resultType="long" parameterType="com.ichecc.domain.VipDepositRecordDO">
+	     SELECT
+	     	count(1)
+		 FROM
+		 	vip_deposit_record
+	 	<include refid="MybatisVipDepositRecordDAO_dynamic_where_fields" />
+ 	</select>
+
+ 	<select id="MybatisVipDepositRecordDAO_select_dynamic_page_query" resultMap="VipDepositRecordDOResultMap" parameterType="com.ichecc.domain.VipDepositRecordDO">
+	     SELECT
+	     	<include refid="MybatisVipDepositRecordDAO_all_column_fields" />
+		 FROM
+		 	vip_deposit_record
+	 	<include refid="MybatisVipDepositRecordDAO_dynamic_where_fields" />
+	 	ORDER BY vip_deposit_record.id DESC
+	 	Limit #{start},#{pageSize}
+ 	</select>
+
+</mapper>

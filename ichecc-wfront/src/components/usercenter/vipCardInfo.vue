@@ -1,36 +1,16 @@
 <!--  -->
 <template>
-  <div class="vipinfo">
-    <p class="notice">
-      VIP会员详情
-    </p>
-    <p class="title">
-      会员权益
-    </p>
-    <p class="content">
-      会员权益详细说明会员权益详细说明会员权益详细说明会员权益详细说明会 员权益详细说明会员权益详细说明会员权益详细说明会员权益详细说明会员权益详细说明 会员权益详细说明会员权益详细说明会员权益详细说明 会员权益详细说明会员权益详细说明会员权益详细说明
-    </p>
-    <p class="title">
-      有效期
-    </p>
-    <p class="content">
-      剩余38天
-    </p>
-    <p class="title">
-      会员编号
-    </p>
-    <p class="content">
-      69500698
-    </p>
-    <p class="title">
-      注意事项
-    </p>
-    <p class="content">
-      注意事项详细说明注意事项详细说明注意事项详细说明注意事项详细说明注意事项详细说明 注意事项详细说明注意事项详细说明注意事项详细说明注意事项详细说明注意事项详细 注意事项详细说明注意事项详细说明注意事项详细说明注意事项详细说明 注意事项详细说明注意事项详细说明注意事项详细说明注意事项详细说明注意事项详细说明 注意事项详细说明注意事项详细说明
-
-    </p>
-    <p class="bottom">
-    </p>
+  <div class="vipinfo" v-if="resData.vipInfo != undefined">
+    <p class="notice">VIP会员详情</p>
+    <p class="title">会员权益</p>
+    <p class="content">{{resData.vipBenefit}}</p>
+    <p class="title">有效期</p>
+    <p class="content">剩余{{resData.vipInfo.expiryDate}}天</p>
+    <p class="title">会员编号</p>
+    <p class="content">{{resData.vipInfo.vipCardNo}}</p>
+    <p class="title">注意事项</p>
+    <p class="content">{{resData.vipNotice}}</p>
+    <p class="bottom"></p>
   </div>
 </template>
 
@@ -38,10 +18,15 @@
 export default {
   data() {
     return {
-
+      resData: {}
     }
   },
-  components: {
+  created() {
+    this.$http.post("/api/vip/vipinfoDetail").then(res => {
+      if (this.$resp_code === res.code) {
+        this.resData = res.data;
+      }
+    });
   }
 }
 </script>

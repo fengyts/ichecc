@@ -20,7 +20,7 @@ import com.ichecc.enums.ChoiceOrderStatusEnum;
 import com.ichecc.front.dto.ChoiceSubmitDTO;
 import com.ichecc.service.ChoiceConfigService;
 import com.ichecc.service.ChoiceOrderService;
-import com.ichecc.service.DepositRecordService;
+import com.ichecc.service.VipUserInfoService;
 import com.ichecc.vo.ChoiceOrderBaseVO;
 import com.ichecc.vo.ChoiceOrderDetailVO;
 import com.ichecc.vo.VipInfoVO;
@@ -31,7 +31,7 @@ public class ChoiceAO extends BaseAO {
 	@Autowired
 	private ChoiceConfigService choiceConfigService;
 	@Autowired
-	private DepositRecordService depositRecordService;
+	private VipUserInfoService vipUserService;
 	@Autowired
 	private ChoiceOrderService choiceOrderService;
 
@@ -89,7 +89,7 @@ public class ChoiceAO extends BaseAO {
 			return ResultData.failureMsg(ResultCode.Common.PARAMS_ERROR);
 		}
 		// 校验vip
-		VipInfoVO vipVO = depositRecordService.getVipInfo(userId);
+		VipInfoVO vipVO = vipUserService.getVipInfo(userId);
 		if (!vipVO.getIsVip()) {
 			return ResultData.failureMsg(ResultCode.Biz.IS_NOT_VIP);
 		}
