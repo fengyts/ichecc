@@ -64,10 +64,12 @@ public class ResultCode implements Serializable {
 	public static class Biz {
 		/** 必须是vip */
 		public static final String IS_NOT_VIP = "200001";
+		public static final String WECHAT_PAY_CONFIG_ERROR = "200002";
 		
 		public static Map<String, Object> desc = new HashMap<String, Object>();
 		static {
 			desc.put(IS_NOT_VIP, "请开通vip");
+			desc.put(WECHAT_PAY_CONFIG_ERROR, "微信jsapi接口配置信息错误");
 		}
 	}
 	

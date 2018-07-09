@@ -26,4 +26,10 @@ public class WechatController extends BaseController {
 		}
 	}
 	
+	@RequestMapping("jsApiConfig")
+	@ResponseBody
+	public ResultData getWechatJSConfig(String url){
+		return wechatAO.getWechatJSConfig(url);
+	}
+	
 }

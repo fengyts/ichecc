@@ -1,24 +1,14 @@
 package com.ichecc;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.ichecc.dao.DepositRecordDAO;
 import com.ichecc.dao.IcheccUserDAO;
-import com.ichecc.dao.ItemAttributeDAO;
 import com.ichecc.dao.TopicItemDAO;
-import com.ichecc.domain.DepositRecordDO;
-import com.ichecc.domain.ItemAttributeDO;
-import com.ichecc.domain.TopicItemDO;
-import com.ichecc.dto.ICheccUserDTO;
-import com.ichecc.front.dto.FrontTopicItemDTO;
 import com.ichecc.vo.HiggleJoinVO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -27,8 +17,6 @@ public class TestDao {
 
 	@Autowired
 	private IcheccUserDAO userDao;
-	@Autowired
-	private DepositRecordDAO drDao;
 	@Autowired
 	private TopicItemDAO tiDao;
 

@@ -7,7 +7,7 @@ import router from './router'
 import weui from 'jquery-weui/dist/js/jquery-weui.min'
 import 'jquery-weui/dist/css/jquery-weui.min.css'
 // import axios from 'axios'
-import wx from 'weixin-js-sdk'
+// import wx from 'weixin-js-sdk'
 import filters from './common/filters/filter'
 import 'common/stylus/index'; // 全局自定义样式
 import store from './store/store' // vuex store

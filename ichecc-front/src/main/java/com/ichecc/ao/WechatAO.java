@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.ichecc.common.ResultCode;
 import com.ichecc.common.ResultData;
 import com.ichecc.constants.ICheccConstants;
 import com.ichecc.domain.WechatUserDO;
@@ -26,7 +27,11 @@ import com.ichecc.dto.ICheccUserDTO;
 import com.ichecc.service.IcheccUserService;
 import com.ichecc.service.WechatUserService;
 import com.ichecc.wechat.AccessTokenDTO;
+import com.ichecc.wechat.AuthAccessTokenDTO;
+import com.ichecc.wechat.JSApiTicketDTO;
 import com.ichecc.wechat.WechatApiErrorDTO;
+import com.ichecc.wechat.WechatJsConfigDTO;
+import com.ichecc.wechat.util.JsConfigSign;
 
 import ng.bayue.constants.CharsetConstant;
 import ng.bayue.service.RedisCacheService;
@@ -44,6 +49,8 @@ public class WechatAO extends BaseAO {
 
 	private static String appid;
 	private static String secret;
+	/** 微信支付debug模式 */
+	private static Boolean debug;
 
 	@Value("#{metaf['appid']}")
 	private void setAppid(String appid) {
@@ -53,6 +60,11 @@ public class WechatAO extends BaseAO {
 	@Value("#{metaf['secret']}")
 	private void setSecret(String secret) {
 		WechatAO.secret = secret;
+	}
+	
+	@Value("#{metaf['wechat_jsapi_config_debug']}")
+	private void setDebug(Boolean debug) {
+		WechatAO.debug = debug;
 	}
 
 	@Resource(name = "redisCacheService1")
@@ -72,7 +84,7 @@ public class WechatAO extends BaseAO {
 			code = aes.decrypt(code);
 
 			// 换取access_token同时获取openid
-			AccessTokenDTO tokenDTO = getAccessToken(null, code);
+			AuthAccessTokenDTO tokenDTO = getAccessTokenAuth(null, code);
 			if (null == tokenDTO) {
 				logger.info("微信服务器授权异常：获取access_token失败");
 				return ResultData.failure("微信服务器授权异常：获取access_token失败");
@@ -111,14 +123,22 @@ public class WechatAO extends BaseAO {
 		return userDO;
 	}
 
-	private AccessTokenDTO getAccessToken(String openid, String code) throws Exception {
+	/**
+	 * 获取授权access_token
+	 * 
+	 * @param openid
+	 * @param code
+	 * @return
+	 * @throws Exception
+	 */
+	private AuthAccessTokenDTO getAccessTokenAuth(String openid, String code) throws Exception {
 		try {
-			String redisKey = ICheccConstants.ICheccRedisKeys.WECHAT_AUTH_ACCESS_TOKEN;
+			String redisKey = ICheccConstants.ICheccRedisKeys.WECHAT_ACCESS_TOKEN_AUTH;
 			logger.info("微信授权-获取access_token, openid:{}, code:{}", openid, code);
-			AccessTokenDTO accessToken = null;
+			AuthAccessTokenDTO accessToken = null;
 			if (StringUtils.isNotBlank(openid)) {
 				redisKey += openid;
-				accessToken = (AccessTokenDTO) redisCacheService.getRedisCache(openid);
+				accessToken = (AuthAccessTokenDTO) redisCacheService.getRedisCache(openid);
 			}
 			if (null != accessToken) {
 				return accessToken;
@@ -136,7 +156,7 @@ public class WechatAO extends BaseAO {
 			checkError(json);
 
 			logger.info("微信授权-获取access_token, access_token json:{}", json);
-			accessToken = JSONObject.toJavaObject(json, AccessTokenDTO.class);
+			accessToken = JSONObject.toJavaObject(json, AuthAccessTokenDTO.class);
 			redisCacheService.setRedisCache(redisKey, accessToken, accessToken.getExpires_in());
 			return accessToken;
 		} catch (Exception e) {
@@ -160,6 +180,7 @@ public class WechatAO extends BaseAO {
 			WechatUserDO wechatUserDO = JSONObject.parseObject(jsonStr, WechatUserDO.class);
 			return wechatUserDO;
 		} catch (Exception e) {
+			logger.info("微信获取授权access_token异常：{}", e);
 			throw e;
 		}
 	}
@@ -193,13 +214,100 @@ public class WechatAO extends BaseAO {
 			HttpEntity entity = response.getEntity();
 			String res = EntityUtils.toString(entity, CharsetConstant.UTF8);
 			if (StringUtils.isBlank(res)) {
-				logger.error("获取微信授权异常：网络请求异常");
+				logger.error("请求微信服务器异常：网络请求异常");
 				throw new Exception("网络请求异常：获取数据为空");
 			}
 			return res;
 		} catch (KeyManagementException | NoSuchAlgorithmException | IOException e) {
-			logger.error("获取微信授权异常：网络请求异常", e);
+			logger.error("请求微信服务器异常：网络请求异常", e);
 			throw e;
+		}
+	}
+
+	/**
+	 * 获取微信基础接口access_token
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	private AccessTokenDTO getAccessTokenJsApi() throws Exception {
+		try {
+			final String redisKey = ICheccConstants.ICheccRedisKeys.WECHAT_ACCESS_TOKEN_JSSDK;
+			AccessTokenDTO accessToken = (AccessTokenDTO) redisCacheService.getRedisCache(redisKey);
+			if (null != accessToken) {
+				return accessToken;
+			}
+			final String jsAccessTokenUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="
+					+ appid + "&secret=" + secret;
+			String jsonStr = doRequest(jsAccessTokenUrl);
+			JSONObject json = JSONObject.parseObject(jsonStr);
+			// 接口返回错误信息
+//			checkError(json);
+
+			logger.info("微信jssdk-获取access_token, access_token json:{}", json);
+			accessToken = JSONObject.toJavaObject(json, AccessTokenDTO.class);
+
+			redisCacheService.setRedisCache(redisKey, accessToken, accessToken.getExpires_in());
+
+			return accessToken;
+		} catch (Exception e) {
+			logger.info("微信获取jssdk access_token异常：{}", e);
+			throw e;
+		}
+	}
+
+	private JSApiTicketDTO getJsApiTicket() throws Exception {
+		try {
+			final String redisKey = ICheccConstants.ICheccRedisKeys.WECHAT_JSAPI_TICKET;
+			JSApiTicketDTO ticket = (JSApiTicketDTO) redisCacheService.getRedisCache(redisKey);
+			if (null != ticket) {
+				return ticket;
+			}
+
+			AccessTokenDTO accessTokenDTO = getAccessTokenJsApi();
+			String accessToken = accessTokenDTO.getAccess_token();
+			final String ticketUrl = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token="
+					+ accessToken;
+
+			String jsonStr = doRequest(ticketUrl);
+			JSONObject json = JSONObject.parseObject(jsonStr);
+			// 接口返回错误信息
+//			checkError(json);
+			String errcode = json.getString("errcode");
+			if(!"0".equals(errcode)){
+				logger.info("微信获取jsapi ticket票据异常：返回ticket失败");
+				throw new Exception("微信获取jsapi ticket票据异常");
+			}
+
+			logger.info("微信jssdk-获取access_token, access_token json:{}", json);
+			ticket = JSONObject.toJavaObject(json, JSApiTicketDTO.class);
+
+			redisCacheService.setRedisCache(redisKey, ticket, ticket.getExpires_in());
+
+			return ticket;
+		} catch (Exception e) {
+			logger.info("微信获取jsapi ticket票据异常：{}", e);
+			throw e;
+		}
+	}
+
+	public ResultData getWechatJSConfig(String url) {
+		try {
+			if(StringUtils.isBlank(url)){
+				return ResultData.failureMsg(ResultCode.Common.PARAMS_ERROR);
+			}
+			JSApiTicketDTO ticketDto = getJsApiTicket();
+			String jsapi_ticket = ticketDto.getTicket();
+			WechatJsConfigDTO config = JsConfigSign.sign(jsapi_ticket, url);
+			config.setAppid(appid);
+			config.setDebug(debug);
+			
+			logger.info("微信jsapi获取config: {}", JSONObject.toJSONString(config));
+			
+			return ResultData.success(config);
+		} catch (Exception e) {
+			logger.info("微信jsapi获取配置异常: {}", e);
+			return ResultData.failureMsg(ResultCode.Biz.WECHAT_PAY_CONFIG_ERROR);
 		}
 	}
 

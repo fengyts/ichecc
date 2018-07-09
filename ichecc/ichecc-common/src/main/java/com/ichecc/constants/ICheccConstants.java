@@ -10,9 +10,19 @@ package com.ichecc.constants;
  */
 public interface ICheccConstants {
 	
+	/**
+	 * redis缓存key
+	 * @author lenovopc
+	 *
+	 */
 	interface ICheccRedisKeys {
 		String BASE_KEY = "ichecc_";
-		String WECHAT_AUTH_ACCESS_TOKEN = BASE_KEY + "access_token_";
+		/** 微信授权access_token 缓存key */
+		String WECHAT_ACCESS_TOKEN_AUTH = BASE_KEY + "access_token_auth_";
+		/** 微信jssdk接口access_token缓存key */
+		String WECHAT_ACCESS_TOKEN_JSSDK = BASE_KEY + "access_token_jssdk";
+		/** 微信JS接口的临时票据ticket缓存key */
+		String WECHAT_JSAPI_TICKET = BASE_KEY + "js_api_ticket";
 	}
 	
 	/** VIP会员权益  */

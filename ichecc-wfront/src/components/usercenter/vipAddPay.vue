@@ -36,9 +36,10 @@
     </div>
     <!--支付按钮-->
     <div class="vippay">
-      <router-link :to="{path:'/vipAddResult'}">
+      <!-- <router-link :to="{path:'/vipAddResult'}"> -->
+      <!-- <button class="button_pay" id="vippay" onclick="">立即支付</button> -->
+      <!-- </router-link> -->
       <button class="button_pay" id="vippay" onclick="">立即支付</button>
-      </router-link>
     </div>
     <!--说明-->
     <div class="tips">
@@ -48,10 +49,44 @@
 </template>
 
 <script type="text/javascript">
+import wx from 'weixin-js-sdk';
 export default {
   data() {
     return {
 
+    }
+  },
+  mounted() {
+    this.$nextTick(function () {
+      this.getConfig();
+    })
+  },
+  methods: {
+    getConfig() {
+      let _url = location.href.split('#')[0] //获取锚点之前的链接
+      this.$http.get('/api/wechat/jsApiConfig', { url: _url }).then(res => {
+        console.log("weixin jsapi config");
+        console.log(res);
+        let _that = this;
+        // this.wxInit(res);
+        wx.config({
+          debug: res.debug,
+          appId: res.appid,
+          timestamp: res.timestamp,
+          nonceStr: res.nonceStr,
+          signature: res.signature,
+          jsApiList: _that.setApiList(res.jsApiList)
+        });
+      })
+    },
+    setApiList(_list) {
+      if (null == _list || undefined == _list) {
+        _list = [];
+      }
+      _list.push('chooseWXPay');
+    },
+    wexinPayCall() {
+      
     }
   },
   components: {
