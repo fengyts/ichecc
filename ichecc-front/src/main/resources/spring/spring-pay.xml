@@ -7,17 +7,19 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-	<context:property-placeholder location="classpath:config/metainfo.properties" order="10" />
-	<util:properties id="metaf" location="classpath:config/metainfo.properties" />
-
-	<context:component-scan base-package="com.ichecc.ao">
-		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />
+	<context:property-placeholder location="classpath:config/metainfo.properties" order="100"/>
+	<util:properties id="metap" location="classpath:config/metainfo.properties" />
+	
+	<context:component-scan base-package="com.ichecc.wechat.component">
 	</context:component-scan>
+
+	<bean id="config" class="com.ichecc.wechat.component.ApiCommonConfig" scope="singleton">
+		<property name="appid" value="#{metap['wechatpay.appid']}" />
+		<property name="secrectKey" value="#{metap['wechatpay.secrectKey']}" />
+		<property name="mch_id" value="#{metap['wechatpay.mch_id']}" />
+		<property name="notify_url" value="#{metap['wechatpay.unifiedorder_notify_url']}" />
+	</bean>
 	
-	<import resource="classpath*:spring/spring-context-checcshare.xml"/>
 	
-	<import resource="classpath*:spring/spring-pay.xml"/>
-	
-	<!-- 导入定时任务 -->
-	
+		
 </beans>
