@@ -16,7 +16,7 @@
 
 	<bean id="config" class="com.ichecc.wechat.component.ApiCommonConfig" scope="singleton">
 		<property name="appid" value="#{metap['wechatpay.appid']}" />
-		<property name="secrectKey" value="#{metap['wechatpay.secrectKey']}" />
+		<property name="secrectKey" value="#{metap['wechatpay.apiKey']}" />
 		<property name="mch_id" value="#{metap['wechatpay.mch_id']}" />
 		<property name="notify_url" value="#{metap['wechatpay.unifiedorder_notify_url']}" />
 	</bean>

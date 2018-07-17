@@ -27,6 +27,7 @@ public class TestWechatPay {
 		query.setTrade_type(ApiUnifiedOrderDTO.TradeType.JSAPI.name());
 		query.setSpbill_create_ip("127.0.0.1");
 		query.setAttach("");
+		query.setOpenid("oEUxH0sS0BGO3bNb_rIRv-5xs5Ts");
 		UnifiedOrderResponseDTO order = payService.unifiedOrder(query);
 		System.out.println(order);
 		System.out.println(123);

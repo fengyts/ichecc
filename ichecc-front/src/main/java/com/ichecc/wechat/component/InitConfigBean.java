@@ -17,8 +17,8 @@ public class InitConfigBean {
 		return config.getAppid();
 	}
 
-	public String getSecrectKey() {
-		return config.getSecrectKey();
+	public String getApiKey() {
+		return config.getApiKey();
 	}
 
 	public String getMch_id() {

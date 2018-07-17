@@ -19,7 +19,7 @@ public class SignUtil {
 
 	public static String createSign(Object paramBean) throws Exception {
 		try {
-			String sign = createSign(paramBean, config.getSecrectKey(), CharsetConstant.UTF8);
+			String sign = createSign(paramBean, config.getApiKey(), CharsetConstant.UTF8);
 			return sign;
 		} catch (Exception e) {
 			throw e;
@@ -28,7 +28,7 @@ public class SignUtil {
 
 	public static String createSign(SortedMap<String, String> parameters) throws Exception {
 		try {
-			String sign = createSign(parameters, config.getSecrectKey(), CharsetConstant.UTF8);
+			String sign = createSign(parameters, config.getApiKey(), CharsetConstant.UTF8);
 			return sign;
 		} catch (Exception e) {
 			throw e;
@@ -61,6 +61,8 @@ public class SignUtil {
 			}
 			sb.append("key=" + secrectKey);
 			String sign = MD5Util.MD5Encode(sb.toString(), charset).toUpperCase();
+			System.out.println(sb.toString());
+			System.out.println(sign);
 			return sign;
 		} catch (Exception e) {
 			throw e;
@@ -71,7 +73,7 @@ public class SignUtil {
 	public static boolean checkSign(Object resBean) throws Exception {
 		try {
 			SortedMap<String, Object> parameters = RequestUtil.sortBeanField(resBean);
-			return checkSign(parameters, config.getSecrectKey(), CharsetConstant.UTF8);
+			return checkSign(parameters, config.getApiKey(), CharsetConstant.UTF8);
 		} catch (Exception e) {
 			throw e;
 		}

@@ -36,7 +36,8 @@ public class XmlUtil {
 			Map.Entry<String, Object> entry = (Map.Entry<String, Object>) it.next();
 			String k = entry.getKey();
 			String v = String.valueOf(entry.getValue());
-			if ("attach".equalsIgnoreCase(k) || "body".equalsIgnoreCase(k) || "sign".equalsIgnoreCase(k)) {
+			if ("attach".equalsIgnoreCase(k) || "body".equalsIgnoreCase(k)
+					|| "sign".equalsIgnoreCase(k) || "openid".equalsIgnoreCase(k)) {
 				sb.append("<" + k + ">" + "<![CDATA[" + v + "]]></" + k + ">");
 			} else {
 				// sb.append("<" + k + ">" + v + "</" + k + ">");
@@ -62,7 +63,6 @@ public class XmlUtil {
 			throw e;
 		}
 	}
-
 
 	/**
 	 * xml字符串转换成bean对象
@@ -135,7 +135,8 @@ public class XmlUtil {
 			for (Map.Entry<String, Object> entry : map.entrySet()) {
 				String propertyName = entry.getKey();
 				Object value = entry.getValue();
-				String setMethodName = "set" + propertyName.substring(0, 1).toUpperCase() + propertyName.substring(1);
+				String setMethodName = "set" + propertyName.substring(0, 1).toUpperCase()
+						+ propertyName.substring(1);
 				Field field = getClassField(clazz, propertyName);
 				Class<?> fieldTypeClass = field.getType();
 				value = convertValType(value, fieldTypeClass);

@@ -4,6 +4,7 @@ import com.ichecc.dto.BaseDTO;
 
 /**
  * 从配置文件获取公共配置封装类
+ * 
  * @author lenovopc
  *
  */
@@ -13,7 +14,7 @@ public class ApiCommonConfig extends BaseDTO {
 
 	private String appid;
 	/** 商户秘钥 */
-	private String secrectKey;
+	private String apiKey;
 	/** 商户id */
 	private String mch_id;
 	/** 微信回调地址 */
@@ -27,12 +28,12 @@ public class ApiCommonConfig extends BaseDTO {
 		this.appid = appid;
 	}
 
-	public String getSecrectKey() {
-		return secrectKey;
+	public String getApiKey() {
+		return apiKey;
 	}
 
-	public void setSecrectKey(String secrectKey) {
-		this.secrectKey = secrectKey;
+	public void setApiKey(String apiKey) {
+		this.apiKey = apiKey;
 	}
 
 	public String getMch_id() {
