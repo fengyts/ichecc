@@ -8,7 +8,6 @@ public class InitConfigBean {
 	
 	private static ApiCommonConfig config;
 
-	// @Resource(name="config")
 	@Autowired
 	private void setConfig(ApiCommonConfig config) {
 		InitConfigBean.config = config;

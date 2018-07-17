@@ -2,6 +2,11 @@ package com.ichecc.wechat.component;
 
 import com.ichecc.dto.BaseDTO;
 
+/**
+ * 从配置文件获取公共配置封装类
+ * @author lenovopc
+ *
+ */
 public class ApiCommonConfig extends BaseDTO {
 
 	private static final long serialVersionUID = 789982054532259897L;

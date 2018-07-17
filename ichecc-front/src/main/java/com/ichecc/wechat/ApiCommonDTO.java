@@ -1,7 +1,8 @@
 package com.ichecc.wechat;
 
 import com.ichecc.front.dto.BaseDTO;
-import com.ichecc.wechat.component.GlobalConfig;
+import com.ichecc.wechat.component.InitConfigBean;
+import com.ichecc.wechat.util.SignUtil;
 
 /**
  * 主动调用微信接口基础参数
@@ -12,6 +13,8 @@ import com.ichecc.wechat.component.GlobalConfig;
 public class ApiCommonDTO extends BaseDTO {
 
 	private static final long serialVersionUID = 5191606680819190854L;
+	
+	protected static final InitConfigBean config = new InitConfigBean();
 
 	public static final class SignType {
 		// MD5, SHA1;
@@ -21,11 +24,11 @@ public class ApiCommonDTO extends BaseDTO {
 	}
 
 	/** 【必填】微信支付分配的公众账号ID（企业号corpid即为此appId） */
-	private String appid = GlobalConfig.appid;
+	private String appid = config.getAppid();
 	/** 【必填】微信支付分配的商户号 */
-	private String mch_id = GlobalConfig.mch_id;
+	private String mch_id = config.getMch_id();
 	/** 【必填】随机字符串，长度要求在32位以内。推荐随机数生成算法 */
-	private String nonce_str;
+	private String nonce_str = SignUtil.uuidString();
 	/** 【必填】通过签名算法计算得出的签名值，详见签名生成算法 */
 	private String sign;
 	/** 【选填】签名类型，默认为MD5，支持HMAC-SHA256和MD5。此参数在有些接口是必填项，具体参考接口文档 */

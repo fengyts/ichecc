@@ -1,7 +1,5 @@
 package com.ichecc.wechat.util;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
@@ -9,58 +7,19 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.UUID;
 
-import com.ichecc.wechat.ApiUnifiedOrderDTO;
-import com.ichecc.wechat.component.GlobalConfig;
+import com.ichecc.wechat.component.InitConfigBean;
 
 import ng.bayue.constants.CharsetConstant;
 
 public class SignUtil {
-
-	/**
-	 * 签名对象属性排序
-	 * 
-	 * @param obj
-	 * @return
-	 * @throws Exception
-	 */
-	public static SortedMap<String, Object> signBeanFieldSort(Object obj) throws Exception {
-		try {
-			SortedMap<String, Object> map = new TreeMap<String, Object>();
-			Class<?> c = ApiUnifiedOrderDTO.class;
-
-			Field[] fields = null;
-			while (null != c) {
-				fields = c.getDeclaredFields();
-				for (Field f : fields) {
-					f.setAccessible(true);
-					// 过滤static 和 final字段
-					int mod = f.getModifiers();
-					if (Modifier.isFinal(mod) || Modifier.isStatic(mod)) {
-						continue;
-					}
-					String name = f.getName();
-					// if ("serialVersionUID".equals(name)) {
-					// continue;
-					// }
-					Object value = f.get(c.newInstance());
-					if (null == value) {
-						continue;
-					}
-					map.put(name, value);
-				}
-				c = c.getSuperclass();
-			}
-			return map;
-		} catch (SecurityException | IllegalArgumentException | IllegalAccessException | InstantiationException e) {
-			throw e;
-		}
-	}
+	
+	private static final InitConfigBean config = new InitConfigBean();
 
 	public static String createSign(Object paramBean) throws Exception {
 		try {
-			String sign = createSign(paramBean, GlobalConfig.secrectKey, CharsetConstant.UTF8);
+			String sign = createSign(paramBean, config.getSecrectKey(), CharsetConstant.UTF8);
 			return sign;
 		} catch (Exception e) {
 			throw e;
@@ -69,7 +28,7 @@ public class SignUtil {
 
 	public static String createSign(SortedMap<String, String> parameters) throws Exception {
 		try {
-			String sign = createSign(parameters, GlobalConfig.secrectKey, CharsetConstant.UTF8);
+			String sign = createSign(parameters, config.getSecrectKey(), CharsetConstant.UTF8);
 			return sign;
 		} catch (Exception e) {
 			throw e;
@@ -78,7 +37,7 @@ public class SignUtil {
 
 	public static String createSign(Object paramBean, String secrectKey, String charset) throws Exception {
 		try {
-			SortedMap<String, Object> parameters = signBeanFieldSort(paramBean);
+			SortedMap<String, Object> parameters = RequestUtil.sortBeanField(paramBean);
 			String sign = createSign(parameters, secrectKey, charset);
 			return sign;
 		} catch (Exception e) {
@@ -95,7 +54,7 @@ public class SignUtil {
 			while (it.hasNext()) {
 				Map.Entry<String, Object> entry = (Map.Entry<String, Object>) it.next();
 				String k = entry.getKey();
-				String v = (String) entry.getValue();
+				String v = String.valueOf(entry.getValue());
 				if (null != v && !"".equals(v) && !"sign".equalsIgnoreCase(k) && !"key".equals(k)) {
 					sb.append(k + "=" + v + "&");
 				}
@@ -108,53 +67,14 @@ public class SignUtil {
 		}
 	}
 
-	/**
-	 * @author
-	 * @date 2016-4-22
-	 * @Description：将请求参数转换为xml格式的string
-	 * @param parameters
-	 *            请求参数
-	 * @return
-	 */
-	public static String packageParamsToXmlStr(SortedMap<String, String> parameters) {
-		StringBuffer sb = new StringBuffer();
-		sb.append("<xml>");
-		Set<Entry<String, String>> es = parameters.entrySet();
-		Iterator<Entry<String, String>> it = es.iterator();
-		while (it.hasNext()) {
-			Map.Entry<String, String> entry = (Map.Entry<String, String>) it.next();
-			String k = entry.getKey();
-			String v = entry.getValue();
-			if ("attach".equalsIgnoreCase(k) || "body".equalsIgnoreCase(k) || "sign".equalsIgnoreCase(k)) {
-				sb.append("<" + k + ">" + "<![CDATA[" + v + "]]></" + k + ">");
-			} else {
-				// sb.append("<" + k + ">" + v + "</" + k + ">");
-				sb.append(String.format("<%s>%s</%s>", k, v, k));
-			}
-		}
-		sb.append("</xml>");
-		return sb.toString();
-	}
 
-	/**
-	 * 
-	 * @param paramBean
-	 * @return
-	 * @throws Exception
-	 */
-	public static String packageParamsToXmlStr(Object paramBean) throws Exception {
+	public static boolean checkSign(Object resBean) throws Exception {
 		try {
-			SortedMap<String, Object> parameters = signBeanFieldSort(paramBean);
-			String xmlStr = packageParamsToXmlStr(parameters);
-			return xmlStr;
+			SortedMap<String, Object> parameters = RequestUtil.sortBeanField(resBean);
+			return checkSign(parameters, config.getSecrectKey(), CharsetConstant.UTF8);
 		} catch (Exception e) {
 			throw e;
 		}
-	}
-
-	public static boolean checkSign(Object resBean) {
-
-		return true;
 	}
 
 	/**
@@ -162,14 +82,14 @@ public class SignUtil {
 	 * 
 	 * @return boolean
 	 */
-	public static boolean checkSign(SortedMap<String, String> packageParams, String secrectKey, String charset) {
+	public static boolean checkSign(SortedMap<String, Object> packageParams, String secrectKey, String charset) {
 		StringBuffer sb = new StringBuffer();
-		Set<Entry<String, String>> es = packageParams.entrySet();
-		Iterator<Entry<String, String>> it = es.iterator();
+		Set<Entry<String, Object>> es = packageParams.entrySet();
+		Iterator<Entry<String, Object>> it = es.iterator();
 		while (it.hasNext()) {
-			Map.Entry<String, String> entry = (Map.Entry<String, String>) it.next();
+			Map.Entry<String, Object> entry = (Map.Entry<String, Object>) it.next();
 			String k = entry.getKey();
-			String v = entry.getValue();
+			String v = String.valueOf(entry.getValue());
 			if (!"sign".equals(k) && null != v && !"".equals(v)) {
 				sb.append(k + "=" + v + "&");
 			}
@@ -201,6 +121,10 @@ public class SignUtil {
 			num = num * 10;
 		}
 		return (int) ((random * num));
+	}
+	
+	public static String uuidString(){
+		return UUID.randomUUID().toString().replace("-", "");
 	}
 
 	/**

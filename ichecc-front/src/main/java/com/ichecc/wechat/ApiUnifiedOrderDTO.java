@@ -1,7 +1,5 @@
 package com.ichecc.wechat;
 
-import com.ichecc.wechat.component.GlobalConfig;
-
 /**
  * 微信支付统一下单接口参数
  * 
@@ -11,6 +9,8 @@ import com.ichecc.wechat.component.GlobalConfig;
 public class ApiUnifiedOrderDTO extends ApiCommonDTO {
 
 	private static final long serialVersionUID = -2737337776319054570L;
+	
+	
 
 	/**
 	 * 支付类型
@@ -65,7 +65,7 @@ public class ApiUnifiedOrderDTO extends ApiCommonDTO {
 	/** 【选填】 订单优惠标记，使用代金券或立减优惠功能时需要的参数，说明详见代金券或立减优惠 */
 	private String goods_tag;
 	/** 【必填】 异步接收微信支付结果通知的回调地址，通知url必须为外网可访问的url，不能携带参数。 */
-	private String notify_url = GlobalConfig.notify_url;
+	private String notify_url = config.getNotify_url();
 	/**
 	 * 【必填】 JSAPI--公众号支付、NATIVE--原生扫码支付、APP--app支付，统一下单接口trade_type的传参可参考这里
 	 * MICROPAY--刷卡支付，刷卡支付有单独的支付接口，不调用统一下单接口 说明详见参数规定

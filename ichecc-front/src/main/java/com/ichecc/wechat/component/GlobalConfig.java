@@ -5,11 +5,26 @@ import org.springframework.stereotype.Component;
 
 public class GlobalConfig {
 
-	private InitConfigBean config = new InitConfigBean();
+	private static InitConfigBean config = new InitConfigBean();
 	
-	public final String appid = config.getAppid();
-	public final String secrectKey = config.getSecrectKey();
-	public final String mch_id = config.getMch_id();
-	public final String notify_url = config.getNotify_url();
+	public String appid;
+	public String secrectKey;
+	public String mch_id;
+	public String notify_url;
+	
+//	static {
+//		appid = config.getAppid();
+//	}
+	
+	public GlobalConfig(){
+//		appid = config.getAppid();
+//		secrectKey = config.getSecrectKey();
+//		init();
+	}
+	
+	public void init(){
+		String str = config.getMch_id();
+		System.out.println(str);
+	}
 
 }
