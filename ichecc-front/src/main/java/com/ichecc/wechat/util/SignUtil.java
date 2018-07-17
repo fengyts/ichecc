@@ -61,8 +61,6 @@ public class SignUtil {
 			}
 			sb.append("key=" + secrectKey);
 			String sign = MD5Util.MD5Encode(sb.toString(), charset).toUpperCase();
-			System.out.println(sb.toString());
-			System.out.println(sign);
 			return sign;
 		} catch (Exception e) {
 			throw e;
