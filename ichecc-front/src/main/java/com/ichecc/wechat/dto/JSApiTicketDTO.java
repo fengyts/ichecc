@@ -1,6 +1,6 @@
-package com.ichecc.wechat;
+package com.ichecc.wechat.dto;
 
-import com.ichecc.dto.BaseDTO;
+import com.ichecc.wechat.BaseDTO;
 
 /**
  * 微信JS接口的临时票据
@@ -10,7 +10,7 @@ import com.ichecc.dto.BaseDTO;
  */
 public class JSApiTicketDTO extends BaseDTO {
 
-	private static final long serialVersionUID = 1301846801877900886L;
+	private static final long serialVersionUID = -7249960890092878201L;
 
 	private String errcode;
 	private String errmsg;

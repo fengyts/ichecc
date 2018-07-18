@@ -1,4 +1,4 @@
-package com.ichecc.wechat.util;
+package com.ichecc.wechat.constant;
 
 public class ApiConfigConstant {
 

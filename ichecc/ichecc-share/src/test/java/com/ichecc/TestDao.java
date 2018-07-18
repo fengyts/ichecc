@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.ichecc.dao.IcheccUserDAO;
 import com.ichecc.dao.TopicItemDAO;
+import com.ichecc.dao.VipDepositOrderDAO;
 import com.ichecc.vo.HiggleJoinVO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -19,6 +20,8 @@ public class TestDao {
 	private IcheccUserDAO userDao;
 	@Autowired
 	private TopicItemDAO tiDao;
+	@Autowired
+	private VipDepositOrderDAO orderDao;
 
 	@Test
 	public void test() throws Exception {
@@ -28,8 +31,9 @@ public class TestDao {
 //		System.out.println(dto.getIsCertification());
 //		DepositRecordDO d = drDao.selectLatestDepositRecord(1L);
 //		System.out.println(d);
-		HiggleJoinVO higgle = tiDao.participationHiggle(1L, 1L);
-		System.out.println(higgle);
+//		HiggleJoinVO higgle = tiDao.participationHiggle(1L, 1L);
+//		System.out.println(higgle);
+		
 		
 	}
 	

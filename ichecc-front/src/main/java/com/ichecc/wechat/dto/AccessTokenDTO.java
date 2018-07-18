@@ -1,6 +1,6 @@
-package com.ichecc.wechat;
+package com.ichecc.wechat.dto;
 
-import com.ichecc.dto.BaseDTO;
+import com.ichecc.wechat.BaseDTO;
 
 public class AccessTokenDTO extends BaseDTO {
 

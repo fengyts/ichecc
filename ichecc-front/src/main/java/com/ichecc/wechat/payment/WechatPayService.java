@@ -3,10 +3,7 @@ package com.ichecc.wechat.payment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ichecc.wechat.ApiOrderQueryDTO;
-import com.ichecc.wechat.ApiUnifiedOrderDTO;
-import com.ichecc.wechat.OrderQueryResponseDTO;
-import com.ichecc.wechat.UnifiedOrderResponseDTO;
+import com.ichecc.domain.VipDepositOrderDO;
 import com.ichecc.wechat.component.WechatPayServiceImpl;
 
 public interface WechatPayService {
@@ -18,14 +15,14 @@ public interface WechatPayService {
 	 * 
 	 * @return
 	 */
-	UnifiedOrderResponseDTO unifiedOrder(ApiUnifiedOrderDTO dto) throws Exception;
+	VipDepositOrderDO unifiedOrder(VipDepositOrderDO orderDO) throws Exception;
 
 	/**
 	 * 订单查询
 	 * 
-	 * @param dto
+	 * @param orderNo
 	 * @return
 	 */
-	OrderQueryResponseDTO orderQuery(ApiOrderQueryDTO dto) throws Exception;
+	VipDepositOrderDO orderQuery(String orderNo) throws Exception;
 
 }

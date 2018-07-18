@@ -1,6 +1,6 @@
-package com.ichecc.wechat;
+package com.ichecc.wechat.dto;
 
-import com.ichecc.front.dto.BaseDTO;
+import com.ichecc.wechat.BaseValidateDTO;
 import com.ichecc.wechat.component.InitConfigBean;
 import com.ichecc.wechat.util.SignUtil;
 
@@ -10,9 +10,9 @@ import com.ichecc.wechat.util.SignUtil;
  * @author lenovopc
  *
  */
-public class ApiCommonDTO extends BaseDTO {
+public class ApiCommonDTO extends BaseValidateDTO {
 
-	private static final long serialVersionUID = 5191606680819190854L;
+	private static final long serialVersionUID = 437849644203294539L;
 	
 	protected static final InitConfigBean config = new InitConfigBean();
 

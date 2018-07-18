@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.ichecc.wechat.ApiUnifiedOrderDTO;
-import com.ichecc.wechat.UnifiedOrderResponseDTO;
+import com.ichecc.domain.VipDepositOrderDO;
+import com.ichecc.wechat.dto.ApiUnifiedOrderDTO;
 import com.ichecc.wechat.payment.WechatPayService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -28,7 +28,9 @@ public class TestWechatPay {
 		query.setSpbill_create_ip("127.0.0.1");
 		query.setAttach("");
 		query.setOpenid("oEUxH0sS0BGO3bNb_rIRv-5xs5Ts");
-		UnifiedOrderResponseDTO order = payService.unifiedOrder(query);
+		
+		VipDepositOrderDO orderQuery = new VipDepositOrderDO();
+		VipDepositOrderDO order = payService.unifiedOrder(orderQuery);
 		System.out.println(order);
 		System.out.println(123);
 		

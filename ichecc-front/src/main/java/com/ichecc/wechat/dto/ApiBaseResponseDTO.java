@@ -1,10 +1,10 @@
-package com.ichecc.wechat;
+package com.ichecc.wechat.dto;
 
-import com.ichecc.front.dto.BaseDTO;
+import com.ichecc.wechat.BaseValidateDTO;
 
-public class ApiBaseResponseDTO extends BaseDTO {
+public class ApiBaseResponseDTO extends BaseValidateDTO {
 
-	private static final long serialVersionUID = -665758776741543069L;
+	private static final long serialVersionUID = -1069492927054302666L;
 
 	static final String SUCCESS = "SUCCESS";
 	static final String FAILURE = "FAIL";
@@ -30,7 +30,7 @@ public class ApiBaseResponseDTO extends BaseDTO {
 		}
 		return true;
 	}
-	
+
 	public boolean validateSys() {
 		return validate();
 	}

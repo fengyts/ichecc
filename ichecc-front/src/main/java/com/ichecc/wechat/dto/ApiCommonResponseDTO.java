@@ -1,4 +1,4 @@
-package com.ichecc.wechat;
+package com.ichecc.wechat.dto;
 
 public class ApiCommonResponseDTO extends ApiBaseResponseDTO {
 

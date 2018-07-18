@@ -26,11 +26,11 @@ import com.ichecc.domain.WechatUserDO;
 import com.ichecc.dto.ICheccUserDTO;
 import com.ichecc.service.IcheccUserService;
 import com.ichecc.service.WechatUserService;
-import com.ichecc.wechat.AccessTokenDTO;
-import com.ichecc.wechat.AuthAccessTokenDTO;
-import com.ichecc.wechat.JSApiTicketDTO;
-import com.ichecc.wechat.WechatApiErrorDTO;
-import com.ichecc.wechat.WechatJsConfigDTO;
+import com.ichecc.wechat.dto.AccessTokenDTO;
+import com.ichecc.wechat.dto.AuthAccessTokenDTO;
+import com.ichecc.wechat.dto.JSApiTicketDTO;
+import com.ichecc.wechat.dto.WechatApiErrorDTO;
+import com.ichecc.wechat.dto.WechatJsConfigDTO;
 import com.ichecc.wechat.util.JsConfigSign;
 import com.ichecc.wechat.util.RequestUtil;
 

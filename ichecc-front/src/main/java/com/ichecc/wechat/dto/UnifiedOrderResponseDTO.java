@@ -1,8 +1,8 @@
-package com.ichecc.wechat;
+package com.ichecc.wechat.dto;
 
 public class UnifiedOrderResponseDTO extends ApiCommonResponseDTO {
 
-	private static final long serialVersionUID = 8083988534592350156L;
+	private static final long serialVersionUID = -8366255659538683769L;
 
 	/**
 	 * JSAPI-公众号支付 NATIVE-扫码支付 APP-APP支付

@@ -1,4 +1,4 @@
-package com.ichecc.wechat;
+package com.ichecc.wechat.dto;
 
 /**
  * 微信支付统一下单接口参数

@@ -20,7 +20,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 
 import com.alibaba.fastjson.JSONObject;
-import com.ichecc.wechat.ApiUnifiedOrderDTO;
+import com.ichecc.wechat.dto.ApiUnifiedOrderDTO;
 
 import ng.bayue.constants.CharsetConstant;
 import ng.bayue.util.StringUtils;
@@ -73,46 +73,18 @@ public class RequestUtil {
 
 	public static String doRequest(String url) throws Exception {
 		try {
-			HttpClient client = SSLClient.registerSSL();
-			HttpPost httpPost = new HttpPost(url);
-			RequestConfig config = RequestConfig.custom().setSocketTimeout(10000).setConnectTimeout(5000)
-					.setConnectionRequestTimeout(5000).setExpectContinueEnabled(false).build();
-			httpPost.setConfig(config);
-			ContentType contentType = ContentType.create("text/plain", CharsetConstant.UTF8);
-			StringEntity se = new StringEntity(CharsetConstant.UTF8, contentType);
-			httpPost.setEntity(se);
-			HttpResponse response = client.execute(httpPost);
-			HttpEntity entity = response.getEntity();
-			String res = EntityUtils.toString(entity, CharsetConstant.UTF8);
-			if (StringUtils.isBlank(res)) {
-				throw new Exception("网络请求异常：返回报文为空");
-			}
+			String res = doRequest(url, null);
 			return res;
 		} catch (KeyManagementException | NoSuchAlgorithmException | IOException e) {
 			throw e;
 		}
 	}
 
-	/**
-	 * 发送xml报文请求，返回也是xml
-	 * 
-	 * @param url
-	 * @param tc
-	 * @return
-	 * @throws Exception
-	 */
-	public static <T> T doRequestXml(String url, String paramXml, Class<T> tc) throws Exception {
-		try {
-			String res = doRequest(url, paramXml);
-			T resObj = parseXmlToBean(res, tc);
-			return resObj;
-		} catch (Exception e) {
-			throw e;
-		}
-	}
-
 	public static String doRequest(String url, String data) throws Exception {
 		try {
+			if (StringUtils.isBlank(url)) {
+				throw new Exception("请求异常：url参数为空");
+			}
 			HttpClient client = SSLClient.registerSSL();
 			HttpPost httpPost = new HttpPost(url);
 			RequestConfig config = RequestConfig.custom().setSocketTimeout(10000).setConnectTimeout(5000)
@@ -133,32 +105,31 @@ public class RequestUtil {
 		}
 	}
 
-	public static <T> T parseJsonToBean(String json, Class<T> tc) throws Exception {
+	/**
+	 * 发送xml报文请求，返回也是xml
+	 * 
+	 * @param url
+	 * @param tc
+	 * @return
+	 * @throws Exception
+	 */
+	public static <T> T doRequestXml(String url, String paramXml, Class<T> tc) throws Exception {
 		try {
-			if (StringUtils.isBlank(json)) {
-				return tc.newInstance();
-			}
-			T resObj = JSONObject.parseObject(json, tc);
+			String res = doRequest(url, paramXml);
+			T resObj = XmlUtil.parseXmlToBean(res, tc);
 			return resObj;
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
-	public static <T> T parseXmlToBean(String xmlStr, Class<T> tc) throws Exception {
-		try {
-			if (StringUtils.isBlank(xmlStr)) {
-				return tc.newInstance();
-			}
-			T resObj = XmlUtil.xmlStrToBean(xmlStr, tc);
-			return resObj;
-		} catch (Exception e) {
-			throw e;
-		}
-	}
 
-	private String getIpAddr(HttpServletRequest request) {
-		String ip = request.getHeader("x-forwarded-for");
+	public String getIpAddr(HttpServletRequest request) {
+		String ip = "127.0.0.1";
+		if (null == request) {
+			return ip;
+		}
+		ip = request.getHeader("x-forwarded-for");
 		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getHeader("Proxy-Client-IP");
 		}
@@ -169,7 +140,8 @@ public class RequestUtil {
 			ip = request.getRemoteAddr();
 		}
 		if ("0:0:0:0:0:0:0:1".equals(ip)) {
-			ip = "127.0.0.1";
+			// ip = "127.0.0.1";
+			return ip;
 		}
 		return ip;
 	}

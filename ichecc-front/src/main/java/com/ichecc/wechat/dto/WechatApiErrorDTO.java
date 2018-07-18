@@ -1,6 +1,6 @@
-package com.ichecc.wechat;
+package com.ichecc.wechat.dto;
 
-import com.ichecc.dto.BaseDTO;
+import com.ichecc.wechat.BaseDTO;
 
 /**
  * <pre>
@@ -8,11 +8,12 @@ import com.ichecc.dto.BaseDTO;
  * </pre>
  *
  * @author fengyts
- * @version $Id: WechatApiErrorDTO.java, v 0.1 2018年6月24日 下午4:09:38 fengyts Exp $
+ * @version $Id: WechatApiErrorDTO.java, v 0.1 2018年6月24日 下午4:09:38 fengyts Exp
+ *          $
  */
 public class WechatApiErrorDTO extends BaseDTO {
 
-	private static final long serialVersionUID = 3310360815483334216L;
+	private static final long serialVersionUID = 8002317093490629458L;
 
 	private String errcode;
 	private String errmsg;

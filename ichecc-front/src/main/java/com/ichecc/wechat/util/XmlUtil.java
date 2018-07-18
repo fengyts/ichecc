@@ -13,7 +13,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
-import com.ichecc.wechat.ApiCommonResponseDTO;
+import com.alibaba.fastjson.JSONObject;
 
 import ng.bayue.util.StringUtils;
 
@@ -64,29 +64,6 @@ public class XmlUtil {
 		}
 	}
 
-	/**
-	 * xml字符串转换成bean对象
-	 * 
-	 * @param xmlStr
-	 *            xml字符串
-	 * @param clazz
-	 *            待转换的class
-	 * @return 转换后的对象
-	 */
-	public static <T> T xmlStrToBean(String xmlStr, Class<T> clazz) throws Exception {
-		try {
-			if (StringUtils.isBlank(xmlStr)) {
-				return clazz.newInstance();
-			}
-			// 将xml格式的数据转换成Map对象
-			Map<String, Object> map = xmlStrToMap(xmlStr);
-			// 将map对象的数据转换成Bean对象
-			T obj = mapToBean(map, clazz);
-			return obj;
-		} catch (Exception e) {
-			throw e;
-		}
-	}
 
 	/**
 	 * 将xml格式的字符串转换成Map对象
@@ -116,6 +93,51 @@ public class XmlUtil {
 			}
 		}
 		return map;
+	}
+	
+	public static <T> T parseJsonToBean(String json, Class<T> tc) throws Exception {
+		try {
+			if (StringUtils.isBlank(json)) {
+				return tc.newInstance();
+			}
+			T resObj = JSONObject.parseObject(json, tc);
+			return resObj;
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	public static <T> T parseXmlToBean(String xmlStr, Class<T> tc) throws Exception {
+		try {
+			T resObj = xmlStrToBean(xmlStr, tc);
+			return resObj;
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	/**
+	 * xml字符串转换成bean对象
+	 * 
+	 * @param xmlStr
+	 *            xml字符串
+	 * @param clazz
+	 *            待转换的class
+	 * @return 转换后的对象
+	 */
+	public static <T> T xmlStrToBean(String xmlStr, Class<T> clazz) throws Exception {
+		try {
+			if (StringUtils.isBlank(xmlStr)) {
+				return clazz.newInstance();
+			}
+			// 将xml格式的数据转换成Map对象
+			Map<String, Object> map = xmlStrToMap(xmlStr);
+			// 将map对象的数据转换成Bean对象
+			T obj = mapToBean(map, clazz);
+			return obj;
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 
 	/**
@@ -202,14 +224,14 @@ public class XmlUtil {
 		return null;
 	}
 
-	public static void main(String[] args) {
-		try {
-			String xmlStr = "<xml><return_code><![CDATA[FAIL]]></return_code><return_msg><![CDATA[签名错误]]></return_msg></xml>";
-			ApiCommonResponseDTO dto = XmlUtil.xmlStrToBean(xmlStr, ApiCommonResponseDTO.class);
-			System.out.println(dto.getAppid());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	public static void main(String[] args) {
+//		try {
+//			String xmlStr = "<xml><return_code><![CDATA[FAIL]]></return_code><return_msg><![CDATA[签名错误]]></return_msg></xml>";
+//			ApiCommonResponseDTO dto = XmlUtil.xmlStrToBean(xmlStr, ApiCommonResponseDTO.class);
+//			System.out.println(dto.getAppid());
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 }
