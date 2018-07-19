@@ -19,7 +19,6 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 
-import com.alibaba.fastjson.JSONObject;
 import com.ichecc.wechat.dto.ApiUnifiedOrderDTO;
 
 import ng.bayue.constants.CharsetConstant;
