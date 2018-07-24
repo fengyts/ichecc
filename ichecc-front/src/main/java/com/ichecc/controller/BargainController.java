@@ -12,7 +12,7 @@ import com.ichecc.common.ResultData;
 import com.ichecc.vo.HiggleJoinVO;
 
 @Controller
-@RequestMapping(Constants.API_BASE_PATH + "/bargain/")
+@RequestMapping(Constants.API_BASE_PATH + "bargain")
 public class BargainController {
 	
 	@Autowired

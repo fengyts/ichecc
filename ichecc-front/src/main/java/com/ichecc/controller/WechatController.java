@@ -10,7 +10,7 @@ import com.ichecc.common.Constants;
 import com.ichecc.common.ResultData;
 
 @Controller
-@RequestMapping(Constants.API_BASE_PATH + "wechat/")
+@RequestMapping(Constants.API_BASE_PATH + "wechat")
 public class WechatController extends BaseController {
 	
 	@Autowired

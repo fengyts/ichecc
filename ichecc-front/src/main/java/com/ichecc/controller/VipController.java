@@ -11,7 +11,7 @@ import com.ichecc.common.Constants;
 import com.ichecc.common.ResultData;
 
 @Controller
-@RequestMapping(Constants.API_BASE_PATH + "/vip/")
+@RequestMapping(Constants.API_BASE_PATH + "vip")
 public class VipController {
 	
 	@Autowired
