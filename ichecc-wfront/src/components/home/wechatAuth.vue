@@ -42,8 +42,12 @@ export default {
         "code": _that.$crypto.encryptAes(_code),
         "authSymbol": 1
       };
+      console.log("send code:----");
+      console.log(_code);
+      // return;
       this.$http.post("/api/wechat/authorize", data).then(res => {
         let result = res;
+
         if (result.code === _that.$resp_code) {
           let user = result.data;
           _that.$localStorage.setLocalStorage("icheccuser", user);
@@ -60,7 +64,8 @@ export default {
   },
   methods: {
     wechatAuth() {
-      var isTest = process.env === 'production' ? "1" : "0"; // 1:线上；0-开发/测试环境
+      // var isTest = process.env === 'production' ? "1" : "0"; // 1:线上；0-开发/测试环境
+      var isTest = '1';
       var _authUrl = this.getAuthUrl(isTest);
       location.href = _authUrl;
     },
@@ -68,12 +73,13 @@ export default {
       let scope = "snsapi_userinfo",
         appid = "wxeec85623859fc30e", // 默认正式环境
         redirect_uri = encodeURIComponent(
-          "http://www.checc.cc/mp/MP_verify_KfRYessrSJskNVws.txt"
+          "http://www.checc.cc/ichecc-front/"
         ),
         state = this.rdPath; // 跳转首页(默认)
       if (!state) {
         state = "/";
       }
+      state = encodeURIComponent(state);
 
       //开发/测试环境
       if (_envType === "0") {

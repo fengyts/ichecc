@@ -33,12 +33,26 @@ public class WechatPayServiceImpl implements WechatPayService {
 	private IcheccUserService userService;
 
 	@Override
-	public VipDepositOrderDO unifiedOrder(VipDepositOrderDO orderDO) throws Exception {
+	public VipDepositOrderDO unifiedOrder(VipDepositOrderDO orderDO, ApiUnifiedOrderDTO dto) throws Exception {
 		try {
 			Long userId = orderDO.getUserId();
+			if(null == userId){
+				logger.info("支付异常，用户信息不能为空");
+				return null;
+			}
 			// 查询最新未支付订单
 			VipDepositOrderDO orderLatest = depositOrderService.selectLatestUnPaidOrder(userId);
+			Double totalFee = orderDO.getAmount();
 			if (null != orderLatest) {
+				if(null != totalFee){
+					// 校验未支付订单金额和本次请求是否一样, 若一样，则使用微支付订单重新发起支付，否则生成新订单
+					if(totalFee.doubleValue() == orderLatest.getAmount().doubleValue()){
+						return orderLatest;
+					}
+				} else {
+					logger.info("微信支付下单失败: 支付金额为空");
+					return null;
+				}
 				return orderLatest;
 			}
 			IcheccUserDO userDO = userService.selectById(userId);
@@ -49,9 +63,10 @@ public class WechatPayServiceImpl implements WechatPayService {
 			String openid = userDO.getOpenid();
 			String orderNo = generateOrderNo();
 
-			ApiUnifiedOrderDTO dto = new ApiUnifiedOrderDTO();
+//			ApiUnifiedOrderDTO dto = new ApiUnifiedOrderDTO();
 			dto.setOut_trade_no(orderNo);
-			dto.setTotal_fee(orderDO.getAmount().intValue() * 100); // 元转为分
+			totalFee = totalFee * 100; // 元转为分
+			dto.setTotal_fee(totalFee.intValue());
 			dto.setTrade_type(ApiUnifiedOrderDTO.TradeType.JSAPI.type);
 			dto.setOpenid(openid);
 
@@ -78,13 +93,13 @@ public class WechatPayServiceImpl implements WechatPayService {
 			orderDO.setOpenid(openid);
 			orderDO.setOrderNo(orderNo);
 			orderDO.setPrepayId(resDto.getPrepay_id());
-			orderDO.setAmount(orderDO.getAmount());
+//			orderDO.setAmount(orderDO.getAmount());
 			orderDO.setOrderStatus(DepositOrderStatus.UNPAID);
 			orderDO.setTradeState(DepositOrderTradeState.USERPAYING);
 			orderDO.setCreateTime(new Date());
 
 			Long status = depositOrderService.insert(orderDO);
-			if (status != 1) {
+			if (status <= 0) {
 				logger.info("支付下单异常，保存订单信息失败");
 				throw new CommonServiceException("支付下单异常，保存订单信息失败");
 			}

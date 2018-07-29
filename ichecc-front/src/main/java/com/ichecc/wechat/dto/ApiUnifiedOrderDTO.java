@@ -102,13 +102,13 @@ public class ApiUnifiedOrderDTO extends ApiCommonDTO {
 		}
 		// 特殊场景必填参数校验
 		// trade_type=NATIVE时（即扫码支付），product_id必传
-		if (trade_type.equalsIgnoreCase(TradeType.NATIVE.type)) {
+		if (TradeType.NATIVE.type.equalsIgnoreCase(trade_type)) {
 			if (isBlank(product_id)) {
 				return false;
 			}
 		}
 		// trade_type=JSAPI时（即公众号支付），openid必传
-		if (trade_type.equalsIgnoreCase(TradeType.JSAPI.type)) {
+		if (TradeType.JSAPI.type.equalsIgnoreCase(trade_type)) {
 			if (isBlank(openid)) {
 				return false;
 			}

@@ -53,12 +53,12 @@ public class WechatAO extends BaseAO {
 	/** 微信支付debug模式 */
 	private static Boolean debug;
 
-	@Value("#{metaf['appid']}")
+	@Value("#{metaf['wechatpay.appid']}")
 	private void setAppid(String appid) {
 		WechatAO.appid = appid;
 	}
 
-	@Value("#{metaf['secret']}")
+	@Value("#{metaf['wechatpay.secrectKey']}")
 	private void setSecret(String secret) {
 		WechatAO.secret = secret;
 	}
@@ -203,24 +203,24 @@ public class WechatAO extends BaseAO {
 
 	private String doRequest(String url) throws Exception {
 		try {
-//			HttpClient client = SSLClient.registerSSL();
-//			HttpPost httpPost = new HttpPost(url);
-//			RequestConfig config = RequestConfig.custom().setSocketTimeout(10000).setConnectTimeout(5000)
-//					.setConnectionRequestTimeout(5000).setExpectContinueEnabled(false).build();
-//			httpPost.setConfig(config);
-//			ContentType contentType = ContentType.create("text/plain", CharsetConstant.UTF8);
-//			StringEntity se = new StringEntity(CharsetConstant.UTF8, contentType);
-//			httpPost.setEntity(se);
-//			HttpResponse response = client.execute(httpPost);
-//			HttpEntity entity = response.getEntity();
-//			String res = EntityUtils.toString(entity, CharsetConstant.UTF8);
-//			if (StringUtils.isBlank(res)) {
-//				logger.error("请求微信服务器异常：网络请求异常");
-//				throw new Exception("网络请求异常：获取数据为空");
-//			}
-//			return res;
-			String res = RequestUtil.doRequest(url);
+			HttpClient client = SSLClient.registerSSL();
+			HttpPost httpPost = new HttpPost(url);
+			RequestConfig config = RequestConfig.custom().setSocketTimeout(10000).setConnectTimeout(5000)
+					.setConnectionRequestTimeout(5000).setExpectContinueEnabled(false).build();
+			httpPost.setConfig(config);
+			ContentType contentType = ContentType.create("text/plain", CharsetConstant.UTF8);
+			StringEntity se = new StringEntity(CharsetConstant.UTF8, contentType);
+			httpPost.setEntity(se);
+			HttpResponse response = client.execute(httpPost);
+			HttpEntity entity = response.getEntity();
+			String res = EntityUtils.toString(entity, CharsetConstant.UTF8);
+			if (StringUtils.isBlank(res)) {
+				logger.error("请求微信服务器异常：网络请求异常");
+				throw new Exception("网络请求异常：获取数据为空");
+			}
 			return res;
+//			String res = RequestUtil.doRequest(url);
+//			return res;
 		} catch (KeyManagementException | NoSuchAlgorithmException | IOException e) {
 			logger.error("请求微信服务器异常：网络请求异常", e);
 			throw e;

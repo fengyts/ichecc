@@ -10,7 +10,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.ichecc.dao.IcheccUserDAO;
 import com.ichecc.dao.TopicItemDAO;
 import com.ichecc.dto.ICheccUserDTO;
-import com.ichecc.vo.HiggleJoinVO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath*:spring/spring-context-checcshare.xml" })

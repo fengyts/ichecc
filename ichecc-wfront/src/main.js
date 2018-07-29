@@ -19,10 +19,6 @@ window.jQuery = $;
 window.$ = $;
 
 Vue.config.productionTip = false
-// axios.defaults.baseURL = process.env.BASE_API_URL
-// axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? process.env.BASE_API_URL : ''
-// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-// Vue.prototype.$axios = axios
 Vue.prototype.$resp_code = "1"; // 接口错误代码: "1"-成功；"0"-失败
 Vue.prototype.$localStorage = localStorage;
 Vue.prototype.$crypto = crypto;

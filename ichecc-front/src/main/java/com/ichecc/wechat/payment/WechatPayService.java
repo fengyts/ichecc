@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import com.ichecc.domain.VipDepositOrderDO;
 import com.ichecc.wechat.component.WechatPayServiceImpl;
+import com.ichecc.wechat.dto.ApiUnifiedOrderDTO;
 
 public interface WechatPayService {
 
@@ -15,7 +16,7 @@ public interface WechatPayService {
 	 * 
 	 * @return
 	 */
-	VipDepositOrderDO unifiedOrder(VipDepositOrderDO orderDO) throws Exception;
+	VipDepositOrderDO unifiedOrder(VipDepositOrderDO orderDO, ApiUnifiedOrderDTO dto) throws Exception;
 
 	/**
 	 * 订单查询
