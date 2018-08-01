@@ -84,9 +84,6 @@ export default {
       //开发/测试环境
       if (_envType === "0") {
         appid = "wx11b8b11348ff6db3";
-        // redirect_uri = encodeURIComponent("http://47.94.199.26/ichecc-front/");
-        // redirect_uri = encodeURIComponent("http://192.168.9.108:8080");
-        // redirect_uri = encodeURIComponent("http://192.168.0.107:8080");
         redirect_uri = encodeURIComponent(process.env.BASE_WEB_URL);
       }
       let _authUrl =

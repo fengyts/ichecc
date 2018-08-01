@@ -125,7 +125,7 @@ public class XmlUtil {
 	 *            待转换的class
 	 * @return 转换后的对象
 	 */
-	public static <T> T xmlStrToBean(String xmlStr, Class<T> clazz) throws Exception {
+	private static <T> T xmlStrToBean(String xmlStr, Class<T> clazz) throws Exception {
 		try {
 			if (StringUtils.isBlank(xmlStr)) {
 				return clazz.newInstance();

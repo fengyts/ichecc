@@ -31,8 +31,8 @@ public class ApiCommonResponseDTO extends ApiBaseResponseDTO {
 	}
 	
 	public boolean validateBiz(){
-//		return validate();
-		return (isBlank(result_code) || FAILURE.equals(result_code));
+		return validate();
+//		return (isBlank(result_code) || FAILURE.equals(result_code));
 	}
 
 	public String getAppid() {

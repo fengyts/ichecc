@@ -7,6 +7,8 @@ import com.ichecc.domain.VipDepositOrderDO;
 import com.ichecc.wechat.component.WechatPayServiceImpl;
 import com.ichecc.wechat.dto.ApiUnifiedOrderDTO;
 
+import ng.bayue.common.CommonResultMessage;
+
 public interface WechatPayService {
 
 	Logger logger = LoggerFactory.getLogger(WechatPayServiceImpl.class);
@@ -16,7 +18,7 @@ public interface WechatPayService {
 	 * 
 	 * @return
 	 */
-	VipDepositOrderDO unifiedOrder(VipDepositOrderDO orderDO, ApiUnifiedOrderDTO dto) throws Exception;
+	CommonResultMessage unifiedOrder(VipDepositOrderDO orderDO, ApiUnifiedOrderDTO dto) throws Exception;
 
 	/**
 	 * 订单查询
@@ -24,6 +26,14 @@ public interface WechatPayService {
 	 * @param orderNo
 	 * @return
 	 */
-	VipDepositOrderDO orderQuery(String orderNo) throws Exception;
+	CommonResultMessage orderQuery(String orderNo) throws Exception;
+
+	/**
+	 * 微信支付结果通知
+	 * 
+	 * @param paramXmlStr
+	 * @return
+	 */
+	CommonResultMessage callback(String paramXmlStr) throws Exception;
 
 }

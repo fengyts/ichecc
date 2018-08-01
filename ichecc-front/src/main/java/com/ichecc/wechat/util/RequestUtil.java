@@ -19,8 +19,6 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 
-import com.ichecc.wechat.dto.ApiUnifiedOrderDTO;
-
 import ng.bayue.constants.CharsetConstant;
 import ng.bayue.util.StringUtils;
 import ng.bayue.util.net.SSLClient;
@@ -37,7 +35,7 @@ public class RequestUtil {
 	public static SortedMap<String, Object> sortBeanField(Object obj) throws Exception {
 		try {
 			SortedMap<String, Object> map = new TreeMap<String, Object>();
-			Class<?> c = ApiUnifiedOrderDTO.class;
+			Class<?> c = obj.getClass();
 
 			Field[] fields = null;
 			while (null != c) {
