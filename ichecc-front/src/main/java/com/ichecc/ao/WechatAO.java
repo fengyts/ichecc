@@ -32,7 +32,6 @@ import com.ichecc.wechat.dto.JSApiTicketDTO;
 import com.ichecc.wechat.dto.WechatApiErrorDTO;
 import com.ichecc.wechat.dto.WechatJsConfigDTO;
 import com.ichecc.wechat.util.JsConfigSign;
-import com.ichecc.wechat.util.RequestUtil;
 
 import ng.bayue.constants.CharsetConstant;
 import ng.bayue.service.RedisCacheService;
@@ -190,10 +189,10 @@ public class WechatAO extends BaseAO {
 		try {
 			WechatApiErrorDTO err = null;
 			String errcode = json.getString("errcode");
-			if (StringUtils.isNotBlank(errcode)) {
+			if (StringUtils.isNotBlank(errcode) || !"0".equals(errcode)) {
 				err = JSONObject.toJavaObject(json, WechatApiErrorDTO.class);
-				logger.info("微信授权异常,请求微信接口失败,错误信息：code:{},msg:{}", err.getErrcode(), err.getErrmsg());
-				throw new Exception("微信授权异常,请求微信接口失败,错误信息：" + json.toJSONString());
+				logger.info("请求微信接口失败,错误信息：code:{},msg:{}", err.getErrcode(), err.getErrmsg());
+				throw new Exception("请求微信接口失败,错误信息：" + json.toJSONString());
 			}
 			return err;
 		} catch (Exception e) {
@@ -245,7 +244,7 @@ public class WechatAO extends BaseAO {
 			String jsonStr = doRequest(jsAccessTokenUrl);
 			JSONObject json = JSONObject.parseObject(jsonStr);
 			// 接口返回错误信息
-//			checkError(json);
+			checkError(json);
 
 			logger.info("微信jssdk-获取access_token, access_token json:{}", json);
 			accessToken = JSONObject.toJavaObject(json, AccessTokenDTO.class);
@@ -275,7 +274,7 @@ public class WechatAO extends BaseAO {
 			String jsonStr = doRequest(ticketUrl);
 			JSONObject json = JSONObject.parseObject(jsonStr);
 			// 接口返回错误信息
-//			checkError(json);
+			checkError(json);
 			String errcode = json.getString("errcode");
 			if(!"0".equals(errcode)){
 				logger.info("微信获取jsapi ticket票据异常：返回ticket失败");

@@ -1,6 +1,5 @@
 package com.ichecc.wechat.component;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;

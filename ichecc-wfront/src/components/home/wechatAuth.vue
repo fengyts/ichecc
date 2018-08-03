@@ -73,7 +73,7 @@ export default {
       let scope = "snsapi_userinfo",
         appid = "wxeec85623859fc30e", // 默认正式环境
         redirect_uri = encodeURIComponent(
-          "http://www.checc.cc/ichecc-front/"
+          "http://icweb.checc.cc"
         ),
         state = this.rdPath; // 跳转首页(默认)
       if (!state) {
