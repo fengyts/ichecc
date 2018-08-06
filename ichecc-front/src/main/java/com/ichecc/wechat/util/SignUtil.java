@@ -7,14 +7,16 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.UUID;
 
 import com.ichecc.wechat.component.InitConfigBean;
+import com.ichecc.wechat.dto.JsApiWXPayDTO;
 
 import ng.bayue.constants.CharsetConstant;
 
 public class SignUtil {
-	
+
 	private static final InitConfigBean config = new InitConfigBean();
 
 	public static String createSign(Object paramBean) throws Exception {
@@ -67,6 +69,26 @@ public class SignUtil {
 		}
 	}
 
+	/**
+	 * 微信jsapi支付接口生成sign
+	 * @param wxPayDto
+	 * @return
+	 * @throws Exception
+	 */
+	public static String createJsApiPaySign(JsApiWXPayDTO wxPayDto) throws Exception {
+		try {
+			SortedMap<String, Object> map = new TreeMap<String, Object>();
+			map.put("appId", wxPayDto.getAppid());
+			map.put("nonceStr", wxPayDto.getNonceStr());
+			map.put("timeStamp", wxPayDto.getTimestamp());
+			map.put("package", wxPayDto.getPkage());
+			map.put("signType", wxPayDto.getSignType());
+			String sign = createSign(map, config.getApiKey(), CharsetConstant.UTF8);
+			return sign;
+		} catch (Exception e) {
+			throw e;
+		}
+	}
 
 	public static boolean checkSign(Object resBean) throws Exception {
 		try {
@@ -122,8 +144,8 @@ public class SignUtil {
 		}
 		return (int) ((random * num));
 	}
-	
-	public static String uuidString(){
+
+	public static String uuidString() {
 		return UUID.randomUUID().toString().replace("-", "");
 	}
 

@@ -3,9 +3,9 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
-// const apiUrl = "http://192.168.9.108:8090/ichecc-front/"
-// const apiUrl = "http://47.94.199.26/ichecc-front/";
-const apiUrl = "http://icheccfront.checc.cc/";
+// const apiUrl = "http://192.168.9.108:8090/ichecc-front"
+// const apiUrl = "http://47.94.199.26/ichecc-front";
+const apiUrl = "http://icheccfront.checc.cc";
 
 module.exports = {
   dev: {

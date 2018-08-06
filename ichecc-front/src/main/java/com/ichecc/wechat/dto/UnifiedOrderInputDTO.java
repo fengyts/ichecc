@@ -23,6 +23,15 @@ public class UnifiedOrderInputDTO extends BaseValidateDTO {
 	/** 充值金额 */
 	private Double depositAmount;
 
+	private String body;
+	private String ip;
+	private String attach;
+
+	@Override
+	protected boolean validate() {
+		return false;
+	}
+
 	public Long getUserId() {
 		return userId;
 	}
@@ -55,9 +64,28 @@ public class UnifiedOrderInputDTO extends BaseValidateDTO {
 		this.depositAmount = depositAmount;
 	}
 
-	@Override
-	protected boolean validate() {
-		return false;
+	public String getBody() {
+		return body;
+	}
+
+	public void setBody(String body) {
+		this.body = body;
+	}
+
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+	public String getAttach() {
+		return attach;
+	}
+
+	public void setAttach(String attach) {
+		this.attach = attach;
 	}
 
 }

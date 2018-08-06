@@ -29,10 +29,13 @@ import com.ichecc.service.WechatUserService;
 import com.ichecc.wechat.dto.AccessTokenDTO;
 import com.ichecc.wechat.dto.AuthAccessTokenDTO;
 import com.ichecc.wechat.dto.JSApiTicketDTO;
+import com.ichecc.wechat.dto.UnifiedOrderInputDTO;
 import com.ichecc.wechat.dto.WechatApiErrorDTO;
 import com.ichecc.wechat.dto.WechatJsConfigDTO;
+import com.ichecc.wechat.payment.WechatPayService;
 import com.ichecc.wechat.util.JsConfigSign;
 
+import ng.bayue.common.CommonResultMessage;
 import ng.bayue.constants.CharsetConstant;
 import ng.bayue.service.RedisCacheService;
 import ng.bayue.util.StringUtils;
@@ -61,7 +64,7 @@ public class WechatAO extends BaseAO {
 	private void setSecret(String secret) {
 		WechatAO.secret = secret;
 	}
-	
+
 	@Value("#{metaf['wechat_jsapi_config_debug']}")
 	private void setDebug(Boolean debug) {
 		WechatAO.debug = debug;
@@ -73,6 +76,8 @@ public class WechatAO extends BaseAO {
 	private WechatUserService wechatUserService;
 	@Autowired
 	private IcheccUserService icheccUserService;
+	@Autowired
+	private WechatPayService wechatPayService;
 
 	public ResultData authorize(String code) {
 		try {
@@ -153,7 +158,7 @@ public class WechatAO extends BaseAO {
 			String jsonStr = doRequest(accessTokenUrl);
 			JSONObject json = JSONObject.parseObject(jsonStr);
 			// 接口返回错误信息
-			checkError(json);
+//			checkError(json);
 
 			logger.info("微信授权-获取access_token, access_token json:{}", json);
 			accessToken = JSONObject.toJavaObject(json, AuthAccessTokenDTO.class);
@@ -218,8 +223,8 @@ public class WechatAO extends BaseAO {
 				throw new Exception("网络请求异常：获取数据为空");
 			}
 			return res;
-//			String res = RequestUtil.doRequest(url);
-//			return res;
+			// String res = RequestUtil.doRequest(url);
+			// return res;
 		} catch (KeyManagementException | NoSuchAlgorithmException | IOException e) {
 			logger.error("请求微信服务器异常：网络请求异常", e);
 			throw e;
@@ -244,7 +249,7 @@ public class WechatAO extends BaseAO {
 			String jsonStr = doRequest(jsAccessTokenUrl);
 			JSONObject json = JSONObject.parseObject(jsonStr);
 			// 接口返回错误信息
-			checkError(json);
+//			checkError(json);
 
 			logger.info("微信jssdk-获取access_token, access_token json:{}", json);
 			accessToken = JSONObject.toJavaObject(json, AccessTokenDTO.class);
@@ -274,9 +279,9 @@ public class WechatAO extends BaseAO {
 			String jsonStr = doRequest(ticketUrl);
 			JSONObject json = JSONObject.parseObject(jsonStr);
 			// 接口返回错误信息
-			checkError(json);
+//			checkError(json);
 			String errcode = json.getString("errcode");
-			if(!"0".equals(errcode)){
+			if (!"0".equals(errcode)) {
 				logger.info("微信获取jsapi ticket票据异常：返回ticket失败");
 				throw new Exception("微信获取jsapi ticket票据异常");
 			}
@@ -295,7 +300,7 @@ public class WechatAO extends BaseAO {
 
 	public ResultData getWechatJSConfig(String url) {
 		try {
-			if(StringUtils.isBlank(url)){
+			if (StringUtils.isBlank(url)) {
 				return ResultData.failureMsg(ResultCode.Common.PARAMS_ERROR);
 			}
 			JSApiTicketDTO ticketDto = getJsApiTicket();
@@ -303,13 +308,27 @@ public class WechatAO extends BaseAO {
 			WechatJsConfigDTO config = JsConfigSign.sign(jsapi_ticket, url);
 			config.setAppid(appid);
 			config.setDebug(debug);
-			
+
 			logger.info("微信jsapi获取config: {}", JSONObject.toJSONString(config));
-			
+
 			return ResultData.success(config);
 		} catch (Exception e) {
 			logger.info("微信jsapi获取配置异常: {}", e);
 			return ResultData.failureMsg(ResultCode.Biz.WECHAT_PAY_CONFIG_ERROR);
+		}
+	}
+
+	public ResultData getPayOrder(UnifiedOrderInputDTO inputDto) {
+		try {
+			CommonResultMessage crm = wechatPayService.unifiedOrder(inputDto);
+			if (CommonResultMessage.Failure == crm.getResult()) {
+				logger.info("微信支付下单异常：{}", crm.getMessage());
+				throw new Exception("微信支付下单异常");
+			}
+			return ResultData.success(crm.getData());
+		} catch (Exception e) {
+			logger.info("微信支付下单异常", e);
+			return ResultData.failure("微信支付异常");
 		}
 	}
 

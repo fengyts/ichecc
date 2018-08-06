@@ -6,8 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.ichecc.ao.WechatAO;
+import com.ichecc.common.ResultData;
 import com.ichecc.domain.VipDepositOrderDO;
+import com.ichecc.wechat.constant.WechatPayConstants;
 import com.ichecc.wechat.dto.ApiUnifiedOrderDTO;
+import com.ichecc.wechat.dto.JsApiWXPayDTO;
+import com.ichecc.wechat.dto.UnifiedOrderInputDTO;
 import com.ichecc.wechat.payment.WechatPayService;
 
 import ng.bayue.common.CommonResultMessage;
@@ -18,6 +23,8 @@ public class TestWechatPay {
 
 	@Autowired
 	private WechatPayService payService;
+//	@Autowired
+//	private WechatAO wechatAo;
 
 	/**
 	 * 测试支付下单
@@ -25,21 +32,29 @@ public class TestWechatPay {
 	 */
 	@Test
 	public void unifiedOrder() throws Exception {
-		ApiUnifiedOrderDTO query = new ApiUnifiedOrderDTO();
-		query.setBody("测试支付下单");
-		query.setTotal_fee(100);
-		query.setOut_trade_no("180718001");
-		query.setTrade_type(ApiUnifiedOrderDTO.TradeType.JSAPI.name());
-		query.setSpbill_create_ip("127.0.0.1");
-		query.setAttach("");
-//		query.setOpenid("oEUxH0sS0BGO3bNb_rIRv-5xs5Ts");
-		query.setOpenid("o8qMy0zIbp3UxBGDa__Aqc5ks92o");
+//		ApiUnifiedOrderDTO query = new ApiUnifiedOrderDTO();
+//		query.setBody("测试支付下单");
+//		query.setTotal_fee(100);
+//		query.setOut_trade_no("180718001");
+//		query.setTrade_type(WechatPayConstants.TradeType.JSAPI.name());
+//		query.setSpbill_create_ip("127.0.0.1");
+//		query.setAttach("");
+////		query.setOpenid("oEUxH0sS0BGO3bNb_rIRv-5xs5Ts");
+//		query.setOpenid("o8qMy0zIbp3UxBGDa__Aqc5ks92o");
+//		
+//		VipDepositOrderDO orderQuery = new VipDepositOrderDO();
+//		orderQuery.setUserId(2L);
+//		orderQuery.setAmount(0.01);
 		
-		VipDepositOrderDO orderQuery = new VipDepositOrderDO();
-		orderQuery.setUserId(2L);
-		orderQuery.setAmount(0.01);
-		CommonResultMessage crm = payService.unifiedOrder(orderQuery, query);
+		UnifiedOrderInputDTO inputDto = new UnifiedOrderInputDTO();
+		inputDto.setBody("测试支付下单");
+		inputDto.setUserId(2L);
+		inputDto.setDepositAmount(0.01);
+		inputDto.setIp("127.0.0.1");
+		CommonResultMessage crm = payService.unifiedOrder(inputDto);
 		System.out.println(crm);
+//		ResultData rd = wechatAo.getPayOrder(inputDto);
+//		System.out.println(rd);
 		System.out.println(123);
 		
 		
@@ -85,6 +100,12 @@ public class TestWechatPay {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	@Test
+	public void testConfigLoader(){
+		JsApiWXPayDTO pay = new JsApiWXPayDTO();
+		System.out.println(pay.getAppid());
 	}
 
 }

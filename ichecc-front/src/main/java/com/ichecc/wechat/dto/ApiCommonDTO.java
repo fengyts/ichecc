@@ -2,6 +2,7 @@ package com.ichecc.wechat.dto;
 
 import com.ichecc.wechat.BaseValidateDTO;
 import com.ichecc.wechat.component.InitConfigBean;
+import com.ichecc.wechat.constant.WechatPayConstants;
 import com.ichecc.wechat.util.SignUtil;
 
 /**
@@ -16,13 +17,6 @@ public class ApiCommonDTO extends BaseValidateDTO {
 	
 	protected static final InitConfigBean config = new InitConfigBean();
 
-	public static final class SignType {
-		// MD5, SHA1;
-		/** 默认签名算法 */
-		public static final String MD5_DEFAULT = "MD5";
-		public static final String SHA1 = "SHA1";
-	}
-
 	/** 【必填】微信支付分配的公众账号ID（企业号corpid即为此appId） */
 	private String appid = config.getAppid();
 	/** 【必填】微信支付分配的商户号 */
@@ -32,7 +26,7 @@ public class ApiCommonDTO extends BaseValidateDTO {
 	/** 【必填】通过签名算法计算得出的签名值，详见签名生成算法 */
 	private String sign;
 	/** 【选填】签名类型，默认为MD5，支持HMAC-SHA256和MD5。此参数在有些接口是必填项，具体参考接口文档 */
-	private String sign_type = SignType.MD5_DEFAULT;
+	private String sign_type = WechatPayConstants.SignType.MD5_DEFAULT;
 
 	@Override
 	protected boolean validate() {

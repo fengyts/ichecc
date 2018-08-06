@@ -1,5 +1,7 @@
 package com.ichecc.wechat.dto;
 
+import com.ichecc.wechat.constant.WechatPayConstants;
+
 /**
  * 微信支付统一下单接口参数
  * 
@@ -10,30 +12,6 @@ public class ApiUnifiedOrderDTO extends ApiCommonDTO {
 
 	private static final long serialVersionUID = -2737337776319054570L;
 	
-	
-
-	/**
-	 * 支付类型
-	 * 
-	 * @author lenovopc
-	 *
-	 */
-	public static enum TradeType {
-		/** 公众号支付 */
-		JSAPI("JSAPI"),
-		/** 扫码支付 */
-		NATIVE("NATIVE"),
-		/** APP支付 */
-		APP("APP"),
-		/** 刷卡支付，刷卡支付有单独的支付接口，不调用统一下单接口 */
-		MICROPAY("MICROPAY");
-
-		public String type;
-
-		private TradeType(String type) {
-			this.type = type;
-		}
-	}
 
 	/** 【选填】 自定义参数，可以为终端设备号(门店号或收银设备ID)，PC网页或公众号内支付可以传"WEB" */
 	private String device_info = "WEB";
@@ -102,13 +80,13 @@ public class ApiUnifiedOrderDTO extends ApiCommonDTO {
 		}
 		// 特殊场景必填参数校验
 		// trade_type=NATIVE时（即扫码支付），product_id必传
-		if (TradeType.NATIVE.type.equalsIgnoreCase(trade_type)) {
+		if (WechatPayConstants.TradeType.NATIVE.type.equalsIgnoreCase(trade_type)) {
 			if (isBlank(product_id)) {
 				return false;
 			}
 		}
 		// trade_type=JSAPI时（即公众号支付），openid必传
-		if (TradeType.JSAPI.type.equalsIgnoreCase(trade_type)) {
+		if (WechatPayConstants.TradeType.JSAPI.type.equalsIgnoreCase(trade_type)) {
 			if (isBlank(openid)) {
 				return false;
 			}

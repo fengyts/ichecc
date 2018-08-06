@@ -17,7 +17,7 @@ public class WechatJsConfigDTO extends BaseDTO {
 
 	/** 必填，公众号的唯一标识 */
 	private String appid;
-	/** 必填，生成签名的时间戳 */
+	/** 必填，生成签名的时间戳,自1970年以来的秒数,单位：秒   */
 	private String timestamp;
 	/** 必填，生成签名的随机串 */
 	private String nonceStr;

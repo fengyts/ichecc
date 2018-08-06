@@ -60,7 +60,6 @@ var httpRequestUtil = {
     if (!authSymbol) {
       data.userId = getUserInfo();
     }
-    console.log(data);
     let params = qs.stringify(data);
     return new Promise((resolve, reject) => {
       axios.post(url, params).then(response => {

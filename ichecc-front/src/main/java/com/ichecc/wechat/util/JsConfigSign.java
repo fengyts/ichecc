@@ -23,7 +23,8 @@ public class JsConfigSign {
 			final String string1 = "jsapi_ticket=" + jsapi_ticket + "&noncestr=" + nonce_str + "&timestamp=" + timestamp
 					+ "&url=" + url;
 
-			String signature = SecurityUtil.encryptMD5(string1);
+//			String signature = SecurityUtil.encryptMD5(string1);
+			String signature = SecurityUtil.encryptSHA1(string1);
 
 			WechatJsConfigDTO config = new WechatJsConfigDTO();
 			config.setNonceStr(nonce_str);

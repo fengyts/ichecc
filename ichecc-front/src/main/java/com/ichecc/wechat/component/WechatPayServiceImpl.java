@@ -13,9 +13,12 @@ import com.ichecc.service.IcheccUserService;
 import com.ichecc.service.VipDepositOrderService;
 import com.ichecc.wechat.bean.PayOrderNoGenerator;
 import com.ichecc.wechat.constant.ApiConfigConstant;
+import com.ichecc.wechat.constant.WechatPayConstants;
 import com.ichecc.wechat.dto.ApiOrderQueryDTO;
 import com.ichecc.wechat.dto.ApiUnifiedOrderDTO;
+import com.ichecc.wechat.dto.JsApiWXPayDTO;
 import com.ichecc.wechat.dto.OrderQueryResponseDTO;
+import com.ichecc.wechat.dto.UnifiedOrderInputDTO;
 import com.ichecc.wechat.dto.UnifiedOrderResponseDTO;
 import com.ichecc.wechat.dto.WechatPayCallbackDTO;
 import com.ichecc.wechat.payment.WechatPayService;
@@ -36,24 +39,29 @@ public class WechatPayServiceImpl implements WechatPayService {
 	private IcheccUserService userService;
 
 	@Override
-	public CommonResultMessage unifiedOrder(VipDepositOrderDO orderDO, ApiUnifiedOrderDTO dto) throws Exception {
+	public CommonResultMessage unifiedOrder(UnifiedOrderInputDTO inputDto) throws Exception {
 		try {
-			Long userId = orderDO.getUserId();
+			Long userId = inputDto.getUserId();
 			if (null == userId) {
 				logger.info("支付异常，用户信息不能为空");
 				return CommonResultMessage.failure("支付异常，用户信息不能为空");
 			}
 			// 查询最新未支付订单
 			VipDepositOrderDO orderLatest = depositOrderService.selectLatestUnPaidOrder(userId);
-			Double totalFee = orderDO.getAmount();
+			Double totalFee = inputDto.getDepositAmount();
 			if (null == totalFee || totalFee.doubleValue() <= 0) {
 				logger.info("微信支付下单失败: 支付金额为空");
 				return CommonResultMessage.failure("微信支付下单失败: 支付金额为空");
 			}
+			JsApiWXPayDTO wxPayDto = new JsApiWXPayDTO();
+			String paySign = "";
 			if (null != orderLatest) {
 				// 校验未支付订单金额和本次请求是否一样, 若一样，则使用微支付订单重新发起支付，否则生成新订单
 				if (totalFee.doubleValue() == orderLatest.getAmount().doubleValue()) {
-					return CommonResultMessage.success(orderLatest);
+					wxPayDto.setPkage(orderLatest.getPrepayId());
+					paySign = SignUtil.createJsApiPaySign(wxPayDto);
+					wxPayDto.setPaySign(paySign);
+					return CommonResultMessage.success(wxPayDto);
 				}
 			}
 			IcheccUserDO userDO = userService.selectById(userId);
@@ -64,12 +72,15 @@ public class WechatPayServiceImpl implements WechatPayService {
 			String openid = userDO.getOpenid();
 			String orderNo = generateOrderNo();
 
-			// ApiUnifiedOrderDTO dto = new ApiUnifiedOrderDTO();
+			ApiUnifiedOrderDTO dto = new ApiUnifiedOrderDTO();
 			dto.setOut_trade_no(orderNo);
 			totalFee = totalFee * 100; // 元转为分
 			dto.setTotal_fee(totalFee.intValue());
-			dto.setTrade_type(ApiUnifiedOrderDTO.TradeType.JSAPI.type);
+			dto.setTrade_type(WechatPayConstants.TradeType.JSAPI.name());
 			dto.setOpenid(openid);
+			dto.setBody(inputDto.getBody());
+			dto.setAttach(inputDto.getAttach());
+			dto.setSpbill_create_ip(inputDto.getIp());
 
 			String sign = SignUtil.createSign(dto);
 			dto.setSign(sign);
@@ -91,10 +102,12 @@ public class WechatPayServiceImpl implements WechatPayService {
 			}
 
 			// 保存订单
+			VipDepositOrderDO orderDO = new VipDepositOrderDO();
+			orderDO.setUserId(userId);
 			orderDO.setOpenid(openid);
 			orderDO.setOrderNo(orderNo);
 			orderDO.setPrepayId(resDto.getPrepay_id());
-			// orderDO.setAmount(orderDO.getAmount());
+			orderDO.setAmount(inputDto.getDepositAmount());
 			orderDO.setOrderStatus(DepositOrderStatus.UNPAID);
 			orderDO.setTradeState(DepositOrderTradeState.USERPAYING);
 			orderDO.setCreateTime(new Date());
@@ -104,8 +117,13 @@ public class WechatPayServiceImpl implements WechatPayService {
 				logger.info("支付下单异常，保存订单信息失败");
 				throw new CommonServiceException("支付下单异常，保存订单信息失败");
 			}
+			
+			
+			wxPayDto.setPkage(orderDO.getPrepayId());
+			paySign = SignUtil.createJsApiPaySign(wxPayDto);
+			wxPayDto.setPaySign(paySign);
 
-			return CommonResultMessage.success(orderDO);
+			return CommonResultMessage.success(wxPayDto);
 		} catch (Exception e) {
 			logger.info("支付下单异常:{}", e);
 			throw e;

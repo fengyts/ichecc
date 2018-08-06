@@ -121,7 +121,7 @@ public class RequestUtil {
 	}
 
 
-	public String getIpAddr(HttpServletRequest request) {
+	public static String getIpAddr(HttpServletRequest request) {
 		String ip = "127.0.0.1";
 		if (null == request) {
 			return ip;

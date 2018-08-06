@@ -3,9 +3,8 @@ package com.ichecc.wechat.payment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ichecc.domain.VipDepositOrderDO;
 import com.ichecc.wechat.component.WechatPayServiceImpl;
-import com.ichecc.wechat.dto.ApiUnifiedOrderDTO;
+import com.ichecc.wechat.dto.UnifiedOrderInputDTO;
 
 import ng.bayue.common.CommonResultMessage;
 
@@ -18,7 +17,7 @@ public interface WechatPayService {
 	 * 
 	 * @return
 	 */
-	CommonResultMessage unifiedOrder(VipDepositOrderDO orderDO, ApiUnifiedOrderDTO dto) throws Exception;
+	CommonResultMessage unifiedOrder(UnifiedOrderInputDTO inputDto) throws Exception;
 
 	/**
 	 * 订单查询

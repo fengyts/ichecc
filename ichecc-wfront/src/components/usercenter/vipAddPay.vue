@@ -39,7 +39,7 @@
       <!-- <router-link :to="{path:'/vipAddResult'}"> -->
       <!-- <button class="button_pay" id="vippay" onclick="">立即支付</button> -->
       <!-- </router-link> -->
-      <button class="button_pay" id="vippay" onclick="">立即支付</button>
+      <button class="button_pay" id="vippay" @click="wexinPayCall">立即支付</button>
     </div>
     <!--说明-->
     <div class="tips">
@@ -64,20 +64,38 @@ export default {
   methods: {
     getConfig() {
       let _url = location.href.split('#')[0] //获取锚点之前的链接
-      this.$http.get('/api/wechat/jsApiConfig', { url: _url }).then(res => {
-        console.log("weixin jsapi config");
-        console.log(res);
+      // if(_url.endsWith("/")){
+      //   _url = _url.substring(0, _url.length - 1);
+      // }
+      this.$http.get('/api/wechat/jsApiConfig', { url: _url }).then(response => {
         let _that = this;
         // this.wxInit(res);
-        wx.config({
-          debug: res.debug,
-          appId: res.appid,
-          timestamp: res.timestamp,
-          nonceStr: res.nonceStr,
-          signature: res.signature,
-          jsApiList: _that.setApiList(res.jsApiList)
-        });
-      })
+        if (response.code === this.$resp_code) {
+          let res = response.data;
+          console.log(res);
+          wx.config({
+            debug: res.debug,
+            appId: res.appid,
+            timestamp: res.timestamp,
+            nonceStr: res.nonceStr,
+            signature: res.signature,
+            jsApiList: _that.setApiList(res.jsApiList)
+          });
+        } else {
+          $.toast("服务器连接异常，请稍后再试", "text");
+          return;
+        }
+      });
+
+      // wx.checkJsApi({
+      //   jsApiList: ['chooseWXPay'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+      //   success: function(res) {
+      //     console.log("checkJsApi:");
+      //     console.log(res);
+      //   // 以键值对的形式返回，可用的api值true，不可用为false
+      //   // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
+      //   }
+      // });
     },
     setApiList(_list) {
       if (null == _list || undefined == _list) {
@@ -86,7 +104,34 @@ export default {
       _list.push('chooseWXPay');
     },
     wexinPayCall() {
-      
+      this.$http.post("/api/wechat/payOrder", { "depositAmount": "0.01" }).then(response => {
+        console.log("wx pay order:");
+        console.log(response);
+
+        // return;
+
+        if (response.code === this.$resp_code) {
+          let res = response.data;
+          console.log(res);
+          wx.chooseWXPay({
+            appId: res.appid,
+            timeStamp: res.timestamp,
+            nonceStr: res.nonceStr,
+            package: res.pkage,
+            signType: res.signType,
+            paySign: res.paySign,
+            success: function (res) {
+              console.log("wechat pay success:");
+              console.log(res);
+              alert("haha, success");
+              // 支付成功后的回调函数
+            }
+          });
+        } else {
+          alert("支付失败");
+          return;
+        }
+      });
     }
   },
   components: {
