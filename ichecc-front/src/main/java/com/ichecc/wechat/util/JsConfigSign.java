@@ -18,7 +18,11 @@ public class JsConfigSign {
 			// Map<String, String> ret = new HashMap<String, String>();
 			final String nonce_str = UUID.randomUUID().toString().replace("-", "");
 			final String timestamp = Long.toString(System.currentTimeMillis() / 1000);
-
+			
+			if(url.endsWith("/")){
+//				url = url + "/";
+				url = url.substring(0, url.length() - 1);
+			}
 			// 注意这里参数名必须全部小写，且必须有序
 			final String string1 = "jsapi_ticket=" + jsapi_ticket + "&noncestr=" + nonce_str + "&timestamp=" + timestamp
 					+ "&url=" + url;

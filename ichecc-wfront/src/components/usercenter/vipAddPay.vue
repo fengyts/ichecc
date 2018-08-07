@@ -40,6 +40,7 @@
       <!-- <button class="button_pay" id="vippay" onclick="">立即支付</button> -->
       <!-- </router-link> -->
       <button class="button_pay" id="vippay" @click="wexinPayCall">立即支付</button>
+      <!-- <button class="button_pay" id="vippay" @click="wxpay">立即支付</button> -->
     </div>
     <!--说明-->
     <div class="tips">
@@ -48,8 +49,10 @@
   </div>
 </template>
 
+
 <script type="text/javascript">
 import wx from 'weixin-js-sdk';
+// import wx from 'jweixin';
 export default {
   data() {
     return {
@@ -64,22 +67,26 @@ export default {
   methods: {
     getConfig() {
       let _url = location.href.split('#')[0] //获取锚点之前的链接
+      // console.log(_url);
       // if(_url.endsWith("/")){
       //   _url = _url.substring(0, _url.length - 1);
       // }
+      console.log("_url:");
+      console.log(_url);
       this.$http.get('/api/wechat/jsApiConfig', { url: _url }).then(response => {
         let _that = this;
         // this.wxInit(res);
         if (response.code === this.$resp_code) {
           let res = response.data;
-          console.log(res);
+          console.log(JSON.stringify(res));
           wx.config({
             debug: res.debug,
             appId: res.appid,
             timestamp: res.timestamp,
             nonceStr: res.nonceStr,
             signature: res.signature,
-            jsApiList: _that.setApiList(res.jsApiList)
+            // jsApiList: _that.setApiList(res.jsApiList)
+            jsApiList: ['chooseWXPay']
           });
         } else {
           $.toast("服务器连接异常，请稍后再试", "text");
@@ -106,13 +113,15 @@ export default {
     wexinPayCall() {
       this.$http.post("/api/wechat/payOrder", { "depositAmount": "0.01" }).then(response => {
         console.log("wx pay order:");
-        console.log(response);
+        console.log(JSON.stringify(response));
 
         // return;
 
         if (response.code === this.$resp_code) {
           let res = response.data;
-          console.log(res);
+          console.log("wxpay param:");
+          console.log(JSON.stringify(res));
+          alert(JSON.stringify(res));
           wx.chooseWXPay({
             appId: res.appid,
             timeStamp: res.timestamp,
@@ -122,7 +131,7 @@ export default {
             paySign: res.paySign,
             success: function (res) {
               console.log("wechat pay success:");
-              console.log(res);
+              console.log(JSON.stringify(res));
               alert("haha, success");
               // 支付成功后的回调函数
             }
@@ -132,6 +141,49 @@ export default {
           return;
         }
       });
+    },
+
+    wxpay() {
+      this.$http.post("/api/wechat/payOrder", { "depositAmount": "0.01" }).then(response => {
+        if (response.code === this.$resp_code) {
+          let res = response.data;
+          console.log(55555555);
+          console.log(res);
+          // return;
+
+          if (typeof WeixinJSBridge == "undefined"){
+            if( document.addEventListener ){
+                document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+            }else if (document.attachEvent){
+                document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+                document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+            }
+          }else{
+            onBridgeReady(res);
+          }
+
+          // onBridgeReady(res);
+        }
+      });
+    },
+    onBridgeReady(res) {
+      WeixinJSBridge.invoke(
+        'getBrandWCPayRequest', {
+          "appId": res.appid,     //公众号名称，由商户传入     
+          "timeStamp": res.timestamp,         //时间戳，自1970年以来的秒数     
+          "nonceStr": res.nonceStr, //随机串     
+          "package": res.pkage,
+          "signType": res.signType,         //微信签名方式：     
+          "paySign": res.paySign //微信签名 
+        },
+        function (res) {
+          console.log(12345678888);
+          console.log(res);
+          if (res.err_msg == "get_brand_wcpay_request:ok") {
+            // 使用以上方式判断前端返回,微信团队郑重提示：
+            //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+          }
+        });
     }
   },
   components: {
