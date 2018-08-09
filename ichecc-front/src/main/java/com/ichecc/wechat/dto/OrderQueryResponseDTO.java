@@ -53,6 +53,17 @@ public class OrderQueryResponseDTO extends ApiCommonResponseDTO {
 	/** 对当前查询订单状态的描述和下一步操作的指引 */
 	private String trade_state_desc;
 
+	@Override
+	public boolean validate() {
+		if (!super.validate()) {
+			return false;
+		}
+		if (isBlank(trade_state)) {
+			return false;
+		}
+		return SUCCESS.equals(trade_state);
+	}
+
 	public String getDevice_info() {
 		return device_info;
 	}

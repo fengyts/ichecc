@@ -16,10 +16,8 @@ public class UnifiedOrderInputDTO extends BaseValidateDTO {
 	private static final long serialVersionUID = -575255333174490297L;
 
 	private Long userId;
-	/** 优惠折扣id */
-	private Long discountId;
-	/** 充值选项id */
-	private Long depositConfigId;
+	/** 充值配置选项id */
+	private Long configId;
 	/** 充值金额 */
 	private Double depositAmount;
 
@@ -40,20 +38,12 @@ public class UnifiedOrderInputDTO extends BaseValidateDTO {
 		this.userId = userId;
 	}
 
-	public Long getDiscountId() {
-		return discountId;
+	public Long getConfigId() {
+		return configId;
 	}
 
-	public void setDiscountId(Long discountId) {
-		this.discountId = discountId;
-	}
-
-	public Long getDepositConfigId() {
-		return depositConfigId;
-	}
-
-	public void setDepositConfigId(Long depositConfigId) {
-		this.depositConfigId = depositConfigId;
+	public void setConfigId(Long configId) {
+		this.configId = configId;
 	}
 
 	public Double getDepositAmount() {

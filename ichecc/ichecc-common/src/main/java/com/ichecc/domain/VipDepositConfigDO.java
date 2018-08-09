@@ -7,25 +7,30 @@ import java.util.Date;
 /**
  * 会员充值选项配置
  * 
- * @author fengyts Wed May 09 09:29:16 CST 2018
+ * @author fengyts Thu Aug 09 16:13:39 CST 2018
  */
 
 public class VipDepositConfigDO extends BaseDO {
 
-	/**  */
-	private static final long serialVersionUID = -4337624942583337889L;
+	private static final long serialVersionUID = 5210995158419868873L;
 
 	/** 主键 */
 	private Long id;
 
 	/** 充值金额 */
-	private Double depositAmount;
-
-	/** 有效期：月份值（按每月30天算） */
-	private Integer expiryDate;
+	private Double amount;
 
 	/** 折扣,范围区间:(0,1],如95折则为0.95,默认无折扣为1 */
 	private Double discount;
+
+	/** 有效期限，含当天 */
+	private Integer expiryDate;
+
+	/** 期限类型: 01-按天；02-按月 */
+	private String expiryType;
+
+	/** 配置生效状态：1-有效；0-无效 */
+	private Boolean status;
 
 	/** 创建人 */
 	private Long createUserId;
@@ -51,19 +56,10 @@ public class VipDepositConfigDO extends BaseDO {
 	/**
 	 * 设置 充值金额
 	 * 
-	 * @param depositAmount
+	 * @param amount
 	 */
-	public void setDepositAmount(Double depositAmount) {
-		this.depositAmount = depositAmount;
-	}
-
-	/**
-	 * 设置 有效期：月份值（按每月30天算）
-	 * 
-	 * @param expiryDate
-	 */
-	public void setExpiryDate(Integer expiryDate) {
-		this.expiryDate = expiryDate;
+	public void setAmount(Double amount) {
+		this.amount = amount;
 	}
 
 	/**
@@ -73,6 +69,33 @@ public class VipDepositConfigDO extends BaseDO {
 	 */
 	public void setDiscount(Double discount) {
 		this.discount = discount;
+	}
+
+	/**
+	 * 设置 有效期限，含当天
+	 * 
+	 * @param expiryDate
+	 */
+	public void setExpiryDate(Integer expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+
+	/**
+	 * 设置 期限类型: 01-按天；02-按月
+	 * 
+	 * @param expiryType
+	 */
+	public void setExpiryType(String expiryType) {
+		this.expiryType = expiryType;
+	}
+
+	/**
+	 * 设置 配置生效状态：1-有效；0-无效
+	 * 
+	 * @param status
+	 */
+	public void setStatus(Boolean status) {
+		this.status = status;
 	}
 
 	/**
@@ -123,19 +146,10 @@ public class VipDepositConfigDO extends BaseDO {
 	/**
 	 * 获取 充值金额
 	 * 
-	 * @return depositAmount
+	 * @return amount
 	 */
-	public Double getDepositAmount() {
-		return depositAmount;
-	}
-
-	/**
-	 * 获取 有效期：月份值（按每月30天算）
-	 * 
-	 * @return expiryDate
-	 */
-	public Integer getExpiryDate() {
-		return expiryDate;
+	public Double getAmount() {
+		return amount;
 	}
 
 	/**
@@ -145,6 +159,33 @@ public class VipDepositConfigDO extends BaseDO {
 	 */
 	public Double getDiscount() {
 		return discount;
+	}
+
+	/**
+	 * 获取 有效期限，含当天
+	 * 
+	 * @return expiryDate
+	 */
+	public Integer getExpiryDate() {
+		return expiryDate;
+	}
+
+	/**
+	 * 获取 期限类型: 01-按天；02-按月
+	 * 
+	 * @return expiryType
+	 */
+	public String getExpiryType() {
+		return expiryType;
+	}
+
+	/**
+	 * 获取 配置生效状态：1-有效；0-无效
+	 * 
+	 * @return status
+	 */
+	public Boolean getStatus() {
+		return status;
 	}
 
 	/**

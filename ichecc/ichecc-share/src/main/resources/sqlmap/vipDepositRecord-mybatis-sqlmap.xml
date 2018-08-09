@@ -6,20 +6,22 @@
 	<resultMap type="com.ichecc.domain.VipDepositRecordDO" id="VipDepositRecordDOResultMap">
 		<id column="id" property="id" />
         <result column="user_id" property="userId"/>
-        <result column="deposit_amount" property="depositAmount"/>
+        <result column="order_no" property="orderNo"/>
+        <result column="amount" property="amount"/>
         <result column="discount" property="discount"/>
         <result column="create_time" property="createTime"/>
         <result column="end_time" property="endTime"/>
 	</resultMap>
 
 	<sql id="MybatisVipDepositRecordDAO_all_column_fields">
-	      id,user_id,deposit_amount,discount,create_time,end_time
+	      id,user_id,order_no,amount,discount,create_time,end_time
  	</sql>
 	<!-- 只有varchar char text类型 做 !='' 判断，生成代码时,其他类型时只做!=null 决断 0或fasle与空''是相同的，在mybatis中的动态语句中 -->
 	<sql id="MybatisVipDepositRecordDAO_dynamic_where_fields"><!-- xml转义字符需要 <![CDATA[   ]]> 标签-->
 		<where>
 			<if test="userId != null "> AND user_id=#{userId} </if>
-			<if test="depositAmount != null "> AND deposit_amount=#{depositAmount} </if>
+			<if test="orderNo != null  and orderNo != '' "> AND order_no=#{orderNo} </if>
+			<if test="amount != null "> AND amount=#{amount} </if>
 			<if test="discount != null "> AND discount=#{discount} </if>
 		</where>
  	</sql>
@@ -42,14 +44,16 @@
         INSERT INTO vip_deposit_record(
 			id,
 			user_id,
-			deposit_amount,
+			order_no,
+			amount,
 			discount,
 			create_time,
 			end_time
 		)values(
 			#{id},
 			#{userId},
-			#{depositAmount},
+			#{orderNo},
+			#{amount},
 			#{discount},
 			#{createTime},
 			#{endTime}
@@ -61,7 +65,8 @@
 		UPDATE vip_deposit_record
 		SET
 			user_id = #{userId},
-			deposit_amount = #{depositAmount},
+			order_no = #{orderNo},
+			amount = #{amount},
 			discount = #{discount},
 			end_time = #{endTime}
 		WHERE
@@ -77,7 +82,8 @@
 		UPDATE vip_deposit_record
 		<set>
 			<if test="userId != null ">user_id=#{userId},</if>
-			<if test="depositAmount != null ">deposit_amount=#{depositAmount},</if>
+			<if test="orderNo != null  and orderNo != '' ">order_no=#{orderNo},</if>
+			<if test="amount != null ">amount=#{amount},</if>
 			<if test="discount != null ">discount=#{discount},</if>
 			<if test="endTime != null ">end_time=#{endTime},</if>
 		</set>

@@ -39,8 +39,8 @@
       <!-- <router-link :to="{path:'/vipAddResult'}"> -->
       <!-- <button class="button_pay" id="vippay" onclick="">立即支付</button> -->
       <!-- </router-link> -->
-      <button class="button_pay" id="vippay" @click="wexinPayCall">立即支付</button>
-      <!-- <button class="button_pay" id="vippay" @click="wxpay">立即支付</button> -->
+      <button class="button_pay" id="vippay" @click="wxPayCall">立即支付</button>
+      <!-- <button class="button_pay" id="vippay" @click="wxPay">立即支付</button> -->
     </div>
     <!--说明-->
     <div class="tips">
@@ -67,15 +67,8 @@ export default {
   methods: {
     getConfig() {
       let _url = location.href.split('#')[0] //获取锚点之前的链接
-      // console.log(_url);
-      // if(_url.endsWith("/")){
-      //   _url = _url.substring(0, _url.length - 1);
-      // }
-      console.log("_url:");
-      console.log(_url);
       this.$http.get('/api/wechat/jsApiConfig', { url: _url }).then(response => {
         let _that = this;
-        // this.wxInit(res);
         if (response.code === this.$resp_code) {
           let res = response.data;
           console.log(JSON.stringify(res));
@@ -110,21 +103,16 @@ export default {
       }
       _list.push('chooseWXPay');
     },
-    wexinPayCall() {
+    wxPayCall() {
       this.$http.post("/api/wechat/payOrder", { "depositAmount": "0.01" }).then(response => {
-        console.log("wx pay order:");
-        console.log(JSON.stringify(response));
-
-        // return;
-
         if (response.code === this.$resp_code) {
           let res = response.data;
           console.log("wxpay param:");
           console.log(JSON.stringify(res));
           alert(JSON.stringify(res));
           wx.chooseWXPay({
-            appId: res.appid,
-            timeStamp: res.timestamp,
+            appid: res.appid,
+            timestamp: res.timestamp,
             nonceStr: res.nonceStr,
             package: res.pkage,
             signType: res.signType,
@@ -143,7 +131,7 @@ export default {
       });
     },
 
-    wxpay() {
+    wxPay() {
       this.$http.post("/api/wechat/payOrder", { "depositAmount": "0.01" }).then(response => {
         if (response.code === this.$resp_code) {
           let res = response.data;
@@ -152,6 +140,7 @@ export default {
           // return;
 
           if (typeof WeixinJSBridge == "undefined"){
+            console.log("check wx pay: 123");
             if( document.addEventListener ){
                 document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
             }else if (document.attachEvent){
@@ -159,6 +148,7 @@ export default {
                 document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
             }
           }else{
+            console.log("send wx pay:456");
             onBridgeReady(res);
           }
 
@@ -177,8 +167,9 @@ export default {
           "paySign": res.paySign //微信签名 
         },
         function (res) {
-          console.log(12345678888);
+          console.log(12345678888 + "success res:");
           console.log(res);
+          alert("haha, success");
           if (res.err_msg == "get_brand_wcpay_request:ok") {
             // 使用以上方式判断前端返回,微信团队郑重提示：
             //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。

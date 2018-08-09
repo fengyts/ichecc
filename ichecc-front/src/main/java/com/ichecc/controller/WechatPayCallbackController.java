@@ -48,6 +48,7 @@ public class WechatPayCallbackController extends BaseController {
 				logger.info("微信支付回调通知成功");
 				returnCallbackXmlStr = ReturnWechatCallbackData.successData();
 				packageReturnData(response, returnCallbackXmlStr);
+				return;
 			} else {
 				logger.info("微信支付回调通知失败-info: {}", crm.getMessage());
 				returnCallbackXmlStr = ReturnWechatCallbackData.failureData(crm.getMessage());
@@ -55,8 +56,7 @@ public class WechatPayCallbackController extends BaseController {
 				return;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error("微信支付回调通知获取参数流异常：{}", e);
+			logger.info("微信支付回调通知获取参数流异常：{}", e);
 			returnCallbackXmlStr = ReturnWechatCallbackData.failureData("支付结果通知报文异常");
 			packageReturnData(response, returnCallbackXmlStr);
 			return;
@@ -67,12 +67,12 @@ public class WechatPayCallbackController extends BaseController {
 				if (null != br)
 					br.close();
 			} catch (IOException e) {
-				logger.error("微信支付回调通知异常, 关闭流异常", e);
+				logger.info("微信支付回调通知异常, 关闭流异常", e);
 			}
 		}
-		logger.error("微信支付回调通知获取参数流异常：未知错误(wechat pay callback failure: unknown error)");
-		returnCallbackXmlStr = ReturnWechatCallbackData.failureData(null);
-		packageReturnData(response, returnCallbackXmlStr);
+//		logger.error("微信支付回调通知获取参数流异常：未知错误(wechat pay callback failure: unknown error)");
+//		returnCallbackXmlStr = ReturnWechatCallbackData.failureData(null);
+//		packageReturnData(response, returnCallbackXmlStr);
 	}
 
 	private void packageReturnData(HttpServletResponse response, String resultXml) {

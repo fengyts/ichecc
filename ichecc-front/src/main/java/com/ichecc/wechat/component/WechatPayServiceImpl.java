@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.ichecc.common.ResultCode;
 import com.ichecc.domain.IcheccUserDO;
+import com.ichecc.domain.VipDepositConfigDO;
 import com.ichecc.domain.VipDepositOrderDO;
 import com.ichecc.service.IcheccUserService;
+import com.ichecc.service.VipDepositConfigService;
 import com.ichecc.service.VipDepositOrderService;
 import com.ichecc.wechat.bean.PayOrderNoGenerator;
 import com.ichecc.wechat.constant.ApiConfigConstant;
@@ -27,7 +29,6 @@ import com.ichecc.wechat.util.SignUtil;
 import com.ichecc.wechat.util.XmlUtil;
 
 import ng.bayue.common.CommonResultMessage;
-import ng.bayue.exception.CommonServiceException;
 import ng.bayue.util.DateUtils;
 
 @Service
@@ -37,6 +38,8 @@ public class WechatPayServiceImpl implements WechatPayService {
 	private VipDepositOrderService depositOrderService;
 	@Autowired
 	private IcheccUserService userService;
+	@Autowired
+	private VipDepositConfigService depositConfigService;
 
 	@Override
 	public CommonResultMessage unifiedOrder(UnifiedOrderInputDTO inputDto) throws Exception {
@@ -46,35 +49,71 @@ public class WechatPayServiceImpl implements WechatPayService {
 				logger.info("支付异常，用户信息不能为空");
 				return CommonResultMessage.failure("支付异常，用户信息不能为空");
 			}
-			// 查询最新未支付订单
-			VipDepositOrderDO orderLatest = depositOrderService.selectLatestUnPaidOrder(userId);
-			Double totalFee = inputDto.getDepositAmount();
-			if (null == totalFee || totalFee.doubleValue() <= 0) {
-				logger.info("微信支付下单失败: 支付金额为空");
-				return CommonResultMessage.failure("微信支付下单失败: 支付金额为空");
-			}
-			JsApiWXPayDTO wxPayDto = new JsApiWXPayDTO();
-			String paySign = "";
-			if (null != orderLatest) {
-				// 校验未支付订单金额和本次请求是否一样, 若一样，则使用微支付订单重新发起支付，否则生成新订单
-				if (totalFee.doubleValue() == orderLatest.getAmount().doubleValue()) {
-					wxPayDto.setPkage(orderLatest.getPrepayId());
-					paySign = SignUtil.createJsApiPaySign(wxPayDto);
-					wxPayDto.setPaySign(paySign);
-					return CommonResultMessage.success(wxPayDto);
-				}
-			}
 			IcheccUserDO userDO = userService.selectById(userId);
 			if (null == userDO) {
 				logger.info("支付下单异常，用户信息不存在");
-				return null;
+				return CommonResultMessage.failure("支付下单异常，用户信息不存在");
 			}
-			String openid = userDO.getOpenid();
-			String orderNo = generateOrderNo();
+			// 查询最新未支付订单
+			VipDepositOrderDO orderLatest = depositOrderService.selectLatestUnPaidOrder(userId);
+//			Double totalFee = inputDto.getDepositAmount();
+//			if (null == totalFee || totalFee.doubleValue() <= 0) {
+//				logger.info("微信支付下单失败: 支付金额为空");
+//				return CommonResultMessage.failure("微信支付下单失败: 支付金额为空");
+//			}
+			// 获取支付信息
+			VipDepositConfigDO configDO = null;
+			Long configId = inputDto.getConfigId();
+			if(null != configId){
+				configDO = depositConfigService.selectById(configId);
+			} else {
+				logger.info("支付异常：请刷新页面后重试");
+				return CommonResultMessage.failure("支付异常：请刷新页面后重试");
+			}
+			if(null == configDO){
+				logger.info("支付异常：请刷新页面后重试");
+				return CommonResultMessage.failure("支付异常：请刷新页面后重试");
+			}
 
+			JsApiWXPayDTO wxPayDto = new JsApiWXPayDTO();
+			String paySign = "";
+			if (null != orderLatest) {
+				// 校验未支付订单金额和本次请求是否一样, 若一样并且未支付，则使用微支付订单重新发起支付，否则生成新订单
+				if (checkDepositOrderCofnig(configDO, orderLatest)) {
+					// 校验该订单状态-> 是否已经支付
+					// 若已经支付或者支付异常, 重新下单
+					OrderQueryResponseDTO resQueryDto = orderQueryFromWX(orderLatest);
+					OrderTradeStateEnums tradeStateWX = getOrderState(resQueryDto);
+					if (OrderTradeStateEnums.USERPAYING == tradeStateWX) {
+						// 订单待支付则直接返回支付
+						wxPayDto.setPkage(orderLatest.getPrepayId());
+						paySign = SignUtil.createJsApiPaySign(wxPayDto);
+						wxPayDto.setPaySign(paySign);
+						return CommonResultMessage.success(wxPayDto);
+					} else {
+						// 若微信端已经支付成功状态 并且和本地订单状态不一样，则更新本地订单状态
+						if (OrderTradeStateEnums.SUCCESS == tradeStateWX
+								&& (DepositOrderStatus.UNPAID.equals(orderLatest.getOrderStatus()))) {
+							orderLatest.setOrderStatus(DepositOrderStatus.SUCCESS);
+							orderLatest.setTransactionId(resQueryDto.getTransaction_id());
+							orderLatest.setBankType(resQueryDto.getBank_type());
+							orderLatest.setTradeState(DepositOrderTradeState.SUCCESS);
+							orderLatest.setTradeStateDesc(resQueryDto.getTrade_state_desc());
+							orderLatest.setTimeEnd(DateUtils.parseDate(resQueryDto.getTime_end(), "yyyyMMddHHmmss"));
+							orderLatest.setModifyTime(new Date());
+							depositOrderService.update(orderLatest, false);
+						}
+					}
+				}
+			}
+			
+			String orderNo = generateOrderNo(); // 生成订单编号
+			
+			String openid = userDO.getOpenid();
+			Double totalFee = configDO.getAmount() * 100; // 元转为分
+			
 			ApiUnifiedOrderDTO dto = new ApiUnifiedOrderDTO();
 			dto.setOut_trade_no(orderNo);
-			totalFee = totalFee * 100; // 元转为分
 			dto.setTotal_fee(totalFee.intValue());
 			dto.setTrade_type(WechatPayConstants.TradeType.JSAPI.name());
 			dto.setOpenid(openid);
@@ -107,7 +146,12 @@ public class WechatPayServiceImpl implements WechatPayService {
 			orderDO.setOpenid(openid);
 			orderDO.setOrderNo(orderNo);
 			orderDO.setPrepayId(resDto.getPrepay_id());
-			orderDO.setAmount(inputDto.getDepositAmount());
+			
+			orderDO.setConfigId(configDO.getId());
+			orderDO.setAmount(configDO.getAmount());
+			orderDO.setExpiryDate(configDO.getExpiryDate());
+			orderDO.setExpiryType(configDO.getExpiryType());
+			
 			orderDO.setOrderStatus(DepositOrderStatus.UNPAID);
 			orderDO.setTradeState(DepositOrderTradeState.USERPAYING);
 			orderDO.setCreateTime(new Date());
@@ -115,10 +159,10 @@ public class WechatPayServiceImpl implements WechatPayService {
 			Long status = depositOrderService.insert(orderDO);
 			if (status <= 0) {
 				logger.info("支付下单异常，保存订单信息失败");
-				throw new CommonServiceException("支付下单异常，保存订单信息失败");
+				// throw new CommonServiceException("支付下单异常，保存订单信息失败");
+				return CommonResultMessage.failure("支付下单异常，保存订单信息失败");
 			}
-			
-			
+
 			wxPayDto.setPkage(orderDO.getPrepayId());
 			paySign = SignUtil.createJsApiPaySign(wxPayDto);
 			wxPayDto.setPaySign(paySign);
@@ -128,6 +172,30 @@ public class WechatPayServiceImpl implements WechatPayService {
 			logger.info("支付下单异常:{}", e);
 			throw e;
 		}
+	}
+	
+	/**
+	 * 校验是否同一订单：金额，充值类型，充值期限均一样。用于同一下单未过期且未支付订单发起重新支付请求
+	 * @param configDO
+	 * @param orderDO
+	 * @return
+	 */
+	private boolean checkDepositOrderCofnig(VipDepositConfigDO configDO, VipDepositOrderDO orderDO) {
+		if (null == configDO || null == orderDO) {
+			return false;
+		}
+		Double ca = configDO.getAmount();
+		Double oa = orderDO.getAmount();
+		if (null == ca || null == oa || ca.doubleValue() != oa.doubleValue()) {
+			return false;
+		}
+		if (configDO.getExpiryDate().intValue() != orderDO.getExpiryDate().intValue()) {
+			return false;
+		}
+		if (!configDO.getExpiryType().equals(orderDO.getExpiryType())) {
+			return false;
+		}
+		return true;
 	}
 
 	private String generateOrderNo() {
@@ -142,7 +210,7 @@ public class WechatPayServiceImpl implements WechatPayService {
 			VipDepositOrderDO orderDO = depositOrderService.selectByOrderNo(orderNo);
 			if (null == orderDO) {
 				logger.info("查询订单结果：该订单不存在");
-				return null;
+				return CommonResultMessage.failure("订单不存在");
 			}
 
 			// 订单已支付成功
@@ -151,22 +219,8 @@ public class WechatPayServiceImpl implements WechatPayService {
 				return CommonResultMessage.success(orderDO);
 			}
 
-			ApiOrderQueryDTO dto = new ApiOrderQueryDTO();
-			dto.setTransaction_id(orderDO.getTransactionId());
-			dto.setOut_trade_no(orderNo);
-
-			String sign = SignUtil.createSign(dto);
-			dto.setSign(sign);
-			if (!dto.validate()) {
-				logger.info("支付订单查询异常, 存在空的必填项参数");
-				return CommonResultMessage.failure("支付订单查询异常, 存在空的必填项参数");
-			}
-			String xmlData = XmlUtil.beanToXmlStr(dto);
-			logger.info("支付订单查询请求报文信息: {}", xmlData);
-
-			OrderQueryResponseDTO resDto = RequestUtil.doRequestXml(ApiConfigConstant.ORDER_QUERY_URL, xmlData,
-					OrderQueryResponseDTO.class);
-			if (!resDto.validate()) {
+			OrderQueryResponseDTO resDto = orderQueryFromWX(orderDO);
+			if (!resDto.validateBiz()) {
 				logger.info("支付订单查询异常, 系统错误信息：{}-业务错误信息：{}", resDto.getReturn_msg(), resDto.getErr_code_des());
 				// throw new Exception("支付异常, 系统错误信息：" + resDto.getReturn_msg()
 				// + "-业务错误信息：" + resDto.getErr_code_des());
@@ -223,6 +277,72 @@ public class WechatPayServiceImpl implements WechatPayService {
 		}
 	}
 
+	private OrderQueryResponseDTO orderQueryFromWX(VipDepositOrderDO orderDO) throws Exception {
+		if (null == orderDO) {
+			return null;
+		}
+		String transactionId = orderDO.getTransactionId();
+		String orderNo = orderDO.getOrderNo();
+		if (StringUtils.isBlank(transactionId) && StringUtils.isBlank(orderNo)) {
+			return null;
+		}
+		ApiOrderQueryDTO dto = new ApiOrderQueryDTO();
+		dto.setTransaction_id(transactionId);
+		dto.setOut_trade_no(orderNo);
+
+		String sign = SignUtil.createSign(dto);
+		dto.setSign(sign);
+		if (!dto.validate()) {
+			logger.info("支付订单查询异常, 存在空的必填项参数");
+			return null;
+		}
+		String xmlData = XmlUtil.beanToXmlStr(dto);
+		logger.info("支付订单查询请求报文信息: {}", xmlData);
+
+		OrderQueryResponseDTO resDto = RequestUtil.doRequestXml(ApiConfigConstant.ORDER_QUERY_URL, xmlData,
+				OrderQueryResponseDTO.class);
+		return resDto;
+	}
+
+	private OrderTradeStateEnums getOrderState(OrderQueryResponseDTO resQueryDto){
+		OrderTradeStateEnums res = OrderTradeStateEnums.PAYERROR;
+		if(null == resQueryDto){
+			return res;
+		}
+		String tradeState = resQueryDto.getTrade_state();
+		if(StringUtils.isBlank(tradeState)){
+			return res;
+		}
+		switch(tradeState){
+		case DepositOrderTradeState.SUCCESS:
+			res = OrderTradeStateEnums.SUCCESS;
+			break;
+		case DepositOrderTradeState.USERPAYING:
+			res = OrderTradeStateEnums.USERPAYING;
+			break;
+		case DepositOrderTradeState.CLOSED:
+			res = OrderTradeStateEnums.CLOSED;
+			break;
+		case DepositOrderTradeState.NOTPAY:
+			res = OrderTradeStateEnums.NOTPAY;
+			break;
+		case DepositOrderTradeState.REFUND:
+			res = OrderTradeStateEnums.REFUND;
+			break;
+		case DepositOrderTradeState.REVOKED:
+			res = OrderTradeStateEnums.REVOKED;
+			break;
+		case DepositOrderTradeState.PAYERROR:
+			res = OrderTradeStateEnums.PAYERROR;
+			break;
+		default:
+			res = OrderTradeStateEnums.PAYERROR;
+			break;
+		}
+		
+		return res;
+	}
+
 	@Override
 	public CommonResultMessage callback(String paramXmlStr) throws Exception {
 		try {
@@ -259,7 +379,9 @@ public class WechatPayServiceImpl implements WechatPayService {
 			}
 			order.setTransactionId(transactionId);
 			order.setBankType(bankType);
-			order.setOrderStatus(DepositOrderTradeState.SUCCESS);
+			order.setOrderStatus(DepositOrderStatus.SUCCESS);
+			order.setTradeState(DepositOrderTradeState.SUCCESS);
+			order.setTradeStateDesc("支付成功");
 			Date timeEnd = DateUtils.parseDate(timeEndStr, "yyyyMMddHHmmss");
 			order.setTimeEnd(timeEnd);
 			order.setModifyTime(new Date());
@@ -279,7 +401,7 @@ public class WechatPayServiceImpl implements WechatPayService {
 	 * @author lenovopc
 	 *
 	 */
-	public interface DepositOrderStatus {
+	public static interface DepositOrderStatus {
 		/** 待支付 */
 		static final String UNPAID = "01";
 		/** 支付成功 */
@@ -297,7 +419,7 @@ public class WechatPayServiceImpl implements WechatPayService {
 	 * @author lenovopc
 	 *
 	 */
-	public interface DepositOrderTradeState {
+	public static interface DepositOrderTradeState {
 		/** 支付成功 */
 		static final String SUCCESS = "SUCCESS";
 		/** 转入退款 */
@@ -312,6 +434,24 @@ public class WechatPayServiceImpl implements WechatPayService {
 		static final String USERPAYING = "USERPAYING";
 		/** 支付失败(其他原因，如银行返回失败) */
 		static final String PAYERROR = "PAYERROR";
+	}
+
+	public static enum OrderTradeStateEnums {
+		SUCCESS(DepositOrderTradeState.SUCCESS, "支付成功"), 
+		REFUND(DepositOrderTradeState.REFUND, "转入退款"), 
+		NOTPAY(DepositOrderTradeState.NOTPAY, "未支付"), 
+		CLOSED(DepositOrderTradeState.CLOSED, "已关闭"), 
+		REVOKED(DepositOrderTradeState.REVOKED, "已撤销（刷卡支付）"), 
+		USERPAYING(DepositOrderTradeState.USERPAYING, "用户支付中"), 
+		PAYERROR(DepositOrderTradeState.PAYERROR, "支付失败(其他原因，如银行返回失败)");
+
+		public String code;
+		public String desc;
+
+		private OrderTradeStateEnums(String code, String desc) {
+			this.code = code;
+			this.desc = desc;
+		}
 	}
 
 }

@@ -30,6 +30,10 @@ public class ApiCommonResponseDTO extends ApiBaseResponseDTO {
 		return true;
 	}
 	
+	/**
+	 * 校验业务处理结果, 只有系统级结果校验通过才有业务结果
+	 * @return
+	 */
 	public boolean validateBiz(){
 		return validate();
 //		return (isBlank(result_code) || FAILURE.equals(result_code));

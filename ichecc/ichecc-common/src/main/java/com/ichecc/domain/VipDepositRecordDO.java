@@ -7,12 +7,12 @@ import java.util.Date;
 /**
  * 会员充值记录
  * 
- * @author fengyts Fri Jul 06 14:45:15 CST 2018
+ * @author fengyts Thu Aug 09 09:40:20 CST 2018
  */
 
 public class VipDepositRecordDO extends BaseDO {
 
-	private static final long serialVersionUID = 4141783585587531841L;
+	private static final long serialVersionUID = 760207874269297186L;
 
 	/** 主键 */
 	private Long id;
@@ -20,8 +20,11 @@ public class VipDepositRecordDO extends BaseDO {
 	/** 充值人 */
 	private Long userId;
 
+	/** 充值订单号 */
+	private String orderNo;
+
 	/** 充值金额 */
-	private Double depositAmount;
+	private Double amount;
 
 	/** 充值折扣，默认值为1，即无折扣 */
 	private Double discount;
@@ -51,12 +54,21 @@ public class VipDepositRecordDO extends BaseDO {
 	}
 
 	/**
+	 * 设置 充值订单号
+	 * 
+	 * @param orderNo
+	 */
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
+	}
+
+	/**
 	 * 设置 充值金额
 	 * 
-	 * @param depositAmount
+	 * @param amount
 	 */
-	public void setDepositAmount(Double depositAmount) {
-		this.depositAmount = depositAmount;
+	public void setAmount(Double amount) {
+		this.amount = amount;
 	}
 
 	/**
@@ -105,12 +117,21 @@ public class VipDepositRecordDO extends BaseDO {
 	}
 
 	/**
+	 * 获取 充值订单号
+	 * 
+	 * @return orderNo
+	 */
+	public String getOrderNo() {
+		return orderNo;
+	}
+
+	/**
 	 * 获取 充值金额
 	 * 
-	 * @return depositAmount
+	 * @return amount
 	 */
-	public Double getDepositAmount() {
-		return depositAmount;
+	public Double getAmount() {
+		return amount;
 	}
 
 	/**

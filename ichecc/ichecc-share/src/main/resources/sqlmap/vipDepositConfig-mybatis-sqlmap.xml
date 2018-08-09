@@ -5,9 +5,11 @@
 
 	<resultMap type="com.ichecc.domain.VipDepositConfigDO" id="VipDepositConfigDOResultMap">
 		<id column="id" property="id" />
-        <result column="deposit_amount" property="depositAmount"/>
-        <result column="expiry_date" property="expiryDate"/>
+        <result column="amount" property="amount"/>
         <result column="discount" property="discount"/>
+        <result column="expiry_date" property="expiryDate"/>
+        <result column="expiry_type" property="expiryType"/>
+        <result column="status" property="status"/>
         <result column="create_user_id" property="createUserId"/>
         <result column="create_time" property="createTime"/>
         <result column="modify_user_id" property="modifyUserId"/>
@@ -15,14 +17,16 @@
 	</resultMap>
 
 	<sql id="MybatisVipDepositConfigDAO_all_column_fields">
-	      id,deposit_amount,expiry_date,discount,create_user_id,create_time,modify_user_id,modify_time
+	      id,amount,discount,expiry_date,expiry_type,status,create_user_id,create_time,modify_user_id,modify_time
  	</sql>
 	<!-- 只有varchar char text类型 做 !='' 判断，生成代码时,其他类型时只做!=null 决断 0或fasle与空''是相同的，在mybatis中的动态语句中 -->
 	<sql id="MybatisVipDepositConfigDAO_dynamic_where_fields"><!-- xml转义字符需要 <![CDATA[   ]]> 标签-->
 		<where>
-			<if test="depositAmount != null "> AND deposit_amount=#{depositAmount} </if>
-			<if test="expiryDate != null "> AND expiry_date=#{expiryDate} </if>
+			<if test="amount != null "> AND amount=#{amount} </if>
 			<if test="discount != null "> AND discount=#{discount} </if>
+			<if test="expiryDate != null "> AND expiry_date=#{expiryDate} </if>
+			<if test="expiryType != null  and expiryType != '' "> AND expiry_type=#{expiryType} </if>
+			<if test="status != null "> AND status=#{status} </if>
 			<if test="createUserId != null "> AND create_user_id=#{createUserId} </if>
 			<if test="modifyUserId != null "> AND modify_user_id=#{modifyUserId} </if>
 		</where>
@@ -44,23 +48,27 @@
             SELECT LAST_INSERT_ID() AS id
         </selectKey>
         INSERT INTO vip_deposit_config(
-				id,
-				deposit_amount,
-				expiry_date,
-				discount,
-				create_user_id,
-				create_time,
-				modify_user_id,
-				modify_time
+			id,
+			amount,
+			discount,
+			expiry_date,
+			expiry_type,
+			status,
+			create_user_id,
+			create_time,
+			modify_user_id,
+			modify_time
 		)values(
-				#{id},
-				#{depositAmount},
-				#{expiryDate},
-				#{discount},
-				#{createUserId},
-				#{createTime},
-				#{modifyUserId},
-				#{modifyTime}
+			#{id},
+			#{amount},
+			#{discount},
+			#{expiryDate},
+			#{expiryType},
+			#{status},
+			#{createUserId},
+			#{createTime},
+			#{modifyUserId},
+			#{modifyTime}
 		)
     </insert>
 	
@@ -68,12 +76,14 @@
 	<update id="MybatisVipDepositConfigDAO_updateById" parameterType="com.ichecc.domain.VipDepositConfigDO">
 		UPDATE vip_deposit_config
 		SET
-					deposit_amount = #{depositAmount},
-					expiry_date = #{expiryDate},
-					discount = #{discount},
-					create_user_id = #{createUserId},
-					modify_user_id = #{modifyUserId},
-					modify_time = #{modifyTime}
+			amount = #{amount},
+			discount = #{discount},
+			expiry_date = #{expiryDate},
+			expiry_type = #{expiryType},
+			status = #{status},
+			create_user_id = #{createUserId},
+			modify_user_id = #{modifyUserId},
+			modify_time = #{modifyTime}
 		WHERE
 			id = #{id}
 	</update>
@@ -86,12 +96,14 @@
 	<update id="MybatisVipDepositConfigDAO_update_dynamic" parameterType="com.ichecc.domain.VipDepositConfigDO">
 		UPDATE vip_deposit_config
 		<set>
-					<if test="depositAmount != null ">deposit_amount=#{depositAmount},</if>
-					<if test="expiryDate != null ">expiry_date=#{expiryDate},</if>
-					<if test="discount != null ">discount=#{discount},</if>
-					<if test="createUserId != null ">create_user_id=#{createUserId},</if>
-					<if test="modifyUserId != null ">modify_user_id=#{modifyUserId},</if>
-					<if test="modifyTime != null ">modify_time=#{modifyTime},</if>
+			<if test="amount != null ">amount=#{amount},</if>
+			<if test="discount != null ">discount=#{discount},</if>
+			<if test="expiryDate != null ">expiry_date=#{expiryDate},</if>
+			<if test="expiryType != null  and expiryType != '' ">expiry_type=#{expiryType},</if>
+			<if test="status != null ">status=#{status},</if>
+			<if test="createUserId != null ">create_user_id=#{createUserId},</if>
+			<if test="modifyUserId != null ">modify_user_id=#{modifyUserId},</if>
+			<if test="modifyTime != null ">modify_time=#{modifyTime},</if>
 		</set>
 		WHERE id = #{id}
 	</update>

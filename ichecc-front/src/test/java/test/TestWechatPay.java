@@ -1,5 +1,8 @@
 package test;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import com.ichecc.wechat.dto.UnifiedOrderInputDTO;
 import com.ichecc.wechat.payment.WechatPayService;
 
 import ng.bayue.common.CommonResultMessage;
+import ng.bayue.util.DateUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath*:spring/spring-context-checcshare.xml","classpath*:spring/spring-pay.xml" })
@@ -25,6 +29,12 @@ public class TestWechatPay {
 	private WechatPayService payService;
 //	@Autowired
 //	private WechatAO wechatAo;
+	
+	@Test
+	public void testConfigLoader(){
+		JsApiWXPayDTO pay = new JsApiWXPayDTO();
+		System.out.println(pay.getAppid());
+	}
 
 	/**
 	 * 测试支付下单
@@ -99,13 +109,22 @@ public class TestWechatPay {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
+	/**
+	 * 测试订单查询
+	 */
 	@Test
-	public void testConfigLoader(){
-		JsApiWXPayDTO pay = new JsApiWXPayDTO();
-		System.out.println(pay.getAppid());
+	public void orderQueryTest(){
+		try {
+			String orderNo = "886992553210001604";
+			CommonResultMessage crm = payService.orderQuery(orderNo);
+			System.out.println(crm.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
+	
+	
 
 }

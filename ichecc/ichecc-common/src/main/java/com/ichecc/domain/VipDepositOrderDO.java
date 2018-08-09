@@ -7,12 +7,12 @@ import java.util.Date;
 /**
  * vip会员充值订单
  * 
- * @author fengyts Wed Jul 18 16:45:09 CST 2018
+ * @author fengyts Thu Aug 09 09:50:05 CST 2018
  */
 
 public class VipDepositOrderDO extends BaseDO {
 
-	private static final long serialVersionUID = -4226039848101101429L;
+	private static final long serialVersionUID = -2033594107907281652L;
 
 	/** 主键 */
 	private Long id;
@@ -35,8 +35,17 @@ public class VipDepositOrderDO extends BaseDO {
 	/** 微信支付订单号，查询订单或支付结果通知时返回 */
 	private String transactionId;
 
+	/** 充值配置选项id */
+	private Long configId;
+
 	/** 充值金额,单位:元 */
 	private Double amount;
+
+	/** 充值期限类型: 01-按天；02-按月 */
+	private String expiryType;
+
+	/** 充值会员期限 */
+	private Integer expiryDate;
 
 	/**
 	 * 交易状态,查询订单时返回：SUCCESS-支付成功;REFUND-转入退款;NOTPAY-未支付;CLOSED-已关闭;REVOKED-已撤销（
@@ -123,12 +132,39 @@ public class VipDepositOrderDO extends BaseDO {
 	}
 
 	/**
+	 * 设置 充值配置选项id
+	 * 
+	 * @param configId
+	 */
+	public void setConfigId(Long configId) {
+		this.configId = configId;
+	}
+
+	/**
 	 * 设置 充值金额,单位:元
 	 * 
 	 * @param amount
 	 */
 	public void setAmount(Double amount) {
 		this.amount = amount;
+	}
+
+	/**
+	 * 设置 充值期限类型: 01-按天；02-按月
+	 * 
+	 * @param expiryType
+	 */
+	public void setExpiryType(String expiryType) {
+		this.expiryType = expiryType;
+	}
+
+	/**
+	 * 设置 充值会员期限
+	 * 
+	 * @param expiryDate
+	 */
+	public void setExpiryDate(Integer expiryDate) {
+		this.expiryDate = expiryDate;
 	}
 
 	/**
@@ -251,12 +287,39 @@ public class VipDepositOrderDO extends BaseDO {
 	}
 
 	/**
+	 * 获取 充值配置选项id
+	 * 
+	 * @return configId
+	 */
+	public Long getConfigId() {
+		return configId;
+	}
+
+	/**
 	 * 获取 充值金额,单位:元
 	 * 
 	 * @return amount
 	 */
 	public Double getAmount() {
 		return amount;
+	}
+
+	/**
+	 * 获取 充值期限类型: 01-按天；02-按月
+	 * 
+	 * @return expiryType
+	 */
+	public String getExpiryType() {
+		return expiryType;
+	}
+
+	/**
+	 * 获取 充值会员期限
+	 * 
+	 * @return expiryDate
+	 */
+	public Integer getExpiryDate() {
+		return expiryDate;
 	}
 
 	/**

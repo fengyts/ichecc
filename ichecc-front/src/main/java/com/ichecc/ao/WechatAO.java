@@ -286,7 +286,7 @@ public class WechatAO extends BaseAO {
 				throw new Exception("微信获取jsapi ticket票据异常");
 			}
 
-			logger.info("微信jssdk-获取access_token, access_token json:{}", json);
+			logger.info("微信jssdk-获取api_ticket, api_ticket json:{}", json);
 			ticket = JSONObject.toJavaObject(json, JSApiTicketDTO.class);
 
 			redisCacheService.setRedisCache(redisKey, ticket, ticket.getExpires_in());

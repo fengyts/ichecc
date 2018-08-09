@@ -31,6 +31,10 @@ public class ApiBaseResponseDTO extends BaseValidateDTO {
 		return true;
 	}
 
+	/**
+	 * 校验系统级错误
+	 * @return
+	 */
 	public boolean validateSys() {
 		return validate();
 	}
