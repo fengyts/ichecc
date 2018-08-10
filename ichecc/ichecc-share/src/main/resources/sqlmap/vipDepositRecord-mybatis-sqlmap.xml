@@ -7,22 +7,20 @@
 		<id column="id" property="id" />
         <result column="user_id" property="userId"/>
         <result column="order_no" property="orderNo"/>
-        <result column="amount" property="amount"/>
-        <result column="discount" property="discount"/>
+        <result column="real_amount" property="realAmount"/>
         <result column="create_time" property="createTime"/>
         <result column="end_time" property="endTime"/>
 	</resultMap>
 
 	<sql id="MybatisVipDepositRecordDAO_all_column_fields">
-	      id,user_id,order_no,amount,discount,create_time,end_time
+	      id,user_id,order_no,real_amount,create_time,end_time
  	</sql>
 	<!-- 只有varchar char text类型 做 !='' 判断，生成代码时,其他类型时只做!=null 决断 0或fasle与空''是相同的，在mybatis中的动态语句中 -->
 	<sql id="MybatisVipDepositRecordDAO_dynamic_where_fields"><!-- xml转义字符需要 <![CDATA[   ]]> 标签-->
 		<where>
 			<if test="userId != null "> AND user_id=#{userId} </if>
 			<if test="orderNo != null  and orderNo != '' "> AND order_no=#{orderNo} </if>
-			<if test="amount != null "> AND amount=#{amount} </if>
-			<if test="discount != null "> AND discount=#{discount} </if>
+			<if test="realAmount != null "> AND real_amount=#{realAmount} </if>
 		</where>
  	</sql>
 	
@@ -45,16 +43,14 @@
 			id,
 			user_id,
 			order_no,
-			amount,
-			discount,
+			real_amount,
 			create_time,
 			end_time
 		)values(
 			#{id},
 			#{userId},
 			#{orderNo},
-			#{amount},
-			#{discount},
+			#{realAmount},
 			#{createTime},
 			#{endTime}
 		)
@@ -66,8 +62,7 @@
 		SET
 			user_id = #{userId},
 			order_no = #{orderNo},
-			amount = #{amount},
-			discount = #{discount},
+			real_amount = #{realAmount},
 			end_time = #{endTime}
 		WHERE
 			id = #{id}
@@ -83,8 +78,7 @@
 		<set>
 			<if test="userId != null ">user_id=#{userId},</if>
 			<if test="orderNo != null  and orderNo != '' ">order_no=#{orderNo},</if>
-			<if test="amount != null ">amount=#{amount},</if>
-			<if test="discount != null ">discount=#{discount},</if>
+			<if test="realAmount != null ">real_amount=#{realAmount},</if>
 			<if test="endTime != null ">end_time=#{endTime},</if>
 		</set>
 		WHERE id = #{id}

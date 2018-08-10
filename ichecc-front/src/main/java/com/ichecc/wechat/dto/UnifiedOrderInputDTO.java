@@ -20,6 +20,8 @@ public class UnifiedOrderInputDTO extends BaseValidateDTO {
 	private Long configId;
 	/** 充值金额 */
 	private Double depositAmount;
+	private Integer expiryDate;
+	private String expiryType;
 
 	private String body;
 	private String ip;
@@ -52,6 +54,22 @@ public class UnifiedOrderInputDTO extends BaseValidateDTO {
 
 	public void setDepositAmount(Double depositAmount) {
 		this.depositAmount = depositAmount;
+	}
+
+	public Integer getExpiryDate() {
+		return expiryDate;
+	}
+
+	public void setExpiryDate(Integer expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+
+	public String getExpiryType() {
+		return expiryType;
+	}
+
+	public void setExpiryType(String expiryType) {
+		this.expiryType = expiryType;
 	}
 
 	public String getBody() {

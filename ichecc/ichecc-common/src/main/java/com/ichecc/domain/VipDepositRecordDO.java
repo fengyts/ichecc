@@ -7,12 +7,12 @@ import java.util.Date;
 /**
  * 会员充值记录
  * 
- * @author fengyts Thu Aug 09 09:40:20 CST 2018
+ * @author fengyts Fri Aug 10 14:44:06 CST 2018
  */
 
 public class VipDepositRecordDO extends BaseDO {
 
-	private static final long serialVersionUID = 760207874269297186L;
+	private static final long serialVersionUID = 3323780006362828498L;
 
 	/** 主键 */
 	private Long id;
@@ -23,11 +23,8 @@ public class VipDepositRecordDO extends BaseDO {
 	/** 充值订单号 */
 	private String orderNo;
 
-	/** 充值金额 */
-	private Double amount;
-
-	/** 充值折扣，默认值为1，即无折扣 */
-	private Double discount;
+	/** 实际充值金额 */
+	private Double realAmount;
 
 	/** 充值时间（会员生效时间） */
 	private Date createTime;
@@ -63,21 +60,12 @@ public class VipDepositRecordDO extends BaseDO {
 	}
 
 	/**
-	 * 设置 充值金额
+	 * 设置 实际充值金额
 	 * 
-	 * @param amount
+	 * @param realAmount
 	 */
-	public void setAmount(Double amount) {
-		this.amount = amount;
-	}
-
-	/**
-	 * 设置 充值折扣，默认值为1，即无折扣
-	 * 
-	 * @param discount
-	 */
-	public void setDiscount(Double discount) {
-		this.discount = discount;
+	public void setRealAmount(Double realAmount) {
+		this.realAmount = realAmount;
 	}
 
 	/**
@@ -126,21 +114,12 @@ public class VipDepositRecordDO extends BaseDO {
 	}
 
 	/**
-	 * 获取 充值金额
+	 * 获取 实际充值金额
 	 * 
-	 * @return amount
+	 * @return realAmount
 	 */
-	public Double getAmount() {
-		return amount;
-	}
-
-	/**
-	 * 获取 充值折扣，默认值为1，即无折扣
-	 * 
-	 * @return discount
-	 */
-	public Double getDiscount() {
-		return discount;
+	public Double getRealAmount() {
+		return realAmount;
 	}
 
 	/**

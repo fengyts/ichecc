@@ -39,11 +39,11 @@ public class DepositConfigAO {
 		if (null == configDO) {
 			return ResultMessage.failure("参数不能为空");
 		}
-		Double amount = configDO.getAmount();
+		Double originalAmount = configDO.getOriginalAmount();
 		Double discount = configDO.getDiscount();
 		Integer expiryDate = configDO.getExpiryDate();
 		String expiryType = configDO.getExpiryType();
-		if (null == amount || amount.doubleValue() <= 0d) {
+		if (null == originalAmount || originalAmount.doubleValue() <= 0d) {
 			return ResultMessage.failure("充值金额不能为空");
 		}
 		if (null == discount || discount.doubleValue() > 1d || discount.doubleValue() <= 0d) {
@@ -58,11 +58,11 @@ public class DepositConfigAO {
 
 		synchronized (this) {
 			VipDepositConfigDO check = new VipDepositConfigDO();
-			check.setAmount(amount);
+			check.setOriginalAmount(originalAmount);;
 			check.setStatus(true);
 			List<VipDepositConfigDO> list = depositConfigService.selectDynamic(check);
 			if (CollectionUtils.isNotEmpty(list)) {
-				return ResultMessage.failure("该金额配置已经存在了");
+				return ResultMessage.failure("该金额配置已经存在");
 			}
 
 			Long userId = UserHandler.getUserId();
@@ -87,11 +87,11 @@ public class DepositConfigAO {
 			return ResultMessage.failure("该配置不存在");
 		}
 
-		Double amount = configDO.getAmount();
+		Double originalAmount = configDO.getOriginalAmount();
 		Double discount = configDO.getDiscount();
 		Integer expiryDate = configDO.getExpiryDate();
 		String expiryType = configDO.getExpiryType();
-		if (null == amount || amount.doubleValue() <= 0d) {
+		if (null == originalAmount || originalAmount.doubleValue() <= 0d) {
 			return ResultMessage.failure("充值不能金额为空");
 		}
 		if (null == discount || discount.doubleValue() > 1d || discount.doubleValue() <= 0d) {
@@ -106,12 +106,12 @@ public class DepositConfigAO {
 
 		synchronized (this) {
 			VipDepositConfigDO check = new VipDepositConfigDO();
-			check.setAmount(amount);
+			check.setOriginalAmount(originalAmount);
 			check.setStatus(true);
 			List<VipDepositConfigDO> list = depositConfigService.selectDynamic(check);
 			if (CollectionUtils.isNotEmpty(list)) {
 				if (id.longValue() != list.get(0).getId().longValue()) {
-					return ResultMessage.failure("该金额配置已经存在了");
+					return ResultMessage.failure("该金额配置已经存在");
 				}
 			}
 

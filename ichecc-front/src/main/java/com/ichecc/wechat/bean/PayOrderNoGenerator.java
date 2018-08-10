@@ -9,8 +9,9 @@ import org.slf4j.LoggerFactory;
 import ng.bayue.util.StringUtils;
 
 /**
- * 支付订单编号生成器 <deprecated>废弃的规则：生成规则：8 & yyyyMMddHHmmss & 4位流水号 & 3位随机数
- * 共22位数字</deprecated> 新规则：8 & 年份最后一位 & 当前时间毫秒数的后10位 & 4位流水号 & 3位随机数 共18位数字
+ * 支付订单编号生成器 
+ * <deprecated>废弃的规则：生成规则：8 & yyyyMMddHHmmss & 4位流水号 & 3位随机数 共22位数字</deprecated> 
+ * 新规则：8 & 年份最后一位 & 当前时间毫秒数的后10位 & 4位流水号 & 3位随机数 共18位数字
  * 
  */
 public class PayOrderNoGenerator {

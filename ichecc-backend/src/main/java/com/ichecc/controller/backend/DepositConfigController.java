@@ -50,7 +50,7 @@ public class DepositConfigController {
 	@RequestMapping("edit")
 	public String edit(Model model, Long id) {
 		VipDepositConfigDO configDO = configAO.selectById(id);
-		model.addAttribute("configDO", configDO);
+		model.addAttribute("depositConfigDO", configDO);
 		return BackendConstant.BACKEND_VIEW_PATH + "depositConfig/edit";
 	}
 

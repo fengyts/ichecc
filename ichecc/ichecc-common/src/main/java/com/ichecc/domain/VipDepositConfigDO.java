@@ -7,18 +7,18 @@ import java.util.Date;
 /**
  * 会员充值选项配置
  * 
- * @author fengyts Thu Aug 09 16:13:39 CST 2018
+ * @author fengyts Fri Aug 10 14:44:07 CST 2018
  */
 
 public class VipDepositConfigDO extends BaseDO {
 
-	private static final long serialVersionUID = 5210995158419868873L;
+	private static final long serialVersionUID = -3143282896216343342L;
 
 	/** 主键 */
 	private Long id;
 
-	/** 充值金额 */
-	private Double amount;
+	/** 充值金额,原始金额 */
+	private Double originalAmount;
 
 	/** 折扣,范围区间:(0,1],如95折则为0.95,默认无折扣为1 */
 	private Double discount;
@@ -54,12 +54,12 @@ public class VipDepositConfigDO extends BaseDO {
 	}
 
 	/**
-	 * 设置 充值金额
+	 * 设置 充值金额,原始金额
 	 * 
-	 * @param amount
+	 * @param originalAmount
 	 */
-	public void setAmount(Double amount) {
-		this.amount = amount;
+	public void setOriginalAmount(Double originalAmount) {
+		this.originalAmount = originalAmount;
 	}
 
 	/**
@@ -144,12 +144,12 @@ public class VipDepositConfigDO extends BaseDO {
 	}
 
 	/**
-	 * 获取 充值金额
+	 * 获取 充值金额,原始金额
 	 * 
-	 * @return amount
+	 * @return originalAmount
 	 */
-	public Double getAmount() {
-		return amount;
+	public Double getOriginalAmount() {
+		return originalAmount;
 	}
 
 	/**

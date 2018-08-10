@@ -162,6 +162,7 @@ public class WechatAO extends BaseAO {
 
 			logger.info("微信授权-获取access_token, access_token json:{}", json);
 			accessToken = JSONObject.toJavaObject(json, AuthAccessTokenDTO.class);
+			redisKey += accessToken.getOpenid();
 			redisCacheService.setRedisCache(redisKey, accessToken, accessToken.getExpires_in());
 			return accessToken;
 		} catch (Exception e) {

@@ -10,7 +10,7 @@ css=[
 
 
 <div class="panel-body box_border">
-<form id="depositConfigAddForm" action="" class="form-horizontal dr-form-bordered form-inline">
+<form id="depositConfigAddForm" action="" class="form-horizontal dr-form-bordered form-inline" role="form">
 	<div style="display:none;">
 		<#if depositConfigDO.id?exists>
 			<input type="hidden" id="id" name="id" value="${depositConfigDO.id}" />
@@ -26,14 +26,14 @@ css=[
 		<div class="col-md-4">
 			<input type="text" class="form-control" id="amount" name="amount" value="${depositConfigDO.amount}"/>
 		</div>
-		<label class="col-md-2 control-label">折扣(默认值：1,即无折扣)<span class="dr-asterisk requiredField">*</span></label>
+		<label class="col-md-2 control-label">折扣<font color="#ff0000">(0<折扣值<=1;默认值：1,即无折扣)</font><span class="dr-asterisk requiredField">*</span></label>
 		<div class="col-md-4">
 			<input type="text" class="form-control" id="discount" name="discount" value="${depositConfigDO.discount!1}" />
 		</div>
 	</div>
 	
 	<div class="form-group">
-		<label class="col-md-2 control-label">有效期限<span class="dr-asterisk requiredField">*</span></label>
+		<label class="col-md-2 control-label">有效期限(天/月,含充值当天)<span class="dr-asterisk requiredField">*</span></label>
 		<div class="col-md-4">
 			<input type="text" class="form-control" id="expiryDate" name="expiryDate" value="${depositConfigDO.expiryDate!1}" />
 		</div>
@@ -49,7 +49,7 @@ css=[
 	</div>
 	
 	<div class="form-group">
-		<label class="col-md-2 control-label">状态<span class="dr-asterisk requiredField">*</span></label>
+		<label class="col-md-2 control-label">状态<font color="#ff0000">(状态可用于删除配置)</font><span class="dr-asterisk requiredField">*</span></label>
 		<div class="col-md-4">
 			<label class="radio-inline">
 			  <input type="radio" name="status" value="1" checked> 有效

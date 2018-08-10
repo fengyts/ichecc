@@ -9,7 +9,6 @@ import com.ichecc.annotation.Authority;
 import com.ichecc.ao.BargainAO;
 import com.ichecc.common.Constants;
 import com.ichecc.common.ResultData;
-import com.ichecc.vo.HiggleJoinVO;
 
 @Controller
 @RequestMapping(Constants.API_BASE_PATH + "bargain")

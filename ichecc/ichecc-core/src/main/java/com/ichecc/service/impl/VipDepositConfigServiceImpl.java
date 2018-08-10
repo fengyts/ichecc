@@ -1,5 +1,7 @@
 package com.ichecc.service.impl;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -128,6 +130,57 @@ public class VipDepositConfigServiceImpl  implements VipDepositConfigService{
 		}
 		return new Page<VipDepositConfigDO>();
 	}
+
+
+	@Override
+	public List<VipDepositConfigDO> listAllConfig() {
+		VipDepositConfigDO param = new VipDepositConfigDO();
+		param.setStatus(true);
+		List<VipDepositConfigDO> list = this.selectDynamic(param);
+
+		Collections.sort(list, new Comparator<VipDepositConfigDO>() {
+			@Override
+			public int compare(VipDepositConfigDO o1, VipDepositConfigDO o2) {
+				double amt1 = o1.getOriginalAmount(), amt2 = o2.getOriginalAmount();
+				String expiryType1 = o1.getExpiryType(), expiryType2 = o2.getExpiryType();
+//				//优先按照金额升序，再按照类型升序
+//				if (amt1 > amt2) {
+//					return 1;
+//				}
+//				if (amt1 == amt2) {
+//					if ("01".equals(expiryType1)) {
+//						return 1;
+//					}
+//					if ("01".equals(expiryType2)) {
+//						return -1;
+//					}
+//					return 0;
+//				}
+//				return -1;
+				
+				// 下面排序是优先按照类型，'01'排最前，然后按照金额升序
+				if ("01".equals(expiryType1)) {
+					if("01".equals(expiryType2)){
+						if (amt1 > amt2) {
+							return 1;
+						}
+						if(amt1 == amt2){
+							return 0;
+						}
+						return -1;
+					}
+					return -1;
+				}
+				if ("02".equals(expiryType1)){
+					return -1;
+				}
+				return 0;
+			}
+		});
+
+		return list;
+	}
+	
 	
 	
 }

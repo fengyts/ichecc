@@ -5,7 +5,7 @@
 
 	<resultMap type="com.ichecc.domain.VipDepositConfigDO" id="VipDepositConfigDOResultMap">
 		<id column="id" property="id" />
-        <result column="amount" property="amount"/>
+        <result column="original_amount" property="originalAmount"/>
         <result column="discount" property="discount"/>
         <result column="expiry_date" property="expiryDate"/>
         <result column="expiry_type" property="expiryType"/>
@@ -17,12 +17,12 @@
 	</resultMap>
 
 	<sql id="MybatisVipDepositConfigDAO_all_column_fields">
-	      id,amount,discount,expiry_date,expiry_type,status,create_user_id,create_time,modify_user_id,modify_time
+	      id,original_amount,discount,expiry_date,expiry_type,status,create_user_id,create_time,modify_user_id,modify_time
  	</sql>
 	<!-- 只有varchar char text类型 做 !='' 判断，生成代码时,其他类型时只做!=null 决断 0或fasle与空''是相同的，在mybatis中的动态语句中 -->
 	<sql id="MybatisVipDepositConfigDAO_dynamic_where_fields"><!-- xml转义字符需要 <![CDATA[   ]]> 标签-->
 		<where>
-			<if test="amount != null "> AND amount=#{amount} </if>
+			<if test="originalAmount != null "> AND original_amount=#{originalAmount} </if>
 			<if test="discount != null "> AND discount=#{discount} </if>
 			<if test="expiryDate != null "> AND expiry_date=#{expiryDate} </if>
 			<if test="expiryType != null  and expiryType != '' "> AND expiry_type=#{expiryType} </if>
@@ -49,7 +49,7 @@
         </selectKey>
         INSERT INTO vip_deposit_config(
 			id,
-			amount,
+			original_amount,
 			discount,
 			expiry_date,
 			expiry_type,
@@ -60,7 +60,7 @@
 			modify_time
 		)values(
 			#{id},
-			#{amount},
+			#{originalAmount},
 			#{discount},
 			#{expiryDate},
 			#{expiryType},
@@ -76,7 +76,7 @@
 	<update id="MybatisVipDepositConfigDAO_updateById" parameterType="com.ichecc.domain.VipDepositConfigDO">
 		UPDATE vip_deposit_config
 		SET
-			amount = #{amount},
+			original_amount = #{originalAmount},
 			discount = #{discount},
 			expiry_date = #{expiryDate},
 			expiry_type = #{expiryType},
@@ -96,7 +96,7 @@
 	<update id="MybatisVipDepositConfigDAO_update_dynamic" parameterType="com.ichecc.domain.VipDepositConfigDO">
 		UPDATE vip_deposit_config
 		<set>
-			<if test="amount != null ">amount=#{amount},</if>
+			<if test="originalAmount != null ">original_amount=#{originalAmount},</if>
 			<if test="discount != null ">discount=#{discount},</if>
 			<if test="expiryDate != null ">expiry_date=#{expiryDate},</if>
 			<if test="expiryType != null  and expiryType != '' ">expiry_type=#{expiryType},</if>

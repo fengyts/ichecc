@@ -1,7 +1,10 @@
 package com.ichecc.service;
 
-import ng.bayue.service.common.GeneralService;
+import java.util.List;
+
 import com.ichecc.domain.VipDepositConfigDO;
+
+import ng.bayue.service.common.GeneralService;
 
  /**
  * 会员充值选项配置 Service
@@ -9,5 +12,10 @@ import com.ichecc.domain.VipDepositConfigDO;
  */
 public interface VipDepositConfigService extends GeneralService<VipDepositConfigDO, VipDepositConfigDO> {
 	
+	/**
+	 * 获取所有有效的配置项, 按照金额升序
+	 * @return
+	 */
+	List<VipDepositConfigDO> listAllConfig();
 	
 }

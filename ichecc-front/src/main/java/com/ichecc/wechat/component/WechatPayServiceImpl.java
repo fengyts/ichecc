@@ -67,18 +67,18 @@ public class WechatPayServiceImpl implements WechatPayService {
 			if(null != configId){
 				configDO = depositConfigService.selectById(configId);
 			} else {
-				logger.info("支付异常：请刷新页面后重试");
-				return CommonResultMessage.failure("支付异常：请刷新页面后重试");
+				logger.info("支付异常：请稍后重试");
+				return CommonResultMessage.failure("支付异常：请稍后重试");
 			}
 			if(null == configDO){
-				logger.info("支付异常：请刷新页面后重试");
-				return CommonResultMessage.failure("支付异常：请刷新页面后重试");
+				logger.info("支付异常：请稍后重试");
+				return CommonResultMessage.failure("支付异常：请稍后重试");
 			}
 
 			JsApiWXPayDTO wxPayDto = new JsApiWXPayDTO();
 			String paySign = "";
 			if (null != orderLatest) {
-				// 校验未支付订单金额和本次请求是否一样, 若一样并且未支付，则使用微支付订单重新发起支付，否则生成新订单
+				// 校验未支付订单金额以及类型和本次请求是否一样, 若一样并且未支付，则使用微支付订单重新发起支付，否则生成新订单
 				if (checkDepositOrderCofnig(configDO, orderLatest)) {
 					// 校验该订单状态-> 是否已经支付
 					// 若已经支付或者支付异常, 重新下单
@@ -94,6 +94,7 @@ public class WechatPayServiceImpl implements WechatPayService {
 						// 若微信端已经支付成功状态 并且和本地订单状态不一样，则更新本地订单状态
 						if (OrderTradeStateEnums.SUCCESS == tradeStateWX
 								&& (DepositOrderStatus.UNPAID.equals(orderLatest.getOrderStatus()))) {
+							logger.info("支付成功订单：更新本地订单状态");
 							orderLatest.setOrderStatus(DepositOrderStatus.SUCCESS);
 							orderLatest.setTransactionId(resQueryDto.getTransaction_id());
 							orderLatest.setBankType(resQueryDto.getBank_type());
@@ -103,14 +104,32 @@ public class WechatPayServiceImpl implements WechatPayService {
 							orderLatest.setModifyTime(new Date());
 							depositOrderService.update(orderLatest, false);
 						}
+						if (OrderTradeStateEnums.SUCCESS != tradeStateWX
+								&& OrderTradeStateEnums.USERPAYING != tradeStateWX) {
+							logger.info("过期或失败订单：更新本地订单状态");
+							String tradeStateDb = orderLatest.getTradeState();
+							if (!DepositOrderTradeState.SUCCESS.equals(tradeStateDb)
+									&& !DepositOrderTradeState.USERPAYING.equals(tradeStateDb)
+									&& StringUtils.isNotBlank(tradeStateDb)) {
+								orderLatest.setOrderStatus(DepositOrderStatus.FAILURE);
+								orderLatest.setTransactionId(resQueryDto.getTransaction_id());
+								orderLatest.setBankType(resQueryDto.getBank_type());
+								orderLatest.setTradeState(tradeStateWX.code);
+								orderLatest.setTradeStateDesc(resQueryDto.getTrade_state_desc());
+								orderLatest.setModifyTime(new Date());
+								depositOrderService.update(orderLatest, false);
+							}
+						}
 					}
 				}
 			}
 			
 			String orderNo = generateOrderNo(); // 生成订单编号
-			
 			String openid = userDO.getOpenid();
-			Double totalFee = configDO.getAmount() * 100; // 元转为分
+			
+			Double originalAmount = configDO.getOriginalAmount();
+			Double realAmount = originalAmount * configDO.getDiscount();
+			Double totalFee = realAmount * 100; // 元转为分
 			
 			ApiUnifiedOrderDTO dto = new ApiUnifiedOrderDTO();
 			dto.setOut_trade_no(orderNo);
@@ -148,7 +167,8 @@ public class WechatPayServiceImpl implements WechatPayService {
 			orderDO.setPrepayId(resDto.getPrepay_id());
 			
 			orderDO.setConfigId(configDO.getId());
-			orderDO.setAmount(configDO.getAmount());
+			orderDO.setOriginalAmount(originalAmount);
+			orderDO.setRealAmount(realAmount);
 			orderDO.setExpiryDate(configDO.getExpiryDate());
 			orderDO.setExpiryType(configDO.getExpiryType());
 			
@@ -184,11 +204,12 @@ public class WechatPayServiceImpl implements WechatPayService {
 		if (null == configDO || null == orderDO) {
 			return false;
 		}
-		Double ca = configDO.getAmount();
-		Double oa = orderDO.getAmount();
+		Double ca = configDO.getOriginalAmount();
+		Double oa = orderDO.getRealAmount();
 		if (null == ca || null == oa || ca.doubleValue() != oa.doubleValue()) {
 			return false;
 		}
+		ca = ca * configDO.getDiscount(); // 实际充值金额
 		if (configDO.getExpiryDate().intValue() != orderDO.getExpiryDate().intValue()) {
 			return false;
 		}
@@ -371,7 +392,7 @@ public class WechatPayServiceImpl implements WechatPayService {
 				logger.info("支付结果通知异常:订单不存在");
 				return CommonResultMessage.failure("订单不存在");
 			}
-			Double amt = order.getAmount();
+			Double amt = order.getRealAmount();
 			int amtTmp = new Double(amt * 100).intValue(); // 转为分
 			if (amtTmp != callbackDto.getTotal_fee()) {
 				logger.info("支付结果通知异常: 金额不统一");

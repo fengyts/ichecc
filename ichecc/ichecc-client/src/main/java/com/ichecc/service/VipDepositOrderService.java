@@ -32,5 +32,13 @@ public interface VipDepositOrderService extends GeneralService<VipDepositOrderDO
 	 * @return
 	 */
 	int updateByOrderNo(VipDepositOrderDO orderDO) throws CommonServiceException;
+	
+	/**
+	 * 根据充值订单更新用户vip信息
+	 * @param orderDO
+	 * @return
+	 * @throws CommonServiceException
+	 */
+	int updateVipInfoByOrder(VipDepositOrderDO orderDO) throws CommonServiceException;
 
 }

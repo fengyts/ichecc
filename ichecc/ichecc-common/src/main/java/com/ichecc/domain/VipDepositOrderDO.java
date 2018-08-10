@@ -7,12 +7,12 @@ import java.util.Date;
 /**
  * vip会员充值订单
  * 
- * @author fengyts Thu Aug 09 09:50:05 CST 2018
+ * @author fengyts Fri Aug 10 14:44:06 CST 2018
  */
 
 public class VipDepositOrderDO extends BaseDO {
 
-	private static final long serialVersionUID = -2033594107907281652L;
+	private static final long serialVersionUID = 3561577169184238766L;
 
 	/** 主键 */
 	private Long id;
@@ -38,8 +38,14 @@ public class VipDepositOrderDO extends BaseDO {
 	/** 充值配置选项id */
 	private Long configId;
 
-	/** 充值金额,单位:元 */
-	private Double amount;
+	/** 原始金额 */
+	private Double originalAmount;
+
+	/** 折扣值 */
+	private Double discount;
+
+	/** 实际充值金额，即折扣后的金额,单位:元 */
+	private Double realAmount;
 
 	/** 充值期限类型: 01-按天；02-按月 */
 	private String expiryType;
@@ -141,12 +147,30 @@ public class VipDepositOrderDO extends BaseDO {
 	}
 
 	/**
-	 * 设置 充值金额,单位:元
+	 * 设置 原始金额
 	 * 
-	 * @param amount
+	 * @param originalAmount
 	 */
-	public void setAmount(Double amount) {
-		this.amount = amount;
+	public void setOriginalAmount(Double originalAmount) {
+		this.originalAmount = originalAmount;
+	}
+
+	/**
+	 * 设置 折扣值
+	 * 
+	 * @param discount
+	 */
+	public void setDiscount(Double discount) {
+		this.discount = discount;
+	}
+
+	/**
+	 * 设置 实际充值金额，即折扣后的金额,单位:元
+	 * 
+	 * @param realAmount
+	 */
+	public void setRealAmount(Double realAmount) {
+		this.realAmount = realAmount;
 	}
 
 	/**
@@ -296,12 +320,30 @@ public class VipDepositOrderDO extends BaseDO {
 	}
 
 	/**
-	 * 获取 充值金额,单位:元
+	 * 获取 原始金额
 	 * 
-	 * @return amount
+	 * @return originalAmount
 	 */
-	public Double getAmount() {
-		return amount;
+	public Double getOriginalAmount() {
+		return originalAmount;
+	}
+
+	/**
+	 * 获取 折扣值
+	 * 
+	 * @return discount
+	 */
+	public Double getDiscount() {
+		return discount;
+	}
+
+	/**
+	 * 获取 实际充值金额，即折扣后的金额,单位:元
+	 * 
+	 * @return realAmount
+	 */
+	public Double getRealAmount() {
+		return realAmount;
 	}
 
 	/**

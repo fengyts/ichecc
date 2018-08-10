@@ -12,7 +12,9 @@
         <result column="order_status" property="orderStatus"/>
         <result column="transaction_id" property="transactionId"/>
         <result column="config_id" property="configId"/>
-        <result column="amount" property="amount"/>
+        <result column="original_amount" property="originalAmount"/>
+        <result column="discount" property="discount"/>
+        <result column="real_amount" property="realAmount"/>
         <result column="expiry_type" property="expiryType"/>
         <result column="expiry_date" property="expiryDate"/>
         <result column="trade_state" property="tradeState"/>
@@ -24,7 +26,7 @@
 	</resultMap>
 
 	<sql id="MybatisVipDepositOrderDAO_all_column_fields">
-	      id,order_no,user_id,openid,prepay_id,order_status,transaction_id,config_id,amount,expiry_type,expiry_date,trade_state,trade_state_desc,bank_type,time_end,create_time,modify_time
+	      id,order_no,user_id,openid,prepay_id,order_status,transaction_id,config_id,original_amount,discount,real_amount,expiry_type,expiry_date,trade_state,trade_state_desc,bank_type,time_end,create_time,modify_time
  	</sql>
 	<!-- 只有varchar char text类型 做 !='' 判断，生成代码时,其他类型时只做!=null 决断 0或fasle与空''是相同的，在mybatis中的动态语句中 -->
 	<sql id="MybatisVipDepositOrderDAO_dynamic_where_fields"><!-- xml转义字符需要 <![CDATA[   ]]> 标签-->
@@ -36,7 +38,9 @@
 			<if test="orderStatus != null  and orderStatus != '' "> AND order_status=#{orderStatus} </if>
 			<if test="transactionId != null  and transactionId != '' "> AND transaction_id=#{transactionId} </if>
 			<if test="configId != null "> AND config_id=#{configId} </if>
-			<if test="amount != null "> AND amount=#{amount} </if>
+			<if test="originalAmount != null "> AND original_amount=#{originalAmount} </if>
+			<if test="discount != null "> AND discount=#{discount} </if>
+			<if test="realAmount != null "> AND real_amount=#{realAmount} </if>
 			<if test="expiryType != null  and expiryType != '' "> AND expiry_type=#{expiryType} </if>
 			<if test="expiryDate != null "> AND expiry_date=#{expiryDate} </if>
 			<if test="tradeState != null  and tradeState != '' "> AND trade_state=#{tradeState} </if>
@@ -69,7 +73,9 @@
 			order_status,
 			transaction_id,
 			config_id,
-			amount,
+			original_amount,
+			discount,
+			real_amount,
 			expiry_type,
 			expiry_date,
 			trade_state,
@@ -87,7 +93,9 @@
 			#{orderStatus},
 			#{transactionId},
 			#{configId},
-			#{amount},
+			#{originalAmount},
+			#{discount},
+			#{realAmount},
 			#{expiryType},
 			#{expiryDate},
 			#{tradeState},
@@ -110,7 +118,9 @@
 			order_status = #{orderStatus},
 			transaction_id = #{transactionId},
 			config_id = #{configId},
-			amount = #{amount},
+			original_amount = #{originalAmount},
+			discount = #{discount},
+			real_amount = #{realAmount},
 			expiry_type = #{expiryType},
 			expiry_date = #{expiryDate},
 			trade_state = #{tradeState},
@@ -137,7 +147,9 @@
 			<if test="orderStatus != null  and orderStatus != '' ">order_status=#{orderStatus},</if>
 			<if test="transactionId != null  and transactionId != '' ">transaction_id=#{transactionId},</if>
 			<if test="configId != null ">config_id=#{configId},</if>
-			<if test="amount != null ">amount=#{amount},</if>
+			<if test="originalAmount != null ">original_amount=#{originalAmount},</if>
+			<if test="discount != null ">discount=#{discount},</if>
+			<if test="realAmount != null ">real_amount=#{realAmount},</if>
 			<if test="expiryType != null  and expiryType != '' ">expiry_type=#{expiryType},</if>
 			<if test="expiryDate != null ">expiry_date=#{expiryDate},</if>
 			<if test="tradeState != null  and tradeState != '' ">trade_state=#{tradeState},</if>
