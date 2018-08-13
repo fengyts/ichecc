@@ -56,21 +56,21 @@ public class WechatPayServiceImpl implements WechatPayService {
 			}
 			// 查询最新未支付订单
 			VipDepositOrderDO orderLatest = depositOrderService.selectLatestUnPaidOrder(userId);
-//			Double totalFee = inputDto.getDepositAmount();
-//			if (null == totalFee || totalFee.doubleValue() <= 0) {
-//				logger.info("微信支付下单失败: 支付金额为空");
-//				return CommonResultMessage.failure("微信支付下单失败: 支付金额为空");
-//			}
+			// Double totalFee = inputDto.getDepositAmount();
+			// if (null == totalFee || totalFee.doubleValue() <= 0) {
+			// logger.info("微信支付下单失败: 支付金额为空");
+			// return CommonResultMessage.failure("微信支付下单失败: 支付金额为空");
+			// }
 			// 获取支付信息
 			VipDepositConfigDO configDO = null;
 			Long configId = inputDto.getConfigId();
-			if(null != configId){
+			if (null != configId) {
 				configDO = depositConfigService.selectById(configId);
 			} else {
 				logger.info("支付异常：请稍后重试");
 				return CommonResultMessage.failure("支付异常：请稍后重试");
 			}
-			if(null == configDO){
+			if (null == configDO) {
 				logger.info("支付异常：请稍后重试");
 				return CommonResultMessage.failure("支付异常：请稍后重试");
 			}
@@ -79,7 +79,7 @@ public class WechatPayServiceImpl implements WechatPayService {
 			String paySign = "";
 			if (null != orderLatest) {
 				// 校验未支付订单金额以及类型和本次请求是否一样, 若一样并且未支付，则使用微支付订单重新发起支付，否则生成新订单
-				if (checkDepositOrderCofnig(configDO, orderLatest)) {
+				if (checkDepositOrderConfig(configDO, orderLatest)) {
 					// 校验该订单状态-> 是否已经支付
 					// 若已经支付或者支付异常, 重新下单
 					OrderQueryResponseDTO resQueryDto = orderQueryFromWX(orderLatest);
@@ -102,8 +102,10 @@ public class WechatPayServiceImpl implements WechatPayService {
 							orderLatest.setTradeStateDesc(resQueryDto.getTrade_state_desc());
 							orderLatest.setTimeEnd(DateUtils.parseDate(resQueryDto.getTime_end(), "yyyyMMddHHmmss"));
 							orderLatest.setModifyTime(new Date());
-							depositOrderService.update(orderLatest, false);
+							// 更新订单状态以及用户vip信息
+							depositOrderService.updateVipInfoByOrder(orderLatest);
 						}
+						// 从微信查询到的订单既不是成功，也不是用户支付中的状态，即其他状态的，统统更新为订单支付失败
 						if (OrderTradeStateEnums.SUCCESS != tradeStateWX
 								&& OrderTradeStateEnums.USERPAYING != tradeStateWX) {
 							logger.info("过期或失败订单：更新本地订单状态");
@@ -123,14 +125,14 @@ public class WechatPayServiceImpl implements WechatPayService {
 					}
 				}
 			}
-			
+
 			String orderNo = generateOrderNo(); // 生成订单编号
 			String openid = userDO.getOpenid();
-			
+
 			Double originalAmount = configDO.getOriginalAmount();
 			Double realAmount = originalAmount * configDO.getDiscount();
 			Double totalFee = realAmount * 100; // 元转为分
-			
+
 			ApiUnifiedOrderDTO dto = new ApiUnifiedOrderDTO();
 			dto.setOut_trade_no(orderNo);
 			dto.setTotal_fee(totalFee.intValue());
@@ -165,13 +167,13 @@ public class WechatPayServiceImpl implements WechatPayService {
 			orderDO.setOpenid(openid);
 			orderDO.setOrderNo(orderNo);
 			orderDO.setPrepayId(resDto.getPrepay_id());
-			
+
 			orderDO.setConfigId(configDO.getId());
 			orderDO.setOriginalAmount(originalAmount);
 			orderDO.setRealAmount(realAmount);
 			orderDO.setExpiryDate(configDO.getExpiryDate());
 			orderDO.setExpiryType(configDO.getExpiryType());
-			
+
 			orderDO.setOrderStatus(DepositOrderStatus.UNPAID);
 			orderDO.setTradeState(DepositOrderTradeState.USERPAYING);
 			orderDO.setCreateTime(new Date());
@@ -193,14 +195,15 @@ public class WechatPayServiceImpl implements WechatPayService {
 			throw e;
 		}
 	}
-	
+
 	/**
 	 * 校验是否同一订单：金额，充值类型，充值期限均一样。用于同一下单未过期且未支付订单发起重新支付请求
+	 * 
 	 * @param configDO
 	 * @param orderDO
 	 * @return
 	 */
-	private boolean checkDepositOrderCofnig(VipDepositConfigDO configDO, VipDepositOrderDO orderDO) {
+	private boolean checkDepositOrderConfig(VipDepositConfigDO configDO, VipDepositOrderDO orderDO) {
 		if (null == configDO || null == orderDO) {
 			return false;
 		}
@@ -325,16 +328,16 @@ public class WechatPayServiceImpl implements WechatPayService {
 		return resDto;
 	}
 
-	private OrderTradeStateEnums getOrderState(OrderQueryResponseDTO resQueryDto){
+	private OrderTradeStateEnums getOrderState(OrderQueryResponseDTO resQueryDto) {
 		OrderTradeStateEnums res = OrderTradeStateEnums.PAYERROR;
-		if(null == resQueryDto){
+		if (null == resQueryDto) {
 			return res;
 		}
 		String tradeState = resQueryDto.getTrade_state();
-		if(StringUtils.isBlank(tradeState)){
+		if (StringUtils.isBlank(tradeState)) {
 			return res;
 		}
-		switch(tradeState){
+		switch (tradeState) {
 		case DepositOrderTradeState.SUCCESS:
 			res = OrderTradeStateEnums.SUCCESS;
 			break;
@@ -360,7 +363,7 @@ public class WechatPayServiceImpl implements WechatPayService {
 			res = OrderTradeStateEnums.PAYERROR;
 			break;
 		}
-		
+
 		return res;
 	}
 
@@ -406,8 +409,10 @@ public class WechatPayServiceImpl implements WechatPayService {
 			Date timeEnd = DateUtils.parseDate(timeEndStr, "yyyyMMddHHmmss");
 			order.setTimeEnd(timeEnd);
 			order.setModifyTime(new Date());
-
-			depositOrderService.update(order, false);
+			
+			// 更新订单状态以及用户vip信息
+			depositOrderService.updateVipInfoByOrder(order);
+			
 
 			return CommonResultMessage.success(order);
 		} catch (Exception e) {
@@ -458,13 +463,10 @@ public class WechatPayServiceImpl implements WechatPayService {
 	}
 
 	public static enum OrderTradeStateEnums {
-		SUCCESS(DepositOrderTradeState.SUCCESS, "支付成功"), 
-		REFUND(DepositOrderTradeState.REFUND, "转入退款"), 
-		NOTPAY(DepositOrderTradeState.NOTPAY, "未支付"), 
-		CLOSED(DepositOrderTradeState.CLOSED, "已关闭"), 
-		REVOKED(DepositOrderTradeState.REVOKED, "已撤销（刷卡支付）"), 
-		USERPAYING(DepositOrderTradeState.USERPAYING, "用户支付中"), 
-		PAYERROR(DepositOrderTradeState.PAYERROR, "支付失败(其他原因，如银行返回失败)");
+		SUCCESS(DepositOrderTradeState.SUCCESS, "支付成功"), REFUND(DepositOrderTradeState.REFUND, "转入退款"), NOTPAY(
+				DepositOrderTradeState.NOTPAY, "未支付"), CLOSED(DepositOrderTradeState.CLOSED, "已关闭"), REVOKED(
+						DepositOrderTradeState.REVOKED, "已撤销（刷卡支付）"), USERPAYING(DepositOrderTradeState.USERPAYING,
+								"用户支付中"), PAYERROR(DepositOrderTradeState.PAYERROR, "支付失败(其他原因，如银行返回失败)");
 
 		public String code;
 		public String desc;

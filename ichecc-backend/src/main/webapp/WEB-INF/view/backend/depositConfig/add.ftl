@@ -24,7 +24,7 @@ css=[
 	<div class="form-group">
 		<label class="col-md-2 control-label">金额<span class="dr-asterisk requiredField">*</span></label>
 		<div class="col-md-4">
-			<input type="text" class="form-control" id="amount" name="amount" value="${depositConfigDO.amount}"/>
+			<input type="text" class="form-control" id="originalAmount" name="originalAmount" value="${depositConfigDO.originalAmount}"/>
 		</div>
 		<label class="col-md-2 control-label">折扣<font color="#ff0000">(0<折扣值<=1;默认值：1,即无折扣)</font><span class="dr-asterisk requiredField">*</span></label>
 		<div class="col-md-4">
@@ -49,6 +49,10 @@ css=[
 	</div>
 	
 	<div class="form-group">
+		<label class="col-md-2 control-label">营销描述</label>
+		<div class="col-md-4">
+			<input type="text" class="form-control" id="attractDesc" name="attractDesc" value="${depositConfigDO.attractDesc}" />
+		</div>
 		<label class="col-md-2 control-label">状态<font color="#ff0000">(状态可用于删除配置)</font><span class="dr-asterisk requiredField">*</span></label>
 		<div class="col-md-4">
 			<label class="radio-inline">

@@ -7,12 +7,12 @@ import java.util.Date;
 /**
  * 会员充值选项配置
  * 
- * @author fengyts Fri Aug 10 14:44:07 CST 2018
+ * @author fengyts Mon Aug 13 16:42:31 CST 2018
  */
 
 public class VipDepositConfigDO extends BaseDO {
 
-	private static final long serialVersionUID = -3143282896216343342L;
+	private static final long serialVersionUID = 5627868023459771197L;
 
 	/** 主键 */
 	private Long id;
@@ -31,6 +31,9 @@ public class VipDepositConfigDO extends BaseDO {
 
 	/** 配置生效状态：1-有效；0-无效 */
 	private Boolean status;
+
+	/** 营销描述 */
+	private String attractDesc;
 
 	/** 创建人 */
 	private Long createUserId;
@@ -96,6 +99,15 @@ public class VipDepositConfigDO extends BaseDO {
 	 */
 	public void setStatus(Boolean status) {
 		this.status = status;
+	}
+
+	/**
+	 * 设置 营销描述
+	 * 
+	 * @param attractDesc
+	 */
+	public void setAttractDesc(String attractDesc) {
+		this.attractDesc = attractDesc;
 	}
 
 	/**
@@ -186,6 +198,15 @@ public class VipDepositConfigDO extends BaseDO {
 	 */
 	public Boolean getStatus() {
 		return status;
+	}
+
+	/**
+	 * 获取 营销描述
+	 * 
+	 * @return attractDesc
+	 */
+	public String getAttractDesc() {
+		return attractDesc;
 	}
 
 	/**

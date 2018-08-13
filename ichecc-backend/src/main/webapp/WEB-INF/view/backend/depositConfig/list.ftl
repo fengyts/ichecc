@@ -48,6 +48,7 @@ css=[
 			    		<th>折扣</th>
 			    		<th>有效期限</th>
 			    		<th>期限类型</th>
+			    		<th>营销描述</th>
 			    		<th>状态</th>
 			    		<th style="width:100px;">操作</th>
 			    	</tr>
@@ -55,10 +56,11 @@ css=[
 			    	<#list page.list as obj>
 			    		<tr class="tr">
 			    			<td class="td_center">${obj.id}</td>
-			    			<td class="td_center">${obj.amount}</td>
-			    			<td class="td_center">${obj.discount}</td>
+			    			<td class="td_center">${obj.originalAmount?string('#0.00')}</td>
+			    			<td class="td_center">${obj.discount * 100}%</td>
 			    			<td class="td_center">${obj.expiryDate}${(obj.expiryType=='01')?string('天', '月')}</td>
 			    			<td class="td_center">${(obj.expiryType=='01')?string('按天', '按月')}</td>
+			    			<td class="td_center">${obj.attractDesc}</td>
 			    			<td class="td_center">
 			    				<#if obj.status == 'true'>有效<#else>无效</#if>
 							</td>

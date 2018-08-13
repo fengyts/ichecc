@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ichecc.ao.DepositConfigAO;
 import com.ichecc.common.Constants;
@@ -19,6 +20,7 @@ public class DepositConfigController {
 	private DepositConfigAO configAO;
 
 	@RequestMapping("listConfig")
+	@ResponseBody
 	public ResultData getConfigList() {
 		List<VipDepositConfigVO> datas = configAO.listAllConfig();
 		return ResultData.success(datas);

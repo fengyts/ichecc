@@ -14,6 +14,8 @@ public class VipDepositConfigVO extends BaseVO {
 	private Double amount;
 	private Integer expiryDate;
 	private String expiryType;
+	/** 营销描述 */
+	private String attractDesc;
 
 	public Long getId() {
 		return id;
@@ -45,6 +47,14 @@ public class VipDepositConfigVO extends BaseVO {
 
 	public void setExpiryType(String expiryType) {
 		this.expiryType = expiryType;
+	}
+
+	public String getAttractDesc() {
+		return attractDesc;
+	}
+
+	public void setAttractDesc(String attractDesc) {
+		this.attractDesc = attractDesc;
 	}
 
 }

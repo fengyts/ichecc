@@ -202,15 +202,15 @@ public class VipDepositOrderServiceImpl implements VipDepositOrderService {
 				return -1;
 			}
 			Long userId = orderDO.getUserId();
-			if(null == userId){
+			if (null == userId) {
 				return -1;
 			}
 			String orderStatus = orderDO.getOrderStatus();
 			if (!"02".equals(orderStatus)) {
 				return -1;
 			}
-			
-			final String REDIS_CACHE_KEY =  ICheccConstants.ICheccRedisKeys.BASE_KEY + "vipDeposit_" + orderNo;
+
+			final String REDIS_CACHE_KEY = ICheccConstants.ICheccRedisKeys.BASE_KEY + "vipDeposit_" + orderNo;
 			try {
 				boolean lock = redisCacheService.lock(REDIS_CACHE_KEY); // 获得锁
 				if (!lock) { // 锁被占用,返回失败
@@ -219,67 +219,81 @@ public class VipDepositOrderServiceImpl implements VipDepositOrderService {
 				VipDepositRecordDO param = new VipDepositRecordDO();
 				param.setOrderNo(orderNo);
 				List<VipDepositRecordDO> list = vipDepositRecordDAO.selectDynamic(param);
-				if(CollectionUtils.isNotEmpty(list)){ // 已经更新过了
+				if (CollectionUtils.isNotEmpty(list)) { // 已经更新过了
 					return 1;
 				}
 				// 更新订单状态
 				int res = this.update(orderDO, false);
-				if(res <= 0){
+				if (res <= 0) {
 					throw new CommonServiceException("更新vip充值订单异常");
 				}
-				
-				Date now = new Date();
+
+				// 更新用户vip信息
+				VipUserInfoDO info = vipUserInfoDAO.selectById(userId);
+				Date startTime = new Date();
+
 				// 计算会员截止日期
 				Integer expiryDate = orderDO.getExpiryDate();
 				String expiryType = orderDO.getExpiryType();
 				Calendar cal = Calendar.getInstance();
-				cal.setTime(now);
-				if("01".equals(expiryType)){ // 有效期类型为按月天
-					cal.add(Calendar.DAY_OF_MONTH, expiryDate);
-				} else { // 有效期类型为按月
-					cal.add(Calendar.MONTH, expiryDate);
-				}
-				Date endTime = DateUtils.getDayEnd(cal); // 截止日期为截止日23:59:59.999
-				
-				// 更新用户vip信息
-				VipUserInfoDO info = vipUserInfoDAO.selectById(userId);
-				if(null == info){ // 新用户首次充值
+				cal.setTime(startTime);
+				Date endTime = null;
+				if (null == info) { // 新用户首次充值
 					info = new VipUserInfoDO();
 					info.setUserId(userId);
 					info.setIsNew(true);
-					info.setStartTime(now);
-					info.setEndTime(endTime);
+					info.setStartTime(startTime);
 					String vipCardNo = new VipCardNoGenerator().generateVipCardNo();
 					info.setVipCardNo(vipCardNo);
-					
-					Long id =vipUserInfoDAO.insert(info);
-					if(null == id || id <= 0){
+
+					if ("01".equals(expiryType)) { // 有效期类型为按月天
+						cal.add(Calendar.DAY_OF_MONTH, expiryDate);
+					} else { // 有效期类型为按月
+						cal.add(Calendar.MONTH, expiryDate);
+					}
+					endTime = DateUtils.getDayEnd(cal); // 截止日期为截止日23:59:59.999
+					info.setEndTime(endTime);
+
+					Long id = vipUserInfoDAO.insert(info);
+					if (null == id || id <= 0) {
 						throw new CommonServiceException("vip充值异常,插入vip会员异常");
 					}
 				} else {
-					info.setStartTime(now);
+					// 非首冲校验当前用户会员是否生效中，若有效则日期顺延。
+					endTime = info.getEndTime();
+					if (endTime.after(startTime)) { // 该会员当前有效, 顺延有效期
+						cal.setTime(endTime);
+					}
+					if ("01".equals(expiryType)) { // 有效期类型为按月天
+						cal.add(Calendar.DAY_OF_MONTH, expiryDate);
+					} else { // 有效期类型为按月
+						cal.add(Calendar.MONTH, expiryDate);
+					}
+					endTime = DateUtils.getDayEnd(cal); // 截止日期为截止日23:59:59.999
+
+					info.setStartTime(startTime);
 					info.setEndTime(endTime);
 					info.setIsNew(false);
-					
+
 					res = vipUserInfoDAO.updateDynamic(info);
-					if(res <= 0){
+					if (res <= 0) {
 						throw new CommonServiceException("更新vip充值订单异常");
 					}
 				}
-				
+
 				// 插入充值记录
 				VipDepositRecordDO record = new VipDepositRecordDO();
 				record.setUserId(userId);
 				record.setOrderNo(orderNo);
-				record.setCreateTime(now);
+				record.setCreateTime(startTime);
 				record.setEndTime(endTime);
 				record.setRealAmount(orderDO.getRealAmount());
-				
+
 				Long recordId = vipDepositRecordDAO.insert(record);
-				if(null == recordId || recordId <= 0){
+				if (null == recordId || recordId <= 0) {
 					throw new CommonServiceException("vip充值异常,插入充值记录异常");
 				}
-				
+
 				return 1;
 			} catch (CommonServiceException e) {
 				throw e;

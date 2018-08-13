@@ -171,9 +171,9 @@ public class VipDepositConfigServiceImpl  implements VipDepositConfigService{
 					}
 					return -1;
 				}
-				if ("02".equals(expiryType1)){
-					return -1;
-				}
+//				if ("02".equals(expiryType1)){
+//					return -1;
+//				}
 				return 0;
 			}
 		});

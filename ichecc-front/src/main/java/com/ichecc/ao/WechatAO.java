@@ -311,7 +311,13 @@ public class WechatAO extends BaseAO {
 			config.setDebug(debug);
 
 			logger.info("微信jsapi获取config: {}", JSONObject.toJSONString(config));
-
+			
+//			List<VipDepositConfigVO> depositConfigs = configAO.listAllConfig();
+//			
+//			Map<String, Object> data = new HashMap<String, Object>();
+//			data.put("jsApiConfig", config);
+//			data.put("depositConfig", depositConfigs);
+			
 			return ResultData.success(config);
 		} catch (Exception e) {
 			logger.info("微信jsapi获取配置异常: {}", e);

@@ -33,6 +33,7 @@ public class DepositConfigAO {
 			vo.setAmount(amount);
 			vo.setExpiryDate(configDO.getExpiryDate());
 			vo.setExpiryType(configDO.getExpiryType());
+			vo.setAttractDesc(configDO.getAttractDesc());
 			
 			datas.add(vo);
 		}
