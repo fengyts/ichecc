@@ -25,7 +25,7 @@ public interface WechatPayService {
 	 * @param orderNo
 	 * @return
 	 */
-	CommonResultMessage orderQuery(String orderNo) throws Exception;
+	CommonResultMessage orderQuery(Long userId, String orderNo) throws Exception;
 
 	/**
 	 * 微信支付结果通知

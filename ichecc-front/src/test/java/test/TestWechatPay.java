@@ -117,8 +117,8 @@ public class TestWechatPay {
 	@Test
 	public void orderQueryTest(){
 		try {
-			String orderNo = "886992553210001604";
-			CommonResultMessage crm = payService.orderQuery(orderNo);
+			String orderNo = "883136148150001778";
+			CommonResultMessage crm = payService.orderQuery(2L,orderNo);
 			System.out.println(crm.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();

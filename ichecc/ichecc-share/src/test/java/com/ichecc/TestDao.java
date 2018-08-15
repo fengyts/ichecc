@@ -1,6 +1,8 @@
 package com.ichecc;
 
 
+import java.util.Date;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.ichecc.dao.IcheccUserDAO;
 import com.ichecc.dao.TopicItemDAO;
 import com.ichecc.dao.VipDepositOrderDAO;
-import com.ichecc.vo.HiggleJoinVO;
+import com.ichecc.dao.VipUserInfoDAO;
+import com.ichecc.domain.VipUserInfoDO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath*:spring/spring-context-checcshare.xml" })
@@ -22,6 +25,8 @@ public class TestDao {
 	private TopicItemDAO tiDao;
 	@Autowired
 	private VipDepositOrderDAO orderDao;
+	@Autowired
+	private VipUserInfoDAO infoDao;
 
 	@Test
 	public void test() throws Exception {
@@ -34,7 +39,14 @@ public class TestDao {
 //		HiggleJoinVO higgle = tiDao.participationHiggle(1L, 1L);
 //		System.out.println(higgle);
 		
-		
+		VipUserInfoDO info = new VipUserInfoDO();
+		info.setUserId(2L);
+		info.setIsNew(true);
+		info.setVipCardNo("1234123");
+		info.setStartTime(new Date());
+		info.setEndTime(new Date());
+		Long id = infoDao.insert(info);
+		System.out.println(id);
 	}
 	
 

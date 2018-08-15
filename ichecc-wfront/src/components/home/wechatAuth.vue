@@ -42,12 +42,8 @@ export default {
         "code": _that.$crypto.encryptAes(_code),
         "authSymbol": 1
       };
-      console.log("send code:----");
-      console.log(_code);
-      // return;
       this.$http.post("/api/wechat/authorize", data).then(res => {
         let result = res;
-
         if (result.code === _that.$resp_code) {
           let user = result.data;
           _that.$localStorage.setLocalStorage("icheccuser", user);

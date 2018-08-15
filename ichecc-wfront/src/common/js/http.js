@@ -36,7 +36,7 @@ axios.interceptors.response.use(response => {
   return response;
 }, err => {
   // Do something with response error
-  return Promise.reject(error)
+  return Promise.reject(err)
 });
 
 var getUserInfo = function () {

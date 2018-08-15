@@ -10,19 +10,19 @@
     <div class="vipinfo">
       <p>
         <span class="title">会员期限</span>
-        <span class="content">30天</span>
+        <span class="content">{{vipInfo.expiryDate}}天</span>
       </p>
       <p>
         <span class="title">有效期剩</span>
-        <span class="content">30天</span>
+        <span class="content">{{vipInfo.expiryDate}}天</span>
       </p>
       <p>
         <span class="title">支付金额</span>
-        <span class="content">¥188.00</span>
+        <span class="content">¥{{vipInfo.realAmount | formatMoney('0')}}</span>
       </p>
       <p>
         <span class="title">支付时间</span>
-        <span class="content">2018-04-19 11:36:28</span>
+        <span class="content">{{vipInfo.startTime | formatDate("yyyy-MM-dd hh:mm:ss")}}</span>
       </p>
     </div>
 
@@ -41,12 +41,15 @@
 
 <script type="text/javascript">
 export default {
+  props: {
+    vipInfo: {
+      type: Object
+    }
+  },
   data() {
     return {
 
     }
-  },
-  components: {
   }
 }
 </script>

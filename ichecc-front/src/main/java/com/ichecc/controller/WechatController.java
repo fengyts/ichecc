@@ -45,5 +45,11 @@ public class WechatController extends BaseController {
 		inputDto.setBody(WechatPayConstants.BODY);
 		return wechatAO.getPayOrder(inputDto);
 	}
+	
+	@RequestMapping("orderQuery")
+	@ResponseBody
+	public ResultData queryOrder(Long userId, String orderNo){
+		return wechatAO.orderQuery(userId, orderNo);
+	}
 
 }

@@ -29,7 +29,6 @@ import ng.bayue.common.Page;
 import ng.bayue.exception.CommonDAOException;
 import ng.bayue.exception.CommonServiceException;
 import ng.bayue.service.RedisCacheService;
-import ng.bayue.util.DateUtils;
 import ng.bayue.util.StringUtils;
 
 @Service(value = "vipDepositOrderService")
@@ -251,13 +250,14 @@ public class VipDepositOrderServiceImpl implements VipDepositOrderService {
 					} else { // 有效期类型为按月
 						cal.add(Calendar.MONTH, expiryDate);
 					}
-					endTime = DateUtils.getDayEnd(cal); // 截止日期为截止日23:59:59.999
+					endTime = cal.getTime();
 					info.setEndTime(endTime);
-
-					Long id = vipUserInfoDAO.insert(info);
-					if (null == id || id <= 0) {
-						throw new CommonServiceException("vip充值异常,插入vip会员异常");
-					}
+					
+					vipUserInfoDAO.insert(info);
+//					Long id = vipUserInfoDAO.insert(info);
+//					if (null == id || id <= 0) {
+//						throw new CommonServiceException("vip充值异常,插入vip会员异常");
+//					}
 				} else {
 					// 非首冲校验当前用户会员是否生效中，若有效则日期顺延。
 					endTime = info.getEndTime();
@@ -269,8 +269,8 @@ public class VipDepositOrderServiceImpl implements VipDepositOrderService {
 					} else { // 有效期类型为按月
 						cal.add(Calendar.MONTH, expiryDate);
 					}
-					endTime = DateUtils.getDayEnd(cal); // 截止日期为截止日23:59:59.999
-
+					endTime = cal.getTime();
+					
 					info.setStartTime(startTime);
 					info.setEndTime(endTime);
 					info.setIsNew(false);

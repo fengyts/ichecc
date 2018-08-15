@@ -1,17 +1,15 @@
-
 <template>
   <div>
     <div class="title">
-      <p>请选择VIP期限并支付</p>
+      <p>请选择并支付</p>
       <hr class="hr">
     </div>
     <div class="vipinfo">
-      <div class="config-wrapper" style="margin-bottom:20px;">
-        <div v-for="(item, index) in depositConfig" class="config-item">
-          <p :class="{'price_num_checked':index==0,'price_num':index>0}">¥{{item.amount | formatMoney('0')}}</p>
-          <p :class="{'viptype_checked':index==0,'viptype':index>0}">{{item.expiryDate}}{{item.expiryType === "01" ? '天' : '月'}}</p>
-          <div class="attract-wrapper" v-if="item.attractDesc != ''">
-            <!-- {{item.attractDesc}} -->
+      <div class="config-wrapper">
+        <div v-for="(item, index) in depositConfig" class="config-item" :class="{'config-item-checked':currentConfig===item.id}" :id="'item' + item.id" @click="selectedConfig($event, item.id)">
+          <p :class="{'price_num_checked':currentConfig===item.id,'price_num':currentConfig!==item.id}">¥{{item.amount | formatMoney('0')}}</p>
+          <p :class="{'viptype_checked':currentConfig===item.id,'viptype':currentConfig!==item.id}">{{item.expiryDate}}{{item.expiryType === "01" ? '天' : '月'}}</p>
+          <div class="attract-wrapper" v-if="item.attractDesc != '' && item.attractDesc != undefined">
             <span>&nbsp;{{item.attractDesc}}&nbsp;</span>
           </div>
         </div>
@@ -48,11 +46,8 @@
     </div>
     <!--支付按钮-->
     <div class="vippay">
-      <!-- <router-link :to="{path:'/vipAddResult'}"> -->
-      <!-- <button class="button_pay" id="vippay" onclick="">立即支付</button> -->
-      <!-- </router-link> -->
-      <button class="button_pay" id="vippay" @click="wxPayCall">立即支付</button>
-      <!-- <button class="button_pay" id="vippay" @click="wxPay">立即支付</button> -->
+      <!-- <button class="button_pay" id="vippay" @click="wxPayCall">立即支付</button> -->
+      <button class="button_pay" id="vippay" @click="wxPay">立即支付</button>
     </div>
     <!--说明-->
     <div class="tips">
@@ -68,7 +63,8 @@ import wx from 'weixin-js-sdk';
 export default {
   data() {
     return {
-      depositConfig: []
+      depositConfig: [],
+      currentConfig: ''
     }
   },
   mounted() {
@@ -89,10 +85,9 @@ export default {
         if (response.code === this.$resp_code) {
           let res = response.data;
           let jsApiConfig = res.jsApiConfig;
-          // this.jsApiConfig = jsApiConfig;
-          // this.depositConfig = res.depositConfig;
           wx.config({
-            debug: jsApiConfig.debug,
+            // debug: jsApiConfig.debug,
+            debug: true,
             appId: jsApiConfig.appid,
             timestamp: jsApiConfig.timestamp,
             nonceStr: jsApiConfig.nonceStr,
@@ -122,50 +117,47 @@ export default {
       }
       _list.push('chooseWXPay');
     },
-    getDepositConfig(){
+    getDepositConfig() {
       this.$http.get('/api/depositConfig/listConfig').then(response => {
         let _that = this;
-        console.log("depositConfig");
-        console.log(response);
         if (response.code === this.$resp_code) {
           this.depositConfig = response.data;
+          this.currentConfig = response.data[0].id;
         }
       });
     },
+    selectedConfig(event, cfgId) {
+      this.currentConfig = cfgId;
+    },
+
+    // 该方法废弃，请使用wxPay()方法
     wxPayCall() {
-      this.$http.post("/api/wechat/payOrder", { "depositAmount": "0.01" }).then(response => {
+      this.$http.post("/api/wechat/payOrder", { "configId": this.currentConfig }).then(response => {
         if (response.code === this.$resp_code) {
           let res = response.data;
-          console.log("wxpay param:");
-          console.log(JSON.stringify(res));
-          alert(JSON.stringify(res));
           wx.chooseWXPay({
-            appid: res.appid,
-            timestamp: res.timestamp,
-            nonceStr: res.nonceStr,
-            package: res.pkage,
-            signType: res.signType,
-            paySign: res.paySign,
+            "appId": res.appid,
+            "timestamp": res.timestamp,
+            "nonceStr": res.nonceStr,
+            "package": res.pkage,
+            "signType": res.signType,
+            "paySign": res.paySign,
             success: function (res) {
-              console.log("wechat pay success:");
-              console.log(JSON.stringify(res));
-              alert("haha, success");
               // 支付成功后的回调函数
             }
           });
         } else {
-          alert("支付失败");
+          $.toast("支付失败", "text");
           return;
         }
       });
     },
 
     wxPay() {
-      this.$http.post("/api/wechat/payOrder", { "depositAmount": "0.01" }).then(response => {
+      this.$http.post("/api/wechat/payOrder", { "configId": this.currentConfig }).then(response => {
         if (response.code === this.$resp_code) {
           let res = response.data;
           if (typeof WeixinJSBridge == "undefined") {
-            console.log("check wx pay: 123");
             if (document.addEventListener) {
               document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
             } else if (document.attachEvent) {
@@ -173,66 +165,82 @@ export default {
               document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
             }
           } else {
-            console.log("send wx pay:456");
-            onBridgeReady(res);
+            this.onBridgeReady(res);
           }
-          // onBridgeReady(res);
         }
       });
     },
     onBridgeReady(res) {
+      let _that = this;
+      let wxpayConfig = res.wxPayConfig;
       WeixinJSBridge.invoke(
-        'getBrandWCPayRequest', {
-          "appId": res.appid,     //公众号名称，由商户传入     
-          "timeStamp": res.timestamp,         //时间戳，自1970年以来的秒数     
-          "nonceStr": res.nonceStr, //随机串     
-          "package": res.pkage,
-          "signType": res.signType,         //微信签名方式：     
-          "paySign": res.paySign //微信签名 
+        'getBrandWCPayRequest',
+        {
+          "appId": wxpayConfig.appid, //公众号名称，由商户传入     
+          "timeStamp": wxpayConfig.timestamp, //时间戳，自1970年以来的秒数     
+          "nonceStr": wxpayConfig.nonceStr, //随机串     
+          "package": wxpayConfig.pkage,
+          "signType": wxpayConfig.signType, //微信签名方式：     
+          "paySign": wxpayConfig.paySign //微信签名 
         },
-        function (res) {
-          alert("haha, success");
-          if (res.err_msg == "get_brand_wcpay_request:ok") {
+        function (resPay) {
+          if (resPay.err_msg == "get_brand_wcpay_request:ok") {
             // 使用以上方式判断前端返回,微信团队郑重提示：
-            //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+            //resPay.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+            _that.$http.get("/api/wechat/orderQuery", { "orderNo": res.orderNo }).then(response => {
+              if (response.code === _that.$resp_code) {
+                _that.$router.push({ "name": "vipAddResult", params: { "vipInfo": response.data } });
+                return;
+              } else {
+                $.toast("支付异常，请联系客服", "text");
+                return;
+              }
+            });
+          }
+          if (resPay.err_msg == "get_brand_wcpay_request:cancel" || resPay.err_msg == "brand_wcpay_request:fail") {
+            _that.$http.get("/api/wechat/orderQuery", { "orderNo": res.orderNo }).then(response => {
+              if (response.code === _that.$resp_code) {
+                $.toast("支付失败", "text");
+                return;
+              }
+            });
           }
         });
     }
-  },
-  computed: {
-  },
-  components: {
   }
+
 }
 </script>
 
 <style scoped lang="stylus">
-
 @import ('../../../static/css/vippay');
 .config-wrapper
   width: 100%;
+  margin-bottom: 20px;
   overflow: hidden;
   text-align: center;
   line-height: 20px;
-.config-item
-  position: relative;
-  display: block;
-  float: left;
-  width: 40%;
-  margin-right: 4%;
-  padding-top: 7px;
-  border: 1px solid #bdbaba;
-  text-align: center;
-  vertical-align: middle;
-  height: 45px;
-  .attract-wrapper
-    position: absolute;
-    top: -12px;
-    right: 0;
-    background: #2aa515;
-    color:white;
-    font-size:12px;
-    display: inline-block;
+  .config-item-checked
+    border: 1px solid #2aa515 !important;
+  .config-item
+    position: relative;
+    display: block;
+    float: left;
+    width: 40%;
+    margin-right: 4%;
+    padding-top: 7px;
+    border: 1px solid #bdbaba;
+    text-align: center;
+    vertical-align: middle;
+    height: 45px;
+    .attract-wrapper
+      position: absolute;
+      top: -12px;
+      right: 0;
+      background: #2aa515;
+      color: white;
+      font-size: 12px;
+      display: inline-block;
 .config-wrapper div:nth-child(even)
   margin-left: 2%;
 .config-wrapper div:nth-child(n+3)

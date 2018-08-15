@@ -73,7 +73,7 @@ const router = new Router({
     {path: '/vipAdd', component: vipAdd}, 
     {path: '/vip', component: vip}, 
     {path: '/vipAddPay', component: vipAddPay}, 
-    {path: '/vipAddResult', component: vipAddResult}, 
+    {path: '/vipAddResult', name: 'vipAddResult', component: vipAddResult, props: true }, 
     {path: '/vipCardInfo', component: vipCardInfo}, 
     {path: '/vipRenewPay', component: vipRenewPay}, 
     {path: '/vipRenewResult', component: vipRenewResult}, 

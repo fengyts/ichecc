@@ -181,7 +181,7 @@ public class WechatAO extends BaseAO {
 			String jsonStr = doRequest(userInfoUrl);
 			JSONObject json = JSONObject.parseObject(jsonStr);
 			// 接口返回错误信息
-			checkError(json);
+//			checkError(json);
 			logger.info("微信授权-获取用户信息, userinfo json:{}", jsonStr);
 			WechatUserDO wechatUserDO = JSONObject.parseObject(jsonStr, WechatUserDO.class);
 			return wechatUserDO;
@@ -336,6 +336,20 @@ public class WechatAO extends BaseAO {
 		} catch (Exception e) {
 			logger.info("微信支付下单异常", e);
 			return ResultData.failure("微信支付异常");
+		}
+	}
+	
+	public ResultData orderQuery(Long userId, String orderNo) {
+		try {
+			CommonResultMessage crm = wechatPayService.orderQuery(userId, orderNo);
+			if (CommonResultMessage.Failure == crm.getResult()) {
+				logger.info("微信支付查询异常：{}", crm.getMessage());
+				throw new Exception("系统充值异常");
+			}
+			return ResultData.success(crm.getData());
+		} catch (Exception e) {
+			logger.info("支付查询出错，系统异常，请联系客服:{}", e);
+			return ResultData.failure("支付出错，系统异常，请联系客服");
 		}
 	}
 

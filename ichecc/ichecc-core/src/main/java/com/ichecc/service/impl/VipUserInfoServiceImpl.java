@@ -19,8 +19,8 @@ import ng.bayue.exception.CommonDAOException;
 import ng.bayue.exception.CommonServiceException;
 import ng.bayue.util.DateUtils;
 
-@Service(value="vipUserInfoService")
-public class VipUserInfoServiceImpl  implements VipUserInfoService{
+@Service(value = "vipUserInfoService")
+public class VipUserInfoServiceImpl implements VipUserInfoService {
 
 	private Log logger = LogFactory.getLog(this.getClass());
 
@@ -31,24 +31,23 @@ public class VipUserInfoServiceImpl  implements VipUserInfoService{
 	public Long insert(VipUserInfoDO vipUserInfoDO) throws CommonServiceException {
 		try {
 			return vipUserInfoDAO.insert(vipUserInfoDO);
-		}catch(CommonDAOException e){
+		} catch (CommonDAOException e) {
 			logger.error(e);
-            throw new CommonServiceException(e);
+			throw new CommonServiceException(e);
 		}
 	}
 
-
 	@Override
-	public int update(VipUserInfoDO vipUserInfoDO,boolean isAllField) throws CommonServiceException {
+	public int update(VipUserInfoDO vipUserInfoDO, boolean isAllField) throws CommonServiceException {
 		try {
-			if(isAllField){
+			if (isAllField) {
 				return (Integer) vipUserInfoDAO.update(vipUserInfoDO);
-			}else{
+			} else {
 				return (Integer) vipUserInfoDAO.updateDynamic(vipUserInfoDO);
 			}
-		}catch(CommonDAOException e){
+		} catch (CommonDAOException e) {
 			logger.error(e);
-            throw new CommonServiceException(e);
+			throw new CommonServiceException(e);
 		}
 	}
 
@@ -56,32 +55,29 @@ public class VipUserInfoServiceImpl  implements VipUserInfoService{
 	public int deleteById(Long id) throws CommonServiceException {
 		try {
 			return (Integer) vipUserInfoDAO.deleteById(id);
-		}catch(CommonDAOException e){
+		} catch (CommonDAOException e) {
 			logger.error(e);
-            throw new CommonServiceException(e);
+			throw new CommonServiceException(e);
 		}
 	}
-	
-
 
 	@Override
 	public VipUserInfoDO selectById(Long id) throws CommonServiceException {
 		try {
 			return vipUserInfoDAO.selectById(id);
-		}catch(CommonDAOException e){
+		} catch (CommonDAOException e) {
 			logger.error(e);
-            throw new CommonServiceException(e);
+			throw new CommonServiceException(e);
 		}
 	}
-	
 
 	@Override
 	public Long selectCountDynamic(VipUserInfoDO vipUserInfoDO) throws CommonServiceException {
 		try {
 			return vipUserInfoDAO.selectCountDynamic(vipUserInfoDO);
-		}catch(CommonDAOException e){
+		} catch (CommonDAOException e) {
 			logger.error(e);
-            throw new CommonServiceException(e);
+			throw new CommonServiceException(e);
 		}
 	}
 
@@ -89,24 +85,23 @@ public class VipUserInfoServiceImpl  implements VipUserInfoService{
 	public List<VipUserInfoDO> selectDynamic(VipUserInfoDO vipUserInfoDO) throws CommonServiceException {
 		try {
 			return vipUserInfoDAO.selectDynamic(vipUserInfoDO);
-		}catch(CommonDAOException e){
+		} catch (CommonDAOException e) {
 			logger.error(e);
-            throw new CommonServiceException(e);
+			throw new CommonServiceException(e);
 		}
 	}
-	
 
 	private List<VipUserInfoDO> selectDynamicPageQuery(VipUserInfoDO vipUserInfoDO) throws CommonServiceException {
 		try {
 			return vipUserInfoDAO.selectDynamicPageQuery(vipUserInfoDO);
-		}catch(CommonDAOException e){
+		} catch (CommonDAOException e) {
 			logger.error(e);
-            throw new CommonServiceException(e);
+			throw new CommonServiceException(e);
 		}
 	}
-	
+
 	@Override
-	public Page<VipUserInfoDO> queryPageListDynamic(VipUserInfoDO vipUserInfoDO) throws CommonServiceException{
+	public Page<VipUserInfoDO> queryPageListDynamic(VipUserInfoDO vipUserInfoDO) throws CommonServiceException {
 		if (vipUserInfoDO != null) {
 			Long totalCount = this.selectCountDynamic(vipUserInfoDO);
 
@@ -114,8 +109,8 @@ public class VipUserInfoServiceImpl  implements VipUserInfoService{
 			page.setPageNo(vipUserInfoDO.getStartPage());
 			page.setPageSize(vipUserInfoDO.getPageSize());
 			page.setTotalCount(totalCount.intValue());
-			
-			if(null != totalCount && totalCount.longValue() > 0){
+
+			if (null != totalCount && totalCount.longValue() > 0) {
 				List<VipUserInfoDO> resultList = this.selectDynamicPageQuery(vipUserInfoDO);
 				page.setList(resultList);
 			}
@@ -123,17 +118,17 @@ public class VipUserInfoServiceImpl  implements VipUserInfoService{
 		}
 		return new Page<VipUserInfoDO>();
 	}
-	
+
 	@Override
-	public Page<VipUserInfoDO> queryPageListDynamicAndStartPageSize(VipUserInfoDO vipUserInfoDO, Integer startPage, Integer pageSize) throws CommonServiceException {
-		if (vipUserInfoDO != null && startPage>0 && pageSize>0) {
+	public Page<VipUserInfoDO> queryPageListDynamicAndStartPageSize(VipUserInfoDO vipUserInfoDO, Integer startPage,
+			Integer pageSize) throws CommonServiceException {
+		if (vipUserInfoDO != null && startPage > 0 && pageSize > 0) {
 			vipUserInfoDO.setStartPage(startPage);
 			vipUserInfoDO.setPageSize(pageSize);
 			return this.queryPageListDynamic(vipUserInfoDO);
 		}
 		return new Page<VipUserInfoDO>();
 	}
-	
 
 	@Override
 	public VipInfoVO getVipInfo(Long userId) {
@@ -156,7 +151,8 @@ public class VipUserInfoServiceImpl  implements VipUserInfoService{
 			Date now = new Date();
 			boolean isVip = now.before(endTime); // 是vip
 			if (isVip) {
-				int days = DateUtils.getDistanceOfTwoDate(new Date(), endTime).intValue();
+				int days = DateUtils.getDistanceOfTwoDate(now, endTime).intValue();
+				days += 1; // 含当天
 				vo.setExpiryDate(days);
 			}
 			vo.setIsVip(isVip);
@@ -166,7 +162,5 @@ public class VipUserInfoServiceImpl  implements VipUserInfoService{
 			throw e;
 		}
 	}
-	
-	
-	
+
 }

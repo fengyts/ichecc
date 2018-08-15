@@ -1,6 +1,8 @@
 package com.ichecc.wechat.component;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +12,12 @@ import com.ichecc.common.ResultCode;
 import com.ichecc.domain.IcheccUserDO;
 import com.ichecc.domain.VipDepositConfigDO;
 import com.ichecc.domain.VipDepositOrderDO;
+import com.ichecc.domain.VipUserInfoDO;
 import com.ichecc.service.IcheccUserService;
 import com.ichecc.service.VipDepositConfigService;
 import com.ichecc.service.VipDepositOrderService;
+import com.ichecc.service.VipUserInfoService;
+import com.ichecc.vo.VipDepositResultVO;
 import com.ichecc.wechat.bean.PayOrderNoGenerator;
 import com.ichecc.wechat.constant.ApiConfigConstant;
 import com.ichecc.wechat.constant.WechatPayConstants;
@@ -40,6 +45,8 @@ public class WechatPayServiceImpl implements WechatPayService {
 	private IcheccUserService userService;
 	@Autowired
 	private VipDepositConfigService depositConfigService;
+	@Autowired
+	private VipUserInfoService userInfoService;
 
 	@Override
 	public CommonResultMessage unifiedOrder(UnifiedOrderInputDTO inputDto) throws Exception {
@@ -84,12 +91,15 @@ public class WechatPayServiceImpl implements WechatPayService {
 					// 若已经支付或者支付异常, 重新下单
 					OrderQueryResponseDTO resQueryDto = orderQueryFromWX(orderLatest);
 					OrderTradeStateEnums tradeStateWX = getOrderState(resQueryDto);
-					if (OrderTradeStateEnums.USERPAYING == tradeStateWX) {
+					if (OrderTradeStateEnums.USERPAYING == tradeStateWX || OrderTradeStateEnums.NOTPAY == tradeStateWX) {
 						// 订单待支付则直接返回支付
 						wxPayDto.setPkage(orderLatest.getPrepayId());
 						paySign = SignUtil.createJsApiPaySign(wxPayDto);
 						wxPayDto.setPaySign(paySign);
-						return CommonResultMessage.success(wxPayDto);
+						Map<String, Object> result = new HashMap<String, Object>();
+						result.put("wxPayConfig", wxPayDto);
+						result.put("orderNo", orderLatest.getOrderNo());
+						return CommonResultMessage.success(result);
 					} else {
 						// 若微信端已经支付成功状态 并且和本地订单状态不一样，则更新本地订单状态
 						if (OrderTradeStateEnums.SUCCESS == tradeStateWX
@@ -130,7 +140,8 @@ public class WechatPayServiceImpl implements WechatPayService {
 			String openid = userDO.getOpenid();
 
 			Double originalAmount = configDO.getOriginalAmount();
-			Double realAmount = originalAmount * configDO.getDiscount();
+			Double discount = configDO.getDiscount();
+			Double realAmount = originalAmount * discount;
 			Double totalFee = realAmount * 100; // 元转为分
 
 			ApiUnifiedOrderDTO dto = new ApiUnifiedOrderDTO();
@@ -170,6 +181,7 @@ public class WechatPayServiceImpl implements WechatPayService {
 
 			orderDO.setConfigId(configDO.getId());
 			orderDO.setOriginalAmount(originalAmount);
+			orderDO.setDiscount(discount);
 			orderDO.setRealAmount(realAmount);
 			orderDO.setExpiryDate(configDO.getExpiryDate());
 			orderDO.setExpiryType(configDO.getExpiryType());
@@ -188,8 +200,10 @@ public class WechatPayServiceImpl implements WechatPayService {
 			wxPayDto.setPkage(orderDO.getPrepayId());
 			paySign = SignUtil.createJsApiPaySign(wxPayDto);
 			wxPayDto.setPaySign(paySign);
-
-			return CommonResultMessage.success(wxPayDto);
+			Map<String, Object> result = new HashMap<String, Object>();
+			result.put("wxPayConfig", wxPayDto);
+			result.put("orderNo", orderNo);
+			return CommonResultMessage.success(result);
 		} catch (Exception e) {
 			logger.info("支付下单异常:{}", e);
 			throw e;
@@ -229,18 +243,24 @@ public class WechatPayServiceImpl implements WechatPayService {
 	}
 
 	@Override
-	public CommonResultMessage orderQuery(String orderNo) throws Exception {
+	public CommonResultMessage orderQuery(Long userId, String orderNo) throws Exception {
 		try {
 			VipDepositOrderDO orderDO = depositOrderService.selectByOrderNo(orderNo);
 			if (null == orderDO) {
 				logger.info("查询订单结果：该订单不存在");
 				return CommonResultMessage.failure("订单不存在");
 			}
-
+			
+			VipDepositResultVO vo = getDepositResult(userId, orderDO);
+			if(null == vo) {
+				logger.info("查询订单结果异常：用户不存在");
+				return CommonResultMessage.failure("查询订单结果异常：用户不存在");
+			}
 			// 订单已支付成功
+			Date now = new Date();
 			if (DepositOrderStatus.SUCCESS.equals(orderDO.getOrderStatus())
 					&& DepositOrderTradeState.SUCCESS.equals(orderDO.getTradeState())) {
-				return CommonResultMessage.success(orderDO);
+				return CommonResultMessage.success(vo);
 			}
 
 			OrderQueryResponseDTO resDto = orderQueryFromWX(orderDO);
@@ -254,8 +274,10 @@ public class WechatPayServiceImpl implements WechatPayService {
 			// 更新订单状态
 			String tradeState = resDto.getTrade_state();
 			String orderStatus = "";
+			boolean updateUserInfoFlag = false;
 			switch (tradeState) {
 			case DepositOrderTradeState.SUCCESS:
+				updateUserInfoFlag = true;
 				orderStatus = DepositOrderStatus.SUCCESS;
 				break;
 			case DepositOrderTradeState.NOTPAY:
@@ -283,22 +305,54 @@ public class WechatPayServiceImpl implements WechatPayService {
 			if (StringUtils.isNotBlank(time_end)) {
 				orderDO.setTimeEnd(DateUtils.parseDate(time_end, DateUtils.Format.YYYYMMDDHHMMSS3));
 			} else {
-				orderDO.setTimeEnd(new Date());
+				orderDO.setTimeEnd(now);
 			}
 			orderDO.setBankType(resDto.getBank_type());
-			orderDO.setModifyTime(new Date());
-
-			int status = depositOrderService.updateByOrderNo(orderDO);
-			if (1 != status) {
-				logger.info("查询订单更新异常: {}");
-				throw new Exception("查询订单更新异常: {}");
+			orderDO.setModifyTime(now);
+			
+			if(updateUserInfoFlag){
+				depositOrderService.updateVipInfoByOrder(orderDO);
+			} else {
+				int status = depositOrderService.updateByOrderNo(orderDO);
+				if (1 != status) {
+					logger.info("查询订单更新异常: {}");
+					throw new Exception("查询订单更新异常: {}");
+				}
 			}
-
-			return CommonResultMessage.success(orderDO);
+			vo = getDepositResult(userId, orderDO);
+			if(null == vo) {
+				logger.info("查询订单结果异常：用户不存在");
+				return CommonResultMessage.failure("查询订单结果异常：用户不存在");
+			}
+			return CommonResultMessage.success(vo);
 		} catch (Exception e) {
 			logger.info("查询订单异常：{}", e);
 			throw e;
 		}
+	}
+	
+	private VipDepositResultVO getDepositResult(Long userId, VipDepositOrderDO orderDO) {
+		VipDepositResultVO vo = new VipDepositResultVO();
+		VipUserInfoDO info = userInfoService.selectById(userId);
+		if (null == info) {
+			logger.info("查询订单结果异常：会员不存在");
+			return null;
+		}
+		Date now = new Date();
+		vo.setStartTime(orderDO.getTimeEnd());
+		Date endTime = info.getEndTime();
+		vo.setEndTime(endTime);
+		vo.setRealAmount(orderDO.getRealAmount());
+		int days = DateUtils.getDistanceOfTwoDate(now, endTime).intValue();
+//		if (days == 0) {
+//			days = 1;
+//		}
+		days += 1;
+		vo.setResidueDate(days);
+		Integer expiryDate = orderDO.getExpiryDate();
+		vo.setExpiryDate(expiryDate);
+		vo.setIsContinue(days > expiryDate);
+		return vo;
 	}
 
 	private OrderQueryResponseDTO orderQueryFromWX(VipDepositOrderDO orderDO) throws Exception {
@@ -463,10 +517,13 @@ public class WechatPayServiceImpl implements WechatPayService {
 	}
 
 	public static enum OrderTradeStateEnums {
-		SUCCESS(DepositOrderTradeState.SUCCESS, "支付成功"), REFUND(DepositOrderTradeState.REFUND, "转入退款"), NOTPAY(
-				DepositOrderTradeState.NOTPAY, "未支付"), CLOSED(DepositOrderTradeState.CLOSED, "已关闭"), REVOKED(
-						DepositOrderTradeState.REVOKED, "已撤销（刷卡支付）"), USERPAYING(DepositOrderTradeState.USERPAYING,
-								"用户支付中"), PAYERROR(DepositOrderTradeState.PAYERROR, "支付失败(其他原因，如银行返回失败)");
+		SUCCESS(DepositOrderTradeState.SUCCESS, "支付成功"), 
+		REFUND(DepositOrderTradeState.REFUND, "转入退款"), 
+		NOTPAY(DepositOrderTradeState.NOTPAY, "未支付"), 
+		CLOSED(DepositOrderTradeState.CLOSED, "已关闭"), 
+		REVOKED(DepositOrderTradeState.REVOKED, "已撤销（刷卡支付）"), 
+		USERPAYING(DepositOrderTradeState.USERPAYING,"用户支付中"), 
+		PAYERROR(DepositOrderTradeState.PAYERROR, "支付失败(其他原因，如银行返回失败)");
 
 		public String code;
 		public String desc;
