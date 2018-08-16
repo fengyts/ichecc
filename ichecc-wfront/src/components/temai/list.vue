@@ -58,8 +58,8 @@ export default {
     };
   },
   created() {
-    console.log("list:")
-    console.log(this.$localStorage.getLocalStorage("icheccuser"));
+    // console.log("list:")
+    // console.log(this.$localStorage.getLocalStorage("icheccuser"));
     this.$http.get("/api/index/itemList").then(response => {
       var result = response;
       if (result.code === this.$resp_code) {

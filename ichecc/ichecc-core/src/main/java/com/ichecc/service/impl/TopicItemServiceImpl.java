@@ -18,6 +18,7 @@ import com.ichecc.domain.BargainRecordDO;
 import com.ichecc.domain.TopicItemDO;
 import com.ichecc.dto.TopicItemDetailDTO;
 import com.ichecc.enums.TopicItemProgressEnum;
+import com.ichecc.enums.TopicStatusEnum;
 import com.ichecc.front.dto.FrontTopicItemDTO;
 import com.ichecc.service.IcheccConstantsService;
 import com.ichecc.service.TopicItemService;
@@ -182,10 +183,21 @@ public class TopicItemServiceImpl implements TopicItemService {
 			vo.setAlreadyBargainAmt(new BigDecimal(alreadyBargainAmt));
 			vo.setShortBargainAmt(new BigDecimal(vo.getBargainAmount() - alreadyBargainAmt));
 			vo.setResidueTimes(vo.getBargainMaxTimes() - hasBargainTimes);
+			
+			Date now = new Date();
+			Date endTime = vo.getEndTime();
+			if (endTime != null) {
+				if (endTime.after(now)) {
+					vo.setStatus(TopicStatusEnum.InProgress.code);
+				} else if (endTime.before(now)) {
+					vo.setStatus(TopicStatusEnum.End.code);
+				} else {
+					vo.setStatus(TopicStatusEnum.NotStarted.code);
+				}
+			}
 
 			long countDownTime = 0;
 			String progress = TopicItemProgressEnum.End.code;
-			Date now = new Date();
 			if (null != vo) {
 				if (vo.getIsSuccess()) { // 已经有人砍价成功
 					progress = TopicItemProgressEnum.Bargain_Success.code;

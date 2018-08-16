@@ -127,9 +127,9 @@ export default {
       });
     },
     selectedConfig(event, cfgId) {
+      // console.log(event.currentTarget);
       this.currentConfig = cfgId;
     },
-
     // 该方法废弃，请使用wxPay()方法
     wxPayCall() {
       this.$http.post("/api/wechat/payOrder", { "configId": this.currentConfig }).then(response => {

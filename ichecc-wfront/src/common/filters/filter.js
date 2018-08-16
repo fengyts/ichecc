@@ -13,7 +13,7 @@ const filters = {
    */
   formatMoney: function (money, type) {
     if (!money) {
-      return '';
+      return '0.00';
     }
     if (!type) {
       var fmt = money / 10000;

@@ -64,10 +64,10 @@
 	<update id="MybatisIcheccConstantsDAO_updateByPrimaryKey" parameterType="com.ichecc.domain.IcheccConstantsDO">
 		UPDATE ichecc_constants
 		SET
-			const_value = #{constValue},
-			description = #{description},
-			modify_user_id = #{modifyUserId},
-			modify_time = #{modifyTime}
+				const_value = #{constValue},
+				description = #{description},
+				modify_user_id = #{modifyUserId},
+				modify_time = #{modifyTime}
 		WHERE
 			const_key = #{constKey}
 	</update>
@@ -125,7 +125,6 @@
 		 FROM
 		 	ichecc_constants
 	 	<include refid="MybatisIcheccConstantsDAO_dynamic_where_fields" />
-	 	ORDER BY ichecc_constants.id DESC
 	 	Limit #{start},#{pageSize}
  	</select>
 

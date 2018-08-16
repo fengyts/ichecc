@@ -49,7 +49,7 @@
       <div class="kanjia_middle">
         <div class="kanjia_price">
           <p class="kanjia_price_des">已砍
-            <font class="kanjia_price_num1">{{resData.alreadyBargainAmt | formatMoney('0')}}</font>元，还差
+            <font class="kanjia_price_num1">{{resData.alreadyBargainAmt||'0' | formatMoney('0')}}</font>元，还差
             <font class="kanjia_price_num2">{{resData.shortBargainAmt | formatMoney('0')}}</font>元</p>
         </div>
         <div class="kanjia_guize">
@@ -136,7 +136,9 @@ export default {
       if (res.code === this.$resp_code) {
         this.resData = res.data;
         this.$nextTick(() => {
-          this.countdown(res.data.countDownTime / 1000);
+          if(res.data.progress === '01'){
+            this.countdown(result.data.countDownTime / 1000);
+          }
         });
       }
     });

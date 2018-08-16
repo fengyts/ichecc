@@ -88,6 +88,16 @@ public class IcheccConstantsServiceImpl  implements IcheccConstantsService{
             throw new CommonServiceException(e);
 		}
 	}
+	
+	@Override
+	public int updateByPrimaryKey(IcheccConstantsDO constantDO) throws CommonServiceException {
+		try {
+			return icheccConstantsDAO.updateByPrimaryKey(constantDO);
+		}catch(CommonDAOException e){
+			logger.error(e);
+            throw new CommonServiceException(e);
+		}
+	}
 
 	@Override
 	public Long selectCountDynamic(IcheccConstantsDO icheccConstantsDO) throws CommonServiceException {
@@ -147,8 +157,7 @@ public class IcheccConstantsServiceImpl  implements IcheccConstantsService{
 		}
 		return new Page<IcheccConstantsDO>();
 	}
-
-
+	
 	@Override
 	public String getValueByKey(String key) {
 		if(StringUtils.isBlank(key)){

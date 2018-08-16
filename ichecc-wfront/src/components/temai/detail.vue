@@ -100,7 +100,9 @@ export default {
         this.resData = result.data;
         this.$nextTick(() => {
           this._initScroll();
-          this.countdown(result.data.countDownTime / 1000);
+          if(result.data.detail.status === '02'){
+            this.countdown(result.data.countDownTime / 1000);
+          }
         });
       }
     });
@@ -110,6 +112,7 @@ export default {
       var _that = this;
       var itv = setInterval(function () {
         var ctr = _that.fmtTime(mss);
+        console.log(ctr);
         document.getElementById("time-countdown-wrapper").innerHTML = ctr;
         if (!mss--) {
           clearInterval(itv);

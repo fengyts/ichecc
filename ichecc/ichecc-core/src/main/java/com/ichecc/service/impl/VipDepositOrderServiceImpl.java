@@ -242,7 +242,7 @@ public class VipDepositOrderServiceImpl implements VipDepositOrderService {
 					info.setUserId(userId);
 					info.setIsNew(true);
 					info.setStartTime(startTime);
-					String vipCardNo = new VipCardNoGenerator().generateVipCardNo();
+					String vipCardNo = new VipCardNoGenerator().generateVipCardNoNew();
 					info.setVipCardNo(vipCardNo);
 
 					if ("01".equals(expiryType)) { // 有效期类型为按月天

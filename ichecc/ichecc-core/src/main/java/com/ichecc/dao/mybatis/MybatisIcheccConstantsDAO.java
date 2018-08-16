@@ -54,6 +54,11 @@ public class MybatisIcheccConstantsDAO extends MybatisBaseDAO implements IcheccC
 	public IcheccConstantsDO selectByPrimaryKey(String primaryKey) throws CommonDAOException {
 		return getSqlSession().selectOne(getStatement("selectByPrimaryKey"), primaryKey);
 	}
+	
+	@Override
+	public int updateByPrimaryKey(IcheccConstantsDO constantDO) throws CommonDAOException {
+		return getSqlSession().update(getStatement("updateByPrimaryKey"), constantDO);
+	}
 
 	@Override
 	public Long selectCountDynamic(IcheccConstantsDO icheccConstantsDO) throws CommonDAOException {

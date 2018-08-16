@@ -41,6 +41,12 @@ public interface TopicItemDAO extends GeneralDAO<TopicItemDO> {
 	 */
 	TopicItemDetailDTO topicItemDetail(Long tiId);
 	
+	/**
+	 * 获取参与砍价详情数据
+	 * @param userId
+	 * @param tiId
+	 * @return
+	 */
 	HiggleJoinVO participationHiggle(Long userId, Long tiId);
 
 }

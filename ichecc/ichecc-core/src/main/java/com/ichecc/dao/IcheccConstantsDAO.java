@@ -7,7 +7,7 @@ import ng.bayue.exception.CommonDAOException;
  /**
  * 常量 DAO
  *
- * @author fengyts 2018-05-09 09:29:18
+ * @author fengyts 2018-08-16 14:34:19
  */
 public interface IcheccConstantsDAO extends GeneralDAO<IcheccConstantsDO> {
 	
@@ -32,5 +32,16 @@ public interface IcheccConstantsDAO extends GeneralDAO<IcheccConstantsDO> {
 	 * @throws CommonDAOException
 	 */
 	int deleteByPrimaryKey(String primaryKey) throws CommonDAOException;
+	
+	/**
+	 * <pre>
+	 * 根据主键动态更新
+	 * </pre>
+	 *
+	 * @param constantDO
+	 * @return int
+	 * @throws CommonDAOException
+	 */
+	int updateByPrimaryKey(IcheccConstantsDO constantDO) throws CommonDAOException;
 
 }

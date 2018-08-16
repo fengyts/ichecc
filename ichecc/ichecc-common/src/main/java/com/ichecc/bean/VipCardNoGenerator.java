@@ -46,6 +46,7 @@ public class VipCardNoGenerator {
 	 * 生成支付订单编号
 	 * 
 	 */
+	@Deprecated
 	public String generateVipCardNo() {
 		try {
 			// 最终生成的会员卡编号
@@ -70,6 +71,32 @@ public class VipCardNoGenerator {
 			return null;
 		}
 	}
+	
+	/**
+	 * 生成支付订单编号
+	 * 
+	 */
+	public String generateVipCardNoNew() {
+		try {
+			// 最终生成的会员卡编号
+			String finalNo = "";
+			synchronized (lockObj) {
+				// 计数器到最大值归1，目前1秒处理峰值9999个
+				if (vipCardNoCount >= 1000) {
+					vipCardNoCount = 1L;
+				}
+				// 组装支付订单编号
+				String countStr = maxPerMSECSize + vipCardNoCount + "";
+				finalNo = countStr.substring(1) + StringUtils.getRandomNum(4);
+				vipCardNoCount++;
+				logger.info("会员卡编号生成成功：" + finalNo);
+				return finalNo;
+			}
+		} catch (Exception e) {
+			logger.error("支付订单编号生成失败", e);
+			return null;
+		}
+	}
 
 	// 测试订单编号生成器
 //	private static void generatorTest() {
@@ -78,7 +105,7 @@ public class VipCardNoGenerator {
 //				Thread t1 = new Thread(new Runnable() {
 //					public void run() {
 //						VipCardNoGenerator bean = new VipCardNoGenerator();
-//						bean.generateVipCardNo();
+//						bean.generateVipCardNo1();
 //					}
 //				}, "at" + i);
 //				t1.start();
@@ -86,7 +113,7 @@ public class VipCardNoGenerator {
 //				Thread t2 = new Thread(new Runnable() {
 //					public void run() {
 //						VipCardNoGenerator bean = new VipCardNoGenerator();
-//						bean.generateVipCardNo();
+//						bean.generateVipCardNo1();
 //					}
 //				}, "bt" + i);
 //				t2.start();
