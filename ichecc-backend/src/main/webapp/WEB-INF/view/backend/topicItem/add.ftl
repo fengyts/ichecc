@@ -28,7 +28,7 @@ css=[
 		<label class="col-md-2 control-label">商品名称<span class="dr-asterisk requiredField">*</span></label>
 		<div class="col-md-4">
 			<div class="input-group">
-				<input type="text" class="form-control" readonly="readonly" id="itemTitle" name="itemTitle" placeholder="请选择商品" value="${topicItemDO.itemTitle}">
+				<input type="text" class="form-control" readonly="readonly" id="itemTitle" name="itemTitle" placeholder="请选择商品">
 				<input type="hidden" id="itemId" name="itemId" value="${topicItemDO.itemId}"/>
 				<span class="btn btn-default btn-sm input-group-addon" id="selectItem">
 					<span class="glyphicon glyphicon-plus"></span>
@@ -38,13 +38,13 @@ css=[
 		</div>
 		<label class="col-md-2 control-label">市场价</label>
 		<div class="col-md-4">
-			<input type="text" class="form-control" readonly id="marketPrice" name="marketPrice" value="${topicItemDO.marketPrice}" />
+			<input type="text" class="form-control" readonly id="marketPrice" />
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-md-2 control-label">指导价<span class="dr-asterisk requiredField">*</span></label>
 		<div class="col-md-4">
-			<input type="text" class="form-control" id="guidePrice" name="guidePrice" value="${topicItemDO.guidePrice}" />
+			<input type="text" class="form-control" id="guidePrice" name="guidePrice" autocomplete="off" />
 		</div>
 	</div>
 	
@@ -52,7 +52,7 @@ css=[
 	<div class="form-group">
 		<label class="col-md-2 control-label">特卖价<span class="dr-asterisk requiredField">*</span></label>
 		<div class="col-md-4">
-			<input type="text" class="form-control" id="specialPrice" name="specialPrice" value="${topicItemDO.specialPrice}" />
+			<input type="text" class="form-control" id="specialPrice" name="specialPrice" placeholder="请先选择商品" autocomplete="off" disabled />
 		</div>
 		<label class="col-md-2 control-label">砍价最大次数(次)<span class="dr-asterisk requiredField">*</span></label>
 		<div class="col-md-4">
@@ -64,7 +64,7 @@ css=[
 		<div class="col-md-4">
 			<input type="text" class="form-control" id="sort" name="sort" value="${topicItemDO.sort!0}" />
 		</div>
-		<label class="col-md-2 control-label">商品状态</label>
+		<label class="col-md-2 control-label">专题商品状态</label>
 		<div class="radio col-md-4">
 			<label>
 				<input type="radio" name="status" id="status" value="1" checked>有效
@@ -75,7 +75,12 @@ css=[
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-md-2 control-label">已参与人数</label>
+		<label class="col-md-2 control-label">允许砍价金额<span class="dr-asterisk requiredField">*</span></label>
+		<div class="col-md-4">
+			<input type="text" class="form-control" id="bargainAmount" name="bargainAmount" placeholder="请先输入特卖价" autocomplete="off" disabled />
+			<font color="#ff0000">允许砍价金额<=(指导价-特卖价), 若设置相等则可砍价成功</font>
+		</div>
+		<label class="col-md-2 control-label">默认已参与人数</label>
 		<div class="col-md-4">
 			<input type="text" class="form-control" id="participationNum" name="participationNum" value="${topicItemDO.participationNum!0}" />
 			<font color="#ff0000">已参与人数一旦创建不能修改</font>

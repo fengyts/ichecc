@@ -50,8 +50,25 @@ $(function() {
 		});
 	});
 	
+	$("#specialPrice").on('input porpertychange', function(){
+		var _g = $("#guidePrice").val();
+		if(!_g){
+			$(this).val("");
+			layer.tips("指导价不能为空", "#guidePrice", {tips : [2, '#666666']});
+			return;
+		}
+		var _te = this.value;
+		var _bamt = _g - _te;
+		$("#bargainAmount").val(_bamt);
+	});
+	
 	
 	$("#saveTopicItemBtn").on('click', function() {
+		var _gprice = $("#guidePrice").val(), _sprice = $("#specialPrice").val(), _bprice = $("#bargainAmount").val();
+		if(!gprice || !_sprice || !_bprice){
+			layer.msg("指导价|特卖价|允许砍价不能为空", {time: 1500});
+			return;
+		}
 		var _data = $("#topicItemAddForm").serializeArray();
 		$.ajax({
 			url: 'save',
@@ -141,6 +158,9 @@ $(function() {
 		window.parent.$("#itemTitle").val(_itemTitle);
 		window.parent.$("#marketPrice").val(_marketPrice);
 		window.parent.$("#guidePrice").val(_guidePrice);
+		
+		window.parent.$("#specialPrice").prop("disabled", false);
+		window.parent.$("#bargainAmount").prop("disabled", false);
 		
 		var _index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 		parent.layer.close(_index); //再执行关闭   

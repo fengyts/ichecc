@@ -22,7 +22,7 @@ css=[
 	</div>
 	
 	<div class="box_top" style="margin-bottom:20px;">
-		<b class="pl15">专题信息</b>
+		<b class="pl15">专题商品信息</b>
 	</div>
 	
 	<div class="form-group">
@@ -107,8 +107,6 @@ css=[
 		</div>
 	</div>
 	
-	
-	<hr/>
 	
 	<#-- 商品上传图片 -->
 	<#--
