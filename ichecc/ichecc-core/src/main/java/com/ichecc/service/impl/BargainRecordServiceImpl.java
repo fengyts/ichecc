@@ -12,6 +12,7 @@ import com.ichecc.domain.BargainRecordDO;
 import com.ichecc.service.BargainRecordService;
 import ng.bayue.exception.CommonDAOException;
 import ng.bayue.exception.CommonServiceException;
+import ng.bayue.util.StringUtils;
 import ng.bayue.common.Page;
 
 @Service(value="bargainRecordService")
@@ -128,6 +129,25 @@ public class BargainRecordServiceImpl  implements BargainRecordService{
 		}
 		return new Page<BargainRecordDO>();
 	}
+
+
+	@Override
+	public int countAreadyBargainTimes(Long userId, Long tiId, String bargainType) {
+		if (null == userId || null == tiId) {
+			return -1;
+		}
+		BargainRecordDO bargainRecordDO = new BargainRecordDO();
+		bargainRecordDO.setUserId(userId);
+		bargainRecordDO.setTopicItemId(tiId);
+		if (StringUtils.isNotBlank(bargainType)) {
+			bargainRecordDO.setBargainType(bargainType);
+		}
+
+		List<BargainRecordDO> list = selectDynamic(bargainRecordDO);
+		return list.size();
+	}
+	
+	
 	
 	
 }

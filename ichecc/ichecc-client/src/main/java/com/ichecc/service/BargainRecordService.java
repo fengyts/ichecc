@@ -10,4 +10,13 @@ import com.ichecc.domain.BargainRecordDO;
  */
 public interface BargainRecordService extends GeneralService<BargainRecordDO, BargainRecordDO> {
 	
+	/**
+	 * 获取某商品某用户已砍价次数
+	 * @param userId
+	 * @param tiId
+	 * @param bargainType: 01-本人砍价；02-好友帮砍
+	 * @return
+	 */
+	int countAreadyBargainTimes(Long userId, Long tiId, String bargainType);
+	
 }
