@@ -26,6 +26,7 @@
 		<result column="countOther" property="bargainCountOther" />
 		<collection property="records" ofType="com.ichecc.vo.HiggleListVO" column="{tiId=tiId,userId=userId}" select="select_bargain_records">
 				<!--  使用select的时候,result 列映射到属性将无效    -->
+				<!-- 参考展义eamp项目-MarketingConsumecoupon和MarketingExpandMember -->
 <!-- 			<result column="headimgurl" property="headimgurl"/> -->
 <!-- 			<result column="nickname" property="nickname"/> -->
 <!-- 			<result column="bargain_amount" property="bargainAmount"/> -->
