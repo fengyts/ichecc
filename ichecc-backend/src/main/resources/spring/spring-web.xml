@@ -110,7 +110,7 @@
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 	<bean id="jsonResolver"
-		class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
+		class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
 
 	<!-- 静态资源路径 -->
 	<mvc:resources mapping="/statics/**" location="/statics/" />
