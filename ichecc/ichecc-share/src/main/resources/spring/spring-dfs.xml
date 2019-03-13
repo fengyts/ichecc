@@ -24,7 +24,7 @@
 		</property>
 	</bean>
 
-	<bean id="poolFactory" class="ng.bayue.factory.TrackerServerFactory">
+	<bean id="trackerServerFactory" class="ng.bayue.factory.TrackerServerFactory">
 		<constructor-arg>
 			<array>
 				<value>${dfs.group1.host}</value>
@@ -38,7 +38,7 @@
 	</bean>
 
 	<bean id="dfsPool" class="ng.bayue.factory.TrackerServerPool">
-		<constructor-arg index="0" ref="poolFactory" />
+		<constructor-arg index="0" ref="trackerServerFactory" />
 		<constructor-arg index="1" ref="poolConfig" />
 	</bean>
 
